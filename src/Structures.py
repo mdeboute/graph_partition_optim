@@ -88,3 +88,15 @@ class Graph:
             if edge.source == source and edge.destination == destination:
                 return edge
         return None
+
+    def getNbEdges(self):
+        """
+        Returns the number of edges of the graph.
+        """
+        return self.nb_edges
+
+    def getNbVertices(self):
+        """
+        Returns the number of vertices of the graph.
+        """
+        return self.nb_vertices
