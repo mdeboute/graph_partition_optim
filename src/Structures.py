@@ -6,34 +6,34 @@ class Edge:
     """
     Represents an edge of a graph.
     """
-    def __init__(self, source, destination, weight):
-        self.source = source
-        self.destination = destination
+    def __init__(self, firstVertex, secondVertex, weight):
+        self.firstVertex = firstVertex
+        self.secondVertex = secondVertex
         self.weight = weight
 
     def __str__(self):
         """
         Returns a string representation of the edge.
         """
-        return "Edge from " + str(self.source) + " to " + str(self.destination) + " with weight " + str(self.weight)
+        return "Edge from " + str(self.firstVertex) + " to " + str(self.secondVertex) + " with weight " + str(self.weight)
 
     def __repr__(self):
         """
         Returns a string representation of the edge.
         """
-        return "Edge from " + str(self.source) + " to " + str(self.destination) + " with weight " + str(self.weight)
+        return "Edge from " + str(self.firstVertex) + " to " + str(self.secondVertex) + " with weight " + str(self.weight)
 
     def __eq__(self, other):
         """
         Returns True if the edges are equal.
         """
-        return self.source == other.source and self.destination == other.destination and self.weight == other.weight
+        return self.firstVertex == other.firstVertex and self.secondVertex == other.secondVertex and self.weight == other.weight
 
     def __hash__(self):
         """
         Returns a hash representation of the edge.
         """
-        return hash((self.source, self.destination, self.weight))
+        return hash((self.firstVertex, self.secondVertex, self.weight))
 
 
 class Graph:
@@ -80,12 +80,12 @@ class Graph:
             print(edge)
         print("")
 
-    def get_edge(self, source, destination):
+    def get_edge(self, firstVertex, secondVertex):
         """
-        Returns the edge between source and destination.
+        Returns the edge between firstVertex and secondVertex.
         """
         for edge in self.edges:
-            if edge.source == source and edge.destination == destination:
+            if edge.firstVertex == firstVertex and edge.secondVertex == secondVertex:
                 return edge
         return None
 
