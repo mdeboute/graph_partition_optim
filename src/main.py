@@ -1,4 +1,4 @@
-from parser import parser
+from utils import *
 import time
 from enum import enum
 import random

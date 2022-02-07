@@ -100,3 +100,41 @@ class Graph:
         Returns the number of vertices of the graph.
         """
         return self.nb_vertices
+
+class solution :
+        
+    def __init__ (self, assignment, n, k, cost) :
+        self.assignment = assignment
+        self.n = n
+        self.k = k
+        self.cost = cost
+        
+    def __str__(self):
+        """
+        Returns a string representation of the solution.
+        """
+        tmp =""
+        for i in range (self.n) :
+            tmp += "Node " + str(i) + " assigned to class " + str(self.assignment[i]) + "\n"
+        return tmp
+    
+    def __repr__(self):
+        """
+        Returns a string representation of the solution.
+        """
+        tmp =""
+        for i in range (self.n) :
+            tmp += "Node " + str(i) + " assigned to class " + str(self.assignment[i]) + "\n"
+        return tmp
+    
+    def __eq__(self, other):
+        """
+        Returns True if the graphs are equal.
+        """
+        return self.assignment == other.assignment
+    
+    def __hash__(self):
+        """
+        Returns a hash representation of the graph.
+        """
+        return hash((self.n, self.k, self.assignment, self.cost))
