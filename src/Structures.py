@@ -1,11 +1,12 @@
 # This file consist of a set of classes that allows us to represents a non oriented weighted graph.
-# Author: Martin Debouté
+# Author: Martin Debouté, Lucas Villenave
 
 
 class Edge:
     """
     Represents an edge of a graph.
     """
+
     def __init__(self, firstVertex, secondVertex, weight):
         self.firstVertex = firstVertex
         self.secondVertex = secondVertex
@@ -15,19 +16,37 @@ class Edge:
         """
         Returns a string representation of the edge.
         """
-        return "Edge from " + str(self.firstVertex) + " to " + str(self.secondVertex) + " with weight " + str(self.weight)
+        return (
+            "Edge from "
+            + str(self.firstVertex)
+            + " to "
+            + str(self.secondVertex)
+            + " with weight "
+            + str(self.weight)
+        )
 
     def __repr__(self):
         """
         Returns a string representation of the edge.
         """
-        return "Edge from " + str(self.firstVertex) + " to " + str(self.secondVertex) + " with weight " + str(self.weight)
+        return (
+            "Edge from "
+            + str(self.firstVertex)
+            + " to "
+            + str(self.secondVertex)
+            + " with weight "
+            + str(self.weight)
+        )
 
     def __eq__(self, other):
         """
         Returns True if the edges are equal.
         """
-        return self.firstVertex == other.firstVertex and self.secondVertex == other.secondVertex and self.weight == other.weight
+        return (
+            self.firstVertex == other.firstVertex
+            and self.secondVertex == other.secondVertex
+            and self.weight == other.weight
+        )
 
     def __hash__(self):
         """
@@ -49,31 +68,65 @@ class Graph:
         """
         Returns a string representation of the graph.
         """
-        return "Graph with " + str(self.nb_vertices) + " vertices and " + str(self.nb_edges) + " edges."
+        return (
+            "Graph with "
+            + str(self.nb_vertices)
+            + " vertices and "
+            + str(self.nb_edges)
+            + " edges."
+        )
 
     def __repr__(self):
         """
         Returns a string representation of the graph.
         """
-        return "Graph with " + str(self.nb_vertices) + " vertices and " + str(self.nb_edges) + " edges."
+        return (
+            "Graph with "
+            + str(self.nb_vertices)
+            + " vertices and "
+            + str(self.nb_edges)
+            + " edges."
+        )
 
     def __eq__(self, other):
         """
         Returns True if the graphs are equal.
         """
-        return self.nb_vertices == other.nb_vertices and self.nb_edges == other.nb_edges and self.dmin == other.dmin and self.dmax == other.dmax and self.edges == other.edges and self.degrees == other.degrees
+        return (
+            self.nb_vertices == other.nb_vertices
+            and self.nb_edges == other.nb_edges
+            and self.dmin == other.dmin
+            and self.dmax == other.dmax
+            and self.edges == other.edges
+            and self.degrees == other.degrees
+        )
 
     def __hash__(self):
         """
         Returns a hash representation of the graph.
         """
-        return hash((self.nb_vertices, self.nb_edges, self.dmin, self.dmax, self.edges, self.degrees))
+        return hash(
+            (
+                self.nb_vertices,
+                self.nb_edges,
+                self.dmin,
+                self.dmax,
+                self.edges,
+                self.degrees,
+            )
+        )
 
     def print_graph(self):
         """
         Prints the graph.
         """
-        print("Graph with " + str(self.nb_vertices) + " vertices and " + str(self.nb_edges) + " edges.")
+        print(
+            "Graph with "
+            + str(self.nb_vertices)
+            + " vertices and "
+            + str(self.nb_edges)
+            + " edges."
+        )
         print("Degrees: " + str(self.degrees))
         print("Edges:")
         for edge in self.edges:
@@ -101,38 +154,50 @@ class Graph:
         """
         return self.nb_vertices
 
-class solution :
-        
-    def __init__ (self, assignment, n, k, cost) :
+
+class Solution:
+    def __init__(self, assignment, n, k, cost):
         self.assignment = assignment
         self.n = n
         self.k = k
         self.cost = cost
-        
+
     def __str__(self):
         """
         Returns a string representation of the solution.
         """
-        tmp =""
-        for i in range (self.n) :
-            tmp += "Node " + str(i) + " assigned to class " + str(self.assignment[i]) + "\n"
+        tmp = ""
+        for i in range(self.n):
+            tmp += (
+                "Node "
+                + str(i)
+                + " assigned to class "
+                + str(self.assignment[i])
+                + "\n"
+            )
         return tmp
-    
+
     def __repr__(self):
         """
         Returns a string representation of the solution.
         """
-        tmp =""
-        for i in range (self.n) :
-            tmp += "Node " + str(i) + " assigned to class " + str(self.assignment[i]) + "\n"
+        tmp = ""
+        for i in range(self.n):
+            tmp += (
+                "Node "
+                + str(i)
+                + " assigned to class "
+                + str(self.assignment[i])
+                + "\n"
+            )
         return tmp
-    
+
     def __eq__(self, other):
         """
         Returns True if the graphs are equal.
         """
         return self.assignment == other.assignment
-    
+
     def __hash__(self):
         """
         Returns a hash representation of the graph.

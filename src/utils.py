@@ -5,7 +5,7 @@ def parser(file_path):
     """
     Parses the file and returns a Graph.
     """
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         lines = f.readlines()
         nb_vertices = int(lines[1].split()[0])
         nb_edges = int(lines[1].split()[1])
@@ -25,43 +25,45 @@ def parser(file_path):
 
 # only thing to check is "nearly equal", with a tab of assignment we already make it so we assign one and only one class each
 # also, overloading to check solution cost in the same time
-def checker(solution) :
+def checker(solution):
     k = solution.k
     assignment = solution.assignment
     Tab = [0] * k
-    for i in assignment :
-        if i<0 or i>=k :
+    for i in assignment:
+        if i < 0 or i >= k:
             print("solution given give an assignment of " + i)
             return 0
         Tab[i] += 1
-    for i in range(1,k) :
-        if (Tab[i]>Tab[0]+1 or Tab[i]<Tab[0]+1) :
+    for i in range(1, k):
+        if Tab[i] > Tab[0] + 1 or Tab[i] < Tab[0] + 1:
             print("assignment not nearly equal")
             return 0
     return 1
 
-def checker (solution, graph) :
+
+def checker(solution, graph):
     k = solution.k
     assignment = solution.assignment
     Tab = [0] * k
-    for i in assignment :
-        if i<0 or i>=k :
+    for i in assignment:
+        if i < 0 or i >= k:
             print("solution given give an assignment of " + i)
             return -1
         Tab[i] += 1
-    for i in range(1,k) :
-        if (Tab[i]>Tab[0]+1 or Tab[i]<Tab[0]+1) :
+    for i in range(1, k):
+        if Tab[i] > Tab[0] + 1 or Tab[i] < Tab[0] + 1:
             print("assignment not nearly equal")
             return -2
-    if (evaluater(solution,graph)==solution.cost) :
+    if evaluater(solution, graph) == solution.cost:
         return solution.cost
     print("cost diff between solution and eval when checking")
     return -3
 
-#it is very sad to browse the edges when you have 10^8 but meh, no other way if you want to check ponctually and here, m<n^2
-def evaluater (solution,graph) :
+
+# it is very sad to browse the edges when you have 10^8 but meh, no other way if you want to check ponctually and here, m<n^2
+def evaluater(solution, graph):
     s = 0
-    for e in graph.edges :
-        if (solution.assignment[e.source] != solution.assignment[e.destination]) :
+    for e in graph.edges:
+        if solution.assignment[e.source] != solution.assignment[e.destination]:
             s += 1
     return s
