@@ -55,7 +55,7 @@ class Edge:
         return hash((self.firstVertex, self.secondVertex, self.weight))
 
 
-class Graph:
+class Graph(Edge):
     def __init__(self, nb_vertices, nb_edges, dmin, dmax, edges, degrees):
         self.nb_vertices = nb_vertices
         self.nb_edges = nb_edges
@@ -154,27 +154,26 @@ class Graph:
         """
         return self.nb_vertices
 
+    def has_key(self, vertex):
+        """
+        Returns True if the graph has the vertex.
+        """
+        return vertex in self.degrees
 
-class Solution:
-    def __init__(self, assignment, n, k, cost):
-        self.assignment = assignment
-        self.n = n
-        self.k = k
-        self.cost = cost
+
+class Solution(Graph):
+    def __init__(self, partition, graph, nbClasses=2):
+        self.partition = partition
+        self.graph = graph
+        self.nbClasses = nbClasses
 
     def __str__(self):
         """
         Returns a string representation of the solution.
         """
         tmp = ""
-        for i in range(self.n):
-            tmp += (
-                "Node "
-                + str(i)
-                + " assigned to class "
-                + str(self.assignment[i])
-                + "\n"
-            )
+        for i in range(len(self.partition)):
+            tmp += "Partition " + str(i) + ": " + str(self.partition[i]) + "\n"
         return tmp
 
     def __repr__(self):
@@ -182,13 +181,9 @@ class Solution:
         Returns a string representation of the solution.
         """
         tmp = ""
-        for i in range(self.n):
+        for i in range(self.graph.nb_vertices):
             tmp += (
-                "Node "
-                + str(i)
-                + " assigned to class "
-                + str(self.assignment[i])
-                + "\n"
+                "Node " + str(i) + " assigned to class " + str(self.partition[i]) + "\n"
             )
         return tmp
 
@@ -196,10 +191,26 @@ class Solution:
         """
         Returns True if the graphs are equal.
         """
-        return self.assignment == other.assignment
+        return self.partition == other.partition
 
     def __hash__(self):
         """
         Returns a hash representation of the graph.
         """
-        return hash((self.n, self.k, self.assignment, self.cost))
+        return hash((self.graph, self.nbClasses, self.partition))
+
+    # this method returns the cost of the solution as the sum of the weiths of the inter-class edges
+    def get_cost(self):
+        """
+        Returns the cost of the solution.
+        """
+        cost = 0
+        for i in range(len(self.partition)):
+            for j in range(len(self.partition[i])):
+                for k in range(j + 1, len(self.partition[i])):
+                    edge = self.graph.get_edge(
+                        self.partition[i][j], self.partition[i][k]
+                    )
+                    if edge is not None:
+                        cost += edge.weight
+        return cost

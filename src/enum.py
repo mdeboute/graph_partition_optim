@@ -1,7 +1,7 @@
 import itertools
 
 
-def enum(nbVertices, nbClasses=2):
+def basicEnum(nbVertices, nbClasses=2):
     # l'ensemble des sommets est :
     vertices = range(nbVertices)  # on a nb sommets
     # on cree les ensembles de classes possibles pour chaque sommet

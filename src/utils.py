@@ -1,3 +1,4 @@
+from functools import partial
 from Structures import *
 
 
@@ -26,15 +27,15 @@ def parser(file_path):
 # only thing to check is "nearly equal", with a tab of assignment we already make it so we assign one and only one class each
 # also, overloading to check solution cost in the same time
 def checker(solution):
-    k = solution.k
-    assignment = solution.assignment
-    Tab = [0] * k
-    for i in assignment:
-        if i < 0 or i >= k:
+    nbClasses = solution.nbClasses
+    partition = solution.partition
+    Tab = [0] * nbClasses
+    for i in partition:
+        if i < 0 or i >= nbClasses:
             print("solution given give an assignment of " + i)
             return 0
         Tab[i] += 1
-    for i in range(1, k):
+    for i in range(1, nbClasses):
         if Tab[i] > Tab[0] + 1 or Tab[i] < Tab[0] + 1:
             print("assignment not nearly equal")
             return 0
@@ -42,20 +43,20 @@ def checker(solution):
 
 
 def checker(solution, graph):
-    k = solution.k
-    assignment = solution.assignment
-    Tab = [0] * k
-    for i in assignment:
-        if i < 0 or i >= k:
+    nbClasses = solution.nbClasses
+    partition = solution.partition
+    Tab = [0] * nbClasses
+    for i in partition:
+        if i < 0 or i >= nbClasses:
             print("solution given give an assignment of " + i)
             return -1
         Tab[i] += 1
-    for i in range(1, k):
+    for i in range(1, nbClasses):
         if Tab[i] > Tab[0] + 1 or Tab[i] < Tab[0] + 1:
             print("assignment not nearly equal")
             return -2
-    if evaluater(solution, graph) == solution.cost:
-        return solution.cost
+    if evaluater(solution, graph) == solution.get_cost():
+        return solution.get_cost()
     print("cost diff between solution and eval when checking")
     return -3
 
@@ -64,6 +65,9 @@ def checker(solution, graph):
 def evaluater(solution, graph):
     s = 0
     for e in graph.edges:
-        if solution.assignment[e.source] != solution.assignment[e.destination]:
+        if solution.partition[e.source] != solution.partition[e.destination]:
             s += 1
     return s
+
+
+# TODO: test the checker and evaluater functions
