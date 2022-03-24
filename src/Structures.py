@@ -27,6 +27,8 @@ class Edge:
         """
         Returns True if the edges are equal.
         """
+        if (other == None) :
+            return False
         return self.source == other.source and self.destination == other.destination and self.weight == other.weight
 
     def __hash__(self):
@@ -86,6 +88,8 @@ class Graph:
         """
         for edge in self.edges:
             if edge.source == source and edge.destination == destination:
+                return edge
+            if edge.source == destination and edge.destination == source:
                 return edge
         return None
 
