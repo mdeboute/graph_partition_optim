@@ -42,11 +42,9 @@ class Edge:
         """
         Returns True if the edges are equal.
         """
-        if other == None:
-            return False
         return (
-            self.source == other.source
-            and self.destination == other.destination
+            self.firstVertex == other.firstVertex
+            and self.secondVertex == other.secondVertex
             and self.weight == other.weight
         )
 
@@ -54,10 +52,12 @@ class Edge:
         """
         Returns a hash representation of the edge.
         """
-        return hash((self.firstVertex, self.secondVertex, self.weight))
+        return hash(self.firstVertex) ^ hash(self.secondVertex) ^ hash(self.weight)
 
 
 class Graph(Edge):
+    """Represents a graph"""
+
     def __init__(self, nb_vertices, nb_edges, dmin, dmax, edges, degrees):
         self.nb_vertices = nb_vertices
         self.nb_edges = nb_edges
@@ -107,18 +107,14 @@ class Graph(Edge):
         """
         Returns a hash representation of the graph.
         """
-        return hash(
-            (
-                self.nb_vertices,
-                self.nb_edges,
-                self.dmin,
-                self.dmax,
-                self.edges,
-                self.degrees,
-            )
+        return (
+            hash(self.nb_vertices)
+            ^ hash(self.nb_edges)
+            ^ hash(self.dmin)
+            ^ hash(self.dmax)
         )
 
-    def print_graph(self):
+    def print(self):
         """
         Prints the graph.
         """
@@ -129,20 +125,20 @@ class Graph(Edge):
             + str(self.nb_edges)
             + " edges."
         )
-        print("Degrees: " + str(self.degrees))
         print("Edges:")
         for edge in self.edges:
             print(edge)
-        print("")
+        print("Degrees:")
+        for vertex in self.degrees:
+            print(vertex, ":", self.degrees[vertex])
 
-    def get_edge(self, firstVertex, secondVertex):
+    def getEdge(self, firstVertex, secondVertex):
         """
         Returns the edge between firstVertex and secondVertex.
         """
         for edge in self.edges:
             if edge.firstVertex == firstVertex and edge.secondVertex == secondVertex:
                 return edge
-        return None
 
     def getNbEdges(self):
         """
@@ -164,6 +160,8 @@ class Graph(Edge):
 
 
 class Solution(Graph):
+    """Represents a solution"""
+
     def __init__(self, partition, graph, nbClasses=2):
         self.partition = partition
         self.graph = graph
@@ -174,8 +172,10 @@ class Solution(Graph):
         Returns a string representation of the solution.
         """
         tmp = ""
-        for i in range(len(self.partition)):
-            tmp += "Partition " + str(i) + ": " + str(self.partition[i]) + "\n"
+        for i in range(self.graph.nb_vertices):
+            tmp += (
+                "Node " + str(i) + " assigned to class " + str(self.partition[i]) + "\n"
+            )
         return tmp
 
     def __repr__(self):
@@ -191,18 +191,22 @@ class Solution(Graph):
 
     def __eq__(self, other):
         """
-        Returns True if the graphs are equal.
+        Returns True if the solutions are equal.
         """
-        return self.partition == other.partition
+        return (
+            self.graph == other.graph
+            and self.nbClasses == other.nbClasses
+            and self.partition == other.partition
+        )
 
     def __hash__(self):
         """
-        Returns a hash representation of the graph.
+        Returns a hash representation of the solution.
         """
-        return hash((self.graph, self.nbClasses, self.partition))
+        return hash(self.graph) ^ hash(self.nbClasses) ^ hash(self.partition)
 
     # this method returns the cost of the solution as the sum of the weiths of the inter-class edges
-    def get_cost(self):
+    def getCost(self):
         """
         Returns the cost of the solution.
         """

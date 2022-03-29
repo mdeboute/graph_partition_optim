@@ -8,8 +8,7 @@ t = time.time()
 graph = parser("../data/dixSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
-if isPrint:
-    graph.print_graph()
+graph.print()
 
 et = time.time()
 enum2(graph, isPrint, 2)
