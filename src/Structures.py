@@ -21,8 +21,9 @@ class Edge:
             + str(self.firstVertex)
             + " to "
             + str(self.secondVertex)
-            + " with weight "
-            + str(self.weight)
+            # + " with weight "
+            # + str(self.weight)
+            # all the weights are equal to 1
         )
 
     def __repr__(self):
@@ -34,8 +35,9 @@ class Edge:
             + str(self.firstVertex)
             + " to "
             + str(self.secondVertex)
-            + " with weight "
-            + str(self.weight)
+            # + " with weight "
+            # + str(self.weight)
+            # all the weights are equal to 1
         )
 
     def __eq__(self, other):
@@ -125,12 +127,14 @@ class Graph(Edge):
             + str(self.nb_edges)
             + " edges."
         )
+        print("\n")
         print("Edges:")
         for edge in self.edges:
             print(edge)
+        print("\n")
         print("Degrees:")
-        for vertex in self.degrees:
-            print(vertex, ":", self.degrees[vertex])
+        for i in range(len(self.degrees)):
+            print(i + 1, ":", self.degrees[i])
 
     def getEdge(self, firstVertex, secondVertex):
         """
