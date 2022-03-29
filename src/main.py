@@ -10,6 +10,7 @@ print(time.time() - t, "seconds of parsing")
 
 graph.print()
 
-# et = time.time()
-# basicEnum(graph, isPrint, 2)
-# print(time.time() - et, "seconds of enum")
+print("\nEnumeration:")
+et = time.time()
+basicEnum(graph.getNbVertices(), 2)
+print(time.time() - et, "seconds of enum")

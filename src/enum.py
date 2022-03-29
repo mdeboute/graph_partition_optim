@@ -2,18 +2,18 @@ import itertools
 from eval import eval
 
 
-def basicEnum(nbVertices, nbClasses):
+def basicEnum(nb_vertices, nb_classes):
     # l'ensemble des sommets est :
-    vertices = range(nbVertices)  # on a nb sommets
+    vertices = range(nb_vertices)  # on a nb sommets
     # on cree les ensembles de classes possibles pour chaque sommet
-    support = (range(nbClasses) for _ in vertices)
+    support = (range(nb_classes) for _ in vertices)
     # on cree l'iterateur
-    iterator = itertools.product(*support)
+    iter = itertools.product(*support)
     # pour chaque reponse de l'iterateur on cree les partitions
     nbSol = 0  # nombre de partitions trouvées
-    for rep in iterator:
+    for rep in iter:
         # au début les partitons sont vides
-        sol = [[] for _ in range(nbClasses)]
+        sol = [[] for _ in range(nb_classes)]
         # si on est là c'est que l'itérateur a trouvé une solution
         nbSol += 1
         # on transforme une réponse du type (0,1,0,1) en [ [0,2], [1,3], [] ]
@@ -28,7 +28,7 @@ def basicEnum(nbVertices, nbClasses):
     _msg = "Found: {found:d} partitions. "
     _msg += "Expected: {expected:d} > "
     _msg += "diagnostic {status}"
-    d = {"found": nbSol, "expected": nbClasses ** nbVertices}
+    d = {"found": nbSol, "expected": nb_classes ** nb_vertices}
     d["status"] = d["found"] == d["expected"]
     print(_msg.format(**d))
 
