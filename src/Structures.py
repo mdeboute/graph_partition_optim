@@ -175,23 +175,13 @@ class Solution(Graph):
         """
         Returns a string representation of the solution.
         """
-        tmp = ""
-        for i in range(self.graph.nb_vertices):
-            tmp += (
-                "Node " + str(i) + " assigned to class " + str(self.partition[i]) + "\n"
-            )
-        return tmp
+        return str(self.partition)
 
     def __repr__(self):
         """
         Returns a string representation of the solution.
         """
-        tmp = ""
-        for i in range(self.graph.nb_vertices):
-            tmp += (
-                "Node " + str(i) + " assigned to class " + str(self.partition[i]) + "\n"
-            )
-        return tmp
+        return str(self.partition)
 
     def __eq__(self, other):
         """
@@ -218,7 +208,7 @@ class Solution(Graph):
         for i in range(len(self.partition)):
             for j in range(len(self.partition[i])):
                 for k in range(j + 1, len(self.partition[i])):
-                    edge = self.graph.get_edge(
+                    edge = self.graph.getEdge(
                         self.partition[i][j], self.partition[i][k]
                     )
                     if edge is not None:
