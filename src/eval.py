@@ -6,7 +6,7 @@ def eval(graph, partition, nbClasses):
                 for node in partition[c]:
                     for node2 in partition[c2]:
                         print(node, " ", node2)
-                        if graph.get_edge(node, node2) != None:
+                        if graph.getEdge(node, node2) != None:
                             cost += 1
 
     return cost

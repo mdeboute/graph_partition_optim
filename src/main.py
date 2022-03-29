@@ -5,7 +5,7 @@ from enum import enum2
 isPrint = 1
 
 t = time.time()
-graph = parser("../data/dixSommets.txt")
+graph = parser("./data/dixSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print()
