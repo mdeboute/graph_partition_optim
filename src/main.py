@@ -10,12 +10,15 @@ print(time.time() - t, "seconds of parsing")
 
 graph.print()
 
-partition = makeBiPartition(graph.getNbVertices())
-solution = Solution(partition, graph)
+# partition = makeBiPartition(graph.getNbVertices())
+# solution = Solution(partition, graph)
 
-# basicEnum(graph.getNbVertices())
+print("\n")
+basicEnum(graph, verbose=True)
 
-print(f"\nSolution: {solution} with cost {solution.getCost()}\n")
+# print(f"\nSolution: {solution} with cost {solution.getCost()}\n")
+
+print("\n")
 
 swapVoisinage(solution)
 
