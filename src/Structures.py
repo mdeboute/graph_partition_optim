@@ -240,3 +240,15 @@ class Solution(Graph):
         Returns the partition of the solution.
         """
         return self.partition
+
+    def getNbVerticesInClass(self, class_):
+        """
+        Returns the number of vertices in the class.
+        """
+        return len(self.partition[class_])
+
+    def getGraph(self):
+        """
+        Returns the graph of the solution.
+        """
+        return self.graph

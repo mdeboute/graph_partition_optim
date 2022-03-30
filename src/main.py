@@ -5,7 +5,7 @@ from random_partition import *
 from neighborhood import *
 
 t = time.time()
-graph = parser("./data/dixSommets.txt")
+graph = parser("./data/quinzeSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print()
@@ -14,16 +14,16 @@ graph.print()
 # solution = Solution(partition, graph)
 
 print("\n")
-basicEnum(graph, verbose=True)
+basicEnum(graph)
 
 # print(f"\nSolution: {solution} with cost {solution.getCost()}\n")
 
 print("\n")
 
-swapVoisinage(solution)
+# swapVoisinage(solution)
 
-kpartition = makeKPartition(graph.getNbVertices(), 3)
-ksolution = Solution(kpartition, graph, 3)
-print(kpartition)
+# kpartition = makeKPartition(graph.getNbVertices(), 3)
+# ksolution = Solution(kpartition, graph, 3)
+# print(kpartition)
 
-pickNDropVoisinage(ksolution, 0)
+# pickNDropVoisinage(ksolution, 0)
