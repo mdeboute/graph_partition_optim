@@ -228,3 +228,15 @@ class Solution(Graph):
                         if self.graph.getEdge(vertex, neighbor) is not None:
                             cost += self.graph.getEdge(vertex, neighbor).weight
         return cost // 2
+
+    def getNbClasses(self):
+        """
+        Returns the number of classes of the solution.
+        """
+        return self.nbClasses
+
+    def getPartition(self):
+        """
+        Returns the partition of the solution.
+        """
+        return self.partition
