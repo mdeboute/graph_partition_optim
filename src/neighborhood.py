@@ -1,5 +1,7 @@
 from Structures import *
 import copy
+from evaluateur import *
+
 
 """
 Notion of neighborhoods:
@@ -15,12 +17,10 @@ Naming convention :
     - XXX_gen: returns an iterator
 """
 
-def swapVoisinage (solution) :
-    k = solution.nbClasses
+def swapVoisinage (soluce) :
+    k = soluce.getNbClasses()
     partitions = []
-    partition = solution.getPartition()
-
-    print ("root :", partition)
+    partition = soluce.getPartition()
 
     for c in range(k):
         for c2 in range(k):
@@ -41,16 +41,15 @@ def swapVoisinage (solution) :
     return partitions
 #ne rend pas des partitions triee. probleme ?
 
-def pickNDropVoisinage (solution,classToDrop) :
-    k = solution.nbClasses
+def pickNDropVoisinage (soluce,classToDrop) :
+    k = soluce.getNbClasses()
     try :
         if (k<classToDrop) :
             raise Exception("trying to drop from not existing class")
     except Exception as e :
         print(e)
     partitions = []
-    partition = solution.getPartition()
-    print ("root :", partition)
+    partition = soluce.getPartition()
     for node in partition[classToDrop]:
         for c in range(k) :
             if (c!=classToDrop) :
@@ -63,62 +62,61 @@ def pickNDropVoisinage (solution,classToDrop) :
                 partitions.append(tmp)
     return partitions
 
+def bestSwapVoisinage (soluce) :
+    k = soluce.getNbClasses()
+    partition = soluce.getPartition()
 
-# should be functionnal, just need a functionnal getCost
+    opt = -1
+    bestPartition = []
 
-# def bestSwapVoisinage (solution,classToDrop) :
-#     k = solution.nbClasses
-#     partition = solution.getPartition()
+    for c in range(k):
+        for c2 in range(k):
+            if c < c2:
+                for node in partition[c]:
+                    for node2 in partition[c2]:
+                        tmp = copy.deepcopy(partition)
+                        tmp[c].remove(node)
+                        tmp[c].append(node2)
 
-#     opt = -1
-#     bestPartition = []
+                        tmp[c2].remove(node2)
+                        tmp[c2].append(node)
 
-#     print ("root :", partition)
+                        tmpSol = Solution(tmp,soluce.getGraph(),soluce.getNbClasses())
+                        ev = evaluateur(tmpSol)
+                        if (opt==-1) :
+                            opt = ev
+                            bestPartition = tmp
+                        if (ev<opt) :
+                            opt = ev
+                            bestPartition = tmp
+    return bestPartition
 
-#     for c in range(k):
-#         for c2 in range(k):
-#             if c < c2:
-#                 for node in partition[c]:
-#                     for node2 in partition[c2]:
-#                         tmp = copy.deepcopy(partition)
-#                         tmp[c].remove(node)
-#                         tmp[c].append(node2)
-
-#                         tmp[c2].remove(node2)
-#                         tmp[c2].append(node)
-
-#                         ev = getCost(tmp)
-#                         if (ev<opt) :
-#                             opt = ev
-#                             bestPartition = tmp
-#     return bestPartition
-
-# def bestPickNDropVoisinage (solution,classToDrop) :
-#     k = solution.nbClasses
-#     try :
-#         if (k<classToDrop) :
-#             raise Exception("trying to drop from not existing class")
-#     except Exception as e :
-#         print(e)
+def bestPickNDropVoisinage (soluce,classToDrop) :
+    k = soluce.getNbClasses()
+    try :
+        if (k<classToDrop) :
+            raise Exception("trying to drop from not existing class")
+    except Exception as e :
+        print(e)
     
-#     opt = -1
-#     bestPartition = []
+    opt = -1
+    bestPartition = []
 
-#     partition = solution.getPartition()
+    partition = soluce.getPartition()
 
-#     print ("root :", partition)
-#     for node in partition[classToDrop]:
-#         for c in range(k) :
-#             if (c!=classToDrop) :
-#                 tmp = copy.deepcopy(partition)
-#                 tmp[c].append(node)
-#                 tmp[classToDrop].remove(node)
+    for node in partition[classToDrop]:
+        for c in range(k) :
+            if (c!=classToDrop) :
+                tmp = copy.deepcopy(partition)
+                tmp[c].append(node)
+                tmp[classToDrop].remove(node)
 
-#                 ev = getCost(tmp)
-#                 if (ev<opt) :
-#                     opt = ev
-#                     bestPartition = tmp
-#     return bestPartition
+                tmpSol = Solution(tmp,soluce.getGraph(),soluce.getNbClasses())
+                ev = evaluateur(tmpSol)
+                if (ev<opt) :
+                    opt = ev
+                    bestPartition = tmp
+    return bestPartition
 
 
 

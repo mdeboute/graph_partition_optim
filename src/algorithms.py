@@ -30,7 +30,7 @@ def makeKPartition(nbVertices,k=2):
     """
     l = []  # the list of vertices
     for i in range(nbVertices) :
-        l.append(i)
+        l.append(i+1)
     
     partition = []
     counter = 0

@@ -141,7 +141,7 @@ class Graph(Edge):
         Returns the edge between firstVertex and secondVertex.
         """
         for edge in self.edges:
-            if edge.firstVertex == firstVertex and edge.secondVertex == secondVertex:
+            if (edge.firstVertex == firstVertex and edge.secondVertex == secondVertex) or (edge.firstVertex == secondVertex and edge.secondVertex == firstVertex):
                 return edge
 
     def getNbEdges(self):
@@ -216,7 +216,10 @@ class Solution(Graph):
         return cost
 
     def getNbClasses (self) :
-        return self.nb_classes
+        return self.nbClasses
 
     def getPartition (self) :
         return self.partition
+
+    def getGraph (self) :
+        return self.graph
