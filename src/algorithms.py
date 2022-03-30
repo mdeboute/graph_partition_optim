@@ -15,7 +15,7 @@ def makeBiPartition(nbVertices):
     @param nbVertices: number of vertices
     @return: a bi-partition of the vertices
     """
-    l = range(nbVertices)  # the list of vertices
+    l = range(1, nbVertices + 1)  # the list of vertices
     k_1 = random.sample(l, int(nbVertices / 2))  # the first class
     k_2 = [x for x in l if x not in k_1]  # the second class
     k_1.sort()  # we sort the list

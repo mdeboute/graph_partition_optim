@@ -141,7 +141,11 @@ class Graph(Edge):
         Returns the edge between firstVertex and secondVertex.
         """
         for edge in self.edges:
-            if edge.firstVertex == firstVertex and edge.secondVertex == secondVertex:
+            if (
+                edge.firstVertex == firstVertex and edge.secondVertex == secondVertex
+            ) or (
+                edge.firstVertex == secondVertex and edge.secondVertex == firstVertex
+            ):
                 return edge
 
     def getNbEdges(self):
@@ -161,6 +165,18 @@ class Graph(Edge):
         Returns True if the graph has the vertex.
         """
         return vertex in self.degrees
+
+    def getNeighbors(self, vertex):
+        """
+        Returns the neighbors of the vertex.
+        """
+        neighbors = []
+        for edge in self.edges:
+            if edge.firstVertex == vertex:
+                neighbors.append(edge.secondVertex)
+            if edge.secondVertex == vertex:
+                neighbors.append(edge.firstVertex)
+        return neighbors
 
 
 class Solution(Graph):
@@ -205,12 +221,10 @@ class Solution(Graph):
         Returns the cost of the solution.
         """
         cost = 0
-        for i in range(len(self.partition)):
-            for j in range(len(self.partition[i])):
-                for k in range(j + 1, len(self.partition[i])):
-                    edge = self.graph.getEdge(
-                        self.partition[i][j], self.partition[i][k]
-                    )
-                    if edge is not None:
-                        cost += edge.weight
-        return cost
+        for i in range(self.nbClasses):
+            for vertex in self.partition[i]:
+                for neighbor in self.graph.getNeighbors(vertex):
+                    if self.partition[i].count(neighbor) == 0:
+                        if self.graph.getEdge(vertex, neighbor) is not None:
+                            cost += self.graph.getEdge(vertex, neighbor).weight
+        return cost // 2
