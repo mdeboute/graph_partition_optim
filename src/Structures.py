@@ -214,3 +214,9 @@ class Solution(Graph):
                     if edge is not None:
                         cost += edge.weight
         return cost
+
+    def getNbClasses (self) :
+        return self.nb_classes
+
+    def getPartition (self) :
+        return self.partition
