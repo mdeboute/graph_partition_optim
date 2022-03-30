@@ -1,7 +1,7 @@
 import time
 from utils import *
 from enum import basicEnum
-from algorithms import *
+from random_partition import *
 from neighborhood import *
 
 t = time.time()
@@ -13,9 +13,11 @@ graph.print()
 partition = makeBiPartition(graph.getNbVertices())
 solution = Solution(partition, graph)
 
+# basicEnum(graph.getNbVertices())
+
 print(f"\nSolution: {solution} with cost {solution.getCost()}\n")
 
-# swapVoisinage(solution)
+swapVoisinage(solution)
 
 kpartition = makeKPartition(graph.getNbVertices(), 3)
 ksolution = Solution(kpartition, graph, 3)

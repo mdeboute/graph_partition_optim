@@ -1,9 +1,9 @@
 import itertools
 
 
-def basicEnum(nb_vertices, nb_classes):
+def basicEnum(nb_vertices, nb_classes=2):
     # l'ensemble des sommets est :
-    vertices = range(nb_vertices)  # on a nb sommets
+    vertices = range(1, nb_vertices + 1)  # on a nb sommets
     # on cree les ensembles de classes possibles pour chaque sommet
     support = (range(nb_classes) for _ in vertices)
     # on cree l'iterateur

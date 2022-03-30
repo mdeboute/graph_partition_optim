@@ -1,12 +1,6 @@
 from Structures import *
 import random
 
-# this method is an heuristic, it is a suboptimal gradient method
-# it allow us to find a good partition of the graph
-# input: Graph g, int k (number of classes)
-# output: list of list of int (each list is a class and each int is a vertex)
-# def gradient(g, k):
-
 
 def makeBiPartition(nbVertices):
     """
