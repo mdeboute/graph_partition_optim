@@ -43,4 +43,6 @@ def makeKPartition(graph, k):
         j = random.sample(l, 1)
         partition[i].append(j[0])
         l.remove(j[0])
+    for _ in range(k):
+        partition[_].sort()
     return partition

@@ -1,11 +1,12 @@
 import time
+from gradient_descent import gradientDescent
 from utils import *
 from enum import *
 from random_partition import *
 from neighborhood import *
 
 t = time.time()
-graph = parser("./data/dixSommets.txt")
+graph = parser("./data/vingtSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -14,11 +15,10 @@ partition = makeBiPartition(graph)
 solution = Solution(partition, graph)
 
 bswap = bestSwap(solution)
-print(f"Best swap: {bswap[0]} with cost {bswap[1]}")
+print(f"Best swap: {bswap}")
+# ok
 
-# print("\n")
-# basicEnum(graph)
+# bestSolution = gradientDescent(graph, 2)
+# print(f"Best solution: {bestSolution[0]} with cost {bestSolution[1]}")
 
-# print(f"\nSolution: {solution} with cost {solution.getCost()}\n")
-
-# print("\n")
+# TODO: fix the gradient descent method

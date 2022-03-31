@@ -16,7 +16,7 @@ def swap(solution):
     partitions = []
     partition = solution.getPartition()
 
-    print("root :", partition)
+    # print("root :", partition)
 
     for c in range(k):
         for c2 in range(k):
@@ -66,8 +66,6 @@ def bestSwap(solution):
     opt = math.inf
     bestPartition = []
 
-    print("root :", partition)
-
     for c in range(k):
         for c2 in range(k):
             if c < c2:
@@ -88,7 +86,7 @@ def bestSwap(solution):
                         if ev < opt:
                             opt = ev
                             bestPartition = tmp
-    return bestPartition, opt
+    return bestPartition
 
 
 # def bestPickNDrop(solution, classToDrop):
