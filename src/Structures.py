@@ -116,7 +116,7 @@ class Graph(Edge):
             ^ hash(self.dmax)
         )
 
-    def print(self):
+    def print(self, verbose=False):
         """
         Prints the graph.
         """
@@ -127,14 +127,15 @@ class Graph(Edge):
             + str(self.nb_edges)
             + " edges."
         )
-        print("\n")
-        print("Edges:")
-        for edge in self.edges:
-            print(edge)
-        print("\n")
-        print("Degrees:")
-        for i in range(len(self.degrees)):
-            print(i + 1, ":", self.degrees[i])
+        if verbose:
+            print("\n")
+            print("Edges:")
+            for edge in self.edges:
+                print(edge)
+            print("\n")
+            print("Degrees:")
+            for i in range(len(self.degrees)):
+                print(i + 1, ":", self.degrees[i])
 
     def getEdge(self, firstVertex, secondVertex):
         """

@@ -54,8 +54,8 @@ def checker(solution, graph):
         if Tab[i] > Tab[0] + 1 or Tab[i] < Tab[0] + 1:
             print("assignment not nearly equal")
             return -2
-    if evaluater(solution, graph) == solution.get_cost():
-        return solution.get_cost()
+    if evaluater(solution, graph) == solution.getCost():
+        return solution.getCost()
     print("cost diff between solution and eval when checking")
     return -3
 
@@ -69,4 +69,4 @@ def evaluater(solution, graph):
     return s
 
 
-# TODO: test the checker and evaluater functions
+# TODO: test the checker and evaluater methods
