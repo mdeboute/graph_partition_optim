@@ -12,7 +12,7 @@ Notion of neighborhoods:
 
 
 def swap(solution):
-    k = solution.nbClasses
+    k = solution.getNbClasses()
     partitions = []
     partition = solution.getPartition()
 
@@ -29,7 +29,7 @@ def swap(solution):
                         tmp[c2].remove(node2)
                         tmp[c2].append(node)
 
-                        partitions.append(Solution(partition, solution.getGraph(), k))
+                        partitions.append(Solution(tmp, solution.getGraph(), k))
     return partitions
 
 
