@@ -56,6 +56,24 @@ class Edge:
         """
         return hash(self.firstVertex) ^ hash(self.secondVertex) ^ hash(self.weight)
 
+    def getFirstVertex(self):
+        """
+        Returns the first vertex of the edge.
+        """
+        return self.firstVertex
+
+    def getSecondVertex(self):
+        """
+        Returns the second vertex of the edge.
+        """
+        return self.secondVertex
+
+    def getWeight(self):
+        """
+        Returns the weight of the edge.
+        """
+        return self.weight
+
 
 class Graph(Edge):
     """Represents a graph"""
@@ -143,9 +161,11 @@ class Graph(Edge):
         """
         for edge in self.edges:
             if (
-                edge.firstVertex == firstVertex and edge.secondVertex == secondVertex
+                edge.getFirstVertex() == firstVertex
+                and edge.getSecondVertex() == secondVertex
             ) or (
-                edge.firstVertex == secondVertex and edge.secondVertex == firstVertex
+                edge.getFirstVertex() == secondVertex
+                and edge.getSecondVertex() == firstVertex
             ):
                 return edge
 
@@ -173,10 +193,10 @@ class Graph(Edge):
         """
         neighbors = []
         for edge in self.edges:
-            if edge.firstVertex == vertex:
-                neighbors.append(edge.secondVertex)
-            if edge.secondVertex == vertex:
-                neighbors.append(edge.firstVertex)
+            if edge.getFirstVertex() == vertex:
+                neighbors.append(edge.getSecondVertex())
+            if edge.getSecondVertex() == vertex:
+                neighbors.append(edge.getFirstVertex())
         return neighbors
 
 
@@ -227,7 +247,7 @@ class Solution(Graph):
                 for neighbor in self.graph.getNeighbors(vertex):
                     if self.partition[i].count(neighbor) == 0:
                         if self.graph.getEdge(vertex, neighbor) is not None:
-                            cost += self.graph.getEdge(vertex, neighbor).weight
+                            cost += self.graph.getEdge(vertex, neighbor).getWeight()
         return cost // 2
 
     def getNbClasses(self):

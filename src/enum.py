@@ -52,6 +52,6 @@ def isApproxEqual(solution):
     nb_vertices = solution.getGraph().getNbVertices()
     nb_vertices_per_class_approx = nb_vertices // solution.getNbClasses()
     for i in range(solution.getNbClasses()):
-        if len(solution.partition[i]) < nb_vertices_per_class_approx:
+        if len(solution.getPartition()[i]) < nb_vertices_per_class_approx:
             return False
     return True

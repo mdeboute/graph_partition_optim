@@ -26,8 +26,8 @@ def parser(file_path):
 # only thing to check is "nearly equal", with a tab of assignment we already make it so we assign one and only one class each
 # also, overloading to check solution cost in the same time
 def checker(solution):
-    nbClasses = solution.nbClasses
-    partition = solution.partition
+    nbClasses = solution.getNbClasses()
+    partition = solution.getPartition()
     Tab = [0] * nbClasses
     for i in partition:
         if i < 0 or i >= nbClasses:
@@ -41,9 +41,9 @@ def checker(solution):
     return 1
 
 
-def checker(solution, graph):
-    nbClasses = solution.nbClasses
-    partition = solution.partition
+def checker(solution):
+    nbClasses = solution.getNbClasses()
+    partition = solution.getPartition()
     Tab = [0] * nbClasses
     for i in partition:
         if i < 0 or i >= nbClasses:
@@ -54,17 +54,20 @@ def checker(solution, graph):
         if Tab[i] > Tab[0] + 1 or Tab[i] < Tab[0] + 1:
             print("assignment not nearly equal")
             return -2
-    if evaluater(solution, graph) == solution.getCost():
+    if evaluater(solution) == solution.getCost():
         return solution.getCost()
     print("cost diff between solution and eval when checking")
     return -3
 
 
 # it is very sad to browse the edges when you have 10^8 but meh, no other way if you want to check ponctually and here, m<n^2
-def evaluater(solution, graph):
+def evaluater(solution):
     s = 0
-    for e in graph.edges:
-        if solution.partition[e.source] != solution.partition[e.destination]:
+    for e in solution.getGraph().getEdges():
+        if (
+            solution.getPartition()[e.getFirstVertex()]
+            != solution.getPartition()[e.getSecondVertex()]
+        ):
             s += 1
     return s
 
