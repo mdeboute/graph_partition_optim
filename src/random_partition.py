@@ -1,4 +1,3 @@
-from Structures import *
 import random
 
 

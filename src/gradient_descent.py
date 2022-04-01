@@ -1,7 +1,3 @@
-from neighborhood import *
-from random_partition import *
-
-
 def gradientDescent(sol, neighborhood):
     """
     Returns the best solution using the swap for the neighborhood.
