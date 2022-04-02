@@ -1,16 +1,16 @@
 def gradientDescent(sol, neighborhood):
     """
     Returns the best solution using the swap for the neighborhood.
-    @param graph: the graph
-    @param k: the number of classes
-    @return: the best solution of the graph
+    @param sol: the solution
+    @param neighborhood: the neighborhood of the solution
+    @return: the best solution for the graph associated to the solution
     """
-    bestScore = sol.getCost()
     bestSol = sol
+    bestScore = sol.getCost()
     for s in neighborhood:
         if s.getCost() < bestScore:
-            bestScore = s.getCost()
             bestSol = s
+            bestScore = s.getCost()
     if bestScore != sol.getCost():
         return gradientDescent(bestSol, neighborhood)
     else:
