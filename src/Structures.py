@@ -273,3 +273,32 @@ class Solution(Graph):
         Returns the graph of the solution.
         """
         return self.graph
+
+    def isFeasible(self):
+        # Check if the solution is feasible
+        # The partition is correct if the sum of the number of vertices
+        # in each class is equal to the number of vertices of the graph associated to the solution
+        # And if the number of vertices in each class is approximatively the same
+
+        feasible = None
+
+        # check the first condition
+        count = 0
+        nb_vertices = self.graph.getNbVertices()
+        for i in range(self.nbClasses):
+            count += len(self.partition[i])
+        if count == nb_vertices:
+            feasible = True
+        else:
+            feasible = False
+
+        # check the second condition
+        nb_vertices_per_class_approx = nb_vertices // self.nbClasses
+        for i in range(self.nbClasses):
+            if len(self.partition[i]) < nb_vertices_per_class_approx:
+                feasible = False
+
+        return feasible
+
+
+# TODO: deepen the notion of approximately

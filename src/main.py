@@ -18,12 +18,14 @@ neighborhood = swap(solution)
 
 # print(gradientDescent(solution, neighborhood))
 
+bestSol, bestCost = simulatedAnnealing(
+    solution,
+    neighborhood,
+    initialTemperature=80,
+    finalTemperature=0.01,
+    coolingRate=0.08,
+)
+
 print(
-    simulatedAnnealing(
-        solution,
-        neighborhood,
-        initialTemperature=80,
-        finalTemperature=0.01,
-        coolingRate=0.08,
-    )
+    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
 )
