@@ -7,13 +7,13 @@ from neighborhood import *
 from metaheuristics import simulatedAnnealing
 
 t = time.time()
-graph = parse("./data/trenteSommets.txt")
+graph = parse("./data/cinquanteSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
 
-partition = makeKPartition(graph, k=2)
-solution = Solution(partition, graph)
+partition = makeKPartition(graph, nbClasses=5)
+solution = Solution(partition, graph, nbClasses=5)
 neighborhood = swap(solution)
 
 # print(gradientDescent(solution, neighborhood))
@@ -29,3 +29,5 @@ bestSol, bestCost = simulatedAnnealing(
 print(
     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
 )
+
+# 2 sec for 500 edges and 5 class is quite good I think?

@@ -16,7 +16,7 @@ def makeBiPartition(graph):
     return k_1, k_2
 
 
-def makeKPartition(graph, k):
+def makeKPartition(graph, nbClasses):
     """
     create a partition of the vertices into k classes
     the vertices are from 1 to N
@@ -29,10 +29,13 @@ def makeKPartition(graph, k):
 
     partition = []
     counter = 0
-    for c in range(k):
+    for c in range(nbClasses):
         partition.append([])
         for i in range(
-            int((graph.getNbVertices() / k) - ((graph.getNbVertices() / k) % 1))
+            int(
+                (graph.getNbVertices() / nbClasses)
+                - ((graph.getNbVertices() / nbClasses) % 1)
+            )
         ):
             counter += 1
             j = random.sample(l, 1)
@@ -42,6 +45,6 @@ def makeKPartition(graph, k):
         j = random.sample(l, 1)
         partition[i].append(j[0])
         l.remove(j[0])
-    for _ in range(k):
+    for _ in range(nbClasses):
         partition[_].sort()
     return partition

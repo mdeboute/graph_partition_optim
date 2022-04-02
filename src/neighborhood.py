@@ -54,3 +54,5 @@ def swap(solution):
 
 #                 partitions.append(tmp)
 #     return partitions
+
+# TODO: test the pickNDrop method and create a kSwap method that will return a list of k neighbors for huge graphs
