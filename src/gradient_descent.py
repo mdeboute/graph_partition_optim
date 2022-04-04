@@ -1,5 +1,5 @@
 from neighborhood import *
-from algorithms import *
+from random_partition import *
 
 def DescenteDeGradiant (soluce) :
     k = soluce.getNbClasses
@@ -20,6 +20,7 @@ def DescenteDeGradiant (soluce) :
         challengerPower = evaluateur(equippedChallenger)
 
         if (challengerPower < championPower) :
+            print("descente")
             isHavingFun = 1 # bloodbath yay
             champion = challenger # new champion is crown
             championPower = challengerPower
