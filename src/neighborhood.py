@@ -1,6 +1,7 @@
+from telnetlib import TM
 from Structures import *
 import copy
-import random
+
 
 """
 Notion of neighborhoods:
@@ -75,7 +76,7 @@ def bestSwapVoisinage(soluce):
                         tmp[c2].append(node)
 
                         tmpSol = Solution(tmp, soluce.getGraph(), soluce.getNbClasses())
-                        ev = evaluateur(tmpSol)
+                        ev = tmpSol.getCost()
                         if opt == -1:
                             opt = ev
                             bestPartition = tmp
@@ -106,7 +107,7 @@ def bestPickNDropVoisinage(soluce, classToDrop):
                 tmp[classToDrop].remove(node)
 
                 tmpSol = Solution(tmp, soluce.getGraph(), soluce.getNbClasses())
-                ev = evaluateur(tmpSol)
+                ev = tmpSol.getCost()
                 if ev < opt:
                     opt = ev
                     bestPartition = tmp
@@ -165,4 +166,6 @@ def nSwap(solution, n):
 #                 partitions.append(tmp)
 #     return partitions
 
-# TODO: test the pickNDrop method and create a nSwap method that will return a list of n neighbors for huge graphs
+# TODO: test the pickNDrop method and create (fix) the nSwap method
+# that will return a random list of n neighbors
+# (useful for huge graphs)
