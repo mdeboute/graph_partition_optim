@@ -1,30 +1,33 @@
 import time
+from gradient_descent import gradientDescent
 from utils import *
-from enum import basicEnum
+from enum import *
 from random_partition import *
 from neighborhood import *
-from evaluateur import *
-from gradient_descent import *
-
-
-k=3
+from metaheuristics import simulatedAnnealing
 
 t = time.time()
-graph = parser("./data/trenteSommets.txt")
+graph = parse("./data/cinquanteSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
-graph.print()
+graph.print(verbose=False)
 
-print("\npartition")
-et = time.time()
+partition = makeKPartition(graph, nbClasses=5)
+solution = Solution(partition, graph, nbClasses=5)
+neighborhood = swap(solution)
 
-kpartition = makeKPartition(graph.getNbVertices(),k)
-ksolution = Solution(kpartition, graph,k)
-print(kpartition, " with a cost of ",evaluateur(ksolution))
+# print(gradientDescent(solution, neighborhood))
 
-opt = Solution(DescenteDeGradiant(ksolution),graph,k)
+bestSol, bestCost = simulatedAnnealing(
+    solution,
+    neighborhood,
+    initialTemperature=80,
+    finalTemperature=0.01,
+    coolingRate=0.08,
+)
 
-ev = evaluateur(opt)
-print("optimal ",opt.getPartition(), " with cost ", ev)
+print(
+    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+)
 
-# pickNDropVoisinage(ksolution,0)
+# 2 sec for 500 edges and 5 class is quite good I think?

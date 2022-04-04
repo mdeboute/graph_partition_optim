@@ -26,7 +26,7 @@ def basicEnum(graph, verbose=False, nb_classes=2):
 
         solution = Solution(sol, graph, nb_classes)
 
-        if isApproxEqual(solution):
+        if solution.isFeasible():
             ev = solution.getCost()
             if ev < opt:
                 opt = ev
@@ -45,13 +45,3 @@ def basicEnum(graph, verbose=False, nb_classes=2):
     d["status"] = d["found"] == d["expected"]
     print(_msg.format(**d))
     print(f"\nBest solution: {bestSol}, with cost: {opt}")
-
-
-# this method evaluate if a solution has approximately equal number of vertices in each class
-def isApproxEqual(solution):
-    nb_vertices = solution.getGraph().getNbVertices()
-    nb_vertices_per_class_approx = nb_vertices // solution.getNbClasses()
-    for i in range(solution.getNbClasses()):
-        if len(solution.partition[i]) < nb_vertices_per_class_approx:
-            return False
-    return True

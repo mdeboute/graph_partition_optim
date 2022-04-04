@@ -56,6 +56,24 @@ class Edge:
         """
         return hash(self.firstVertex) ^ hash(self.secondVertex) ^ hash(self.weight)
 
+    def getFirstVertex(self):
+        """
+        Returns the first vertex of the edge.
+        """
+        return self.firstVertex
+
+    def getSecondVertex(self):
+        """
+        Returns the second vertex of the edge.
+        """
+        return self.secondVertex
+
+    def getWeight(self):
+        """
+        Returns the weight of the edge.
+        """
+        return self.weight
+
 
 class Graph(Edge):
     """Represents a graph"""
@@ -116,7 +134,7 @@ class Graph(Edge):
             ^ hash(self.dmax)
         )
 
-    def print(self):
+    def print(self, verbose=False):
         """
         Prints the graph.
         """
@@ -127,14 +145,15 @@ class Graph(Edge):
             + str(self.nb_edges)
             + " edges."
         )
-        print("\n")
-        print("Edges:")
-        for edge in self.edges:
-            print(edge)
-        print("\n")
-        print("Degrees:")
-        for i in range(len(self.degrees)):
-            print(i + 1, ":", self.degrees[i])
+        if verbose:
+            print("\n")
+            print("Edges:")
+            for edge in self.edges:
+                print(edge)
+            print("\n")
+            print("Degrees:")
+            for i in range(len(self.degrees)):
+                print(i + 1, ":", self.degrees[i])
 
     def getEdge(self, firstVertex, secondVertex):
         """
@@ -142,9 +161,11 @@ class Graph(Edge):
         """
         for edge in self.edges:
             if (
-                edge.firstVertex == firstVertex and edge.secondVertex == secondVertex
+                edge.getFirstVertex() == firstVertex
+                and edge.getSecondVertex() == secondVertex
             ) or (
-                edge.firstVertex == secondVertex and edge.secondVertex == firstVertex
+                edge.getFirstVertex() == secondVertex
+                and edge.getSecondVertex() == firstVertex
             ):
                 return edge
 
@@ -172,10 +193,10 @@ class Graph(Edge):
         """
         neighbors = []
         for edge in self.edges:
-            if edge.firstVertex == vertex:
-                neighbors.append(edge.secondVertex)
-            if edge.secondVertex == vertex:
-                neighbors.append(edge.firstVertex)
+            if edge.getFirstVertex() == vertex:
+                neighbors.append(edge.getSecondVertex())
+            if edge.getSecondVertex() == vertex:
+                neighbors.append(edge.getFirstVertex())
         return neighbors
 
 
@@ -226,7 +247,7 @@ class Solution(Graph):
                 for neighbor in self.graph.getNeighbors(vertex):
                     if self.partition[i].count(neighbor) == 0:
                         if self.graph.getEdge(vertex, neighbor) is not None:
-                            cost += self.graph.getEdge(vertex, neighbor).weight
+                            cost += self.graph.getEdge(vertex, neighbor).getWeight()
         return cost // 2
 
     def getNbClasses(self):
@@ -252,3 +273,32 @@ class Solution(Graph):
         Returns the graph of the solution.
         """
         return self.graph
+
+    def isFeasible(self):
+        # Check if the solution is feasible
+        # The partition is correct if the sum of the number of vertices
+        # in each class is equal to the number of vertices of the graph associated to the solution
+        # And if the number of vertices in each class is approximatively the same
+
+        feasible = None
+
+        # check the first condition
+        count = 0
+        nb_vertices = self.graph.getNbVertices()
+        for i in range(self.nbClasses):
+            count += len(self.partition[i])
+        if count == nb_vertices:
+            feasible = True
+        else:
+            feasible = False
+
+        # check the second condition
+        nb_vertices_per_class_approx = nb_vertices // self.nbClasses
+        for i in range(self.nbClasses):
+            if len(self.partition[i]) < nb_vertices_per_class_approx:
+                feasible = False
+
+        return feasible
+
+
+# TODO: deepen the notion of approximately
