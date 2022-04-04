@@ -33,6 +33,86 @@ def swap(solution):
     return partitions
 
 
+def pickNDropVoisinage(soluce, classToDrop):
+    k = soluce.getNbClasses()
+    try:
+        if k < classToDrop:
+            raise Exception("trying to drop from not existing class")
+    except Exception as e:
+        print(e)
+    partitions = []
+    partition = soluce.getPartition()
+    for node in partition[classToDrop]:
+        for c in range(k):
+            if c != classToDrop:
+                tmp = copy.deepcopy(partition)
+                tmp[c].append(node)
+                tmp[classToDrop].remove(node)
+
+                print(tmp)
+
+                partitions.append(tmp)
+    return partitions
+
+
+def bestSwapVoisinage(soluce):
+    k = soluce.getNbClasses()
+    partition = soluce.getPartition()
+
+    opt = -1
+    bestPartition = []
+
+    for c in range(k):
+        for c2 in range(k):
+            if c < c2:
+                for node in partition[c]:
+                    for node2 in partition[c2]:
+                        tmp = copy.deepcopy(partition)
+                        tmp[c].remove(node)
+                        tmp[c].append(node2)
+
+                        tmp[c2].remove(node2)
+                        tmp[c2].append(node)
+
+                        tmpSol = Solution(tmp, soluce.getGraph(), soluce.getNbClasses())
+                        ev = evaluateur(tmpSol)
+                        if opt == -1:
+                            opt = ev
+                            bestPartition = tmp
+                        if ev < opt:
+                            opt = ev
+                            bestPartition = tmp
+    return bestPartition
+
+
+def bestPickNDropVoisinage(soluce, classToDrop):
+    k = soluce.getNbClasses()
+    try:
+        if k < classToDrop:
+            raise Exception("trying to drop from not existing class")
+    except Exception as e:
+        print(e)
+
+    opt = -1
+    bestPartition = []
+
+    partition = soluce.getPartition()
+
+    for node in partition[classToDrop]:
+        for c in range(k):
+            if c != classToDrop:
+                tmp = copy.deepcopy(partition)
+                tmp[c].append(node)
+                tmp[classToDrop].remove(node)
+
+                tmpSol = Solution(tmp, soluce.getGraph(), soluce.getNbClasses())
+                ev = evaluateur(tmpSol)
+                if ev < opt:
+                    opt = ev
+                    bestPartition = tmp
+    return bestPartition
+
+
 def nSwap(solution, n):
     # this method allows us to obtain a neighborhood of size n
     k = solution.getNbClasses()
