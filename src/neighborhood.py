@@ -180,35 +180,35 @@ def bestPickNDropVoisinage(soluce, classToDrop):
     return bestPartition
 
 
-def nSwap(solution, n):
-    # this method allows us to obtain a neighborhood of size n
-    k = solution.getNbClasses()
-    partition = solution.getPartition()
-    partitions = []
-
-    for c in range(k):
-        for c2 in range(k):
-            if c < c2:
-                p = list(partition[c:n])
-                # random.shuffle(p)
-                p2 = list(partition[c2:n])
-                # random.shuffle(p2)
-                for node in p:
-                    for node2 in p2:
-                        tmp = copy.deepcopy(partition)
-
-                        if tmp[c].count(node) == 1:
-                            tmp[c].remove(node)
-                            tmp[c].append(node2)
-
-                        if tmp[c2].count(node2) == 1:
-                            tmp[c2].remove(node2)
-                            tmp[c2].append(node)
-
-                        partitions.append(Solution(tmp, solution.getGraph(), k))
-
-    return partitions
-
+#def nSwap(solution, n):
+#    # this method allows us to obtain a neighborhood of size n
+#    k = solution.getNbClasses()
+#    partition = solution.getPartition()
+#    partitions = []
+#
+#    for c in range(k):
+#        for c2 in range(k):
+#            if c < c2:
+#                p = list(partition[c:n])
+#                # random.shuffle(p)
+#                p2 = list(partition[c2:n])
+#                # random.shuffle(p2)
+#                for node in p:
+#                    for node2 in p2:
+#                        tmp = copy.deepcopy(partition)
+#
+#                        if tmp[c].count(node) == 1:
+#                            tmp[c].remove(node)
+#                            tmp[c].append(node2)
+#
+#                        if tmp[c2].count(node2) == 1:
+#                            tmp[c2].remove(node2)
+#                            tmp[c2].append(node)
+#
+#                        partitions.append(Solution(tmp, solution.getGraph(), k))
+#
+#    return partitions
+# obsolete ?
 
 # def pickNDrop(solution, classToDrop):
 #     k = solution.getNbClasses()
