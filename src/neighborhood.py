@@ -33,6 +33,36 @@ def swap(solution):
     return partitions
 
 
+def nSwap(solution, n):
+    # this method allows us to obtain a neighborhood of size n
+    k = solution.getNbClasses()
+    partition = solution.getPartition()
+    partitions = []
+
+    for c in range(k):
+        for c2 in range(k):
+            if c < c2:
+                p = list(partition[c:n])
+                # random.shuffle(p)
+                p2 = list(partition[c2:n])
+                # random.shuffle(p2)
+                for node in p:
+                    for node2 in p2:
+                        tmp = copy.deepcopy(partition)
+
+                        if tmp[c].count(node) == 1:
+                            tmp[c].remove(node)
+                            tmp[c].append(node2)
+
+                        if tmp[c2].count(node2) == 1:
+                            tmp[c2].remove(node2)
+                            tmp[c2].append(node)
+
+                        partitions.append(Solution(tmp, solution.getGraph(), k))
+
+    return partitions
+
+
 # def pickNDrop(solution, classToDrop):
 #     k = solution.getNbClasses()
 #     try:
@@ -55,4 +85,4 @@ def swap(solution):
 #                 partitions.append(tmp)
 #     return partitions
 
-# TODO: test the pickNDrop method and create a kSwap method that will return a list of k neighbors for huge graphs
+# TODO: test the pickNDrop method and create a nSwap method that will return a list of n neighbors for huge graphs
