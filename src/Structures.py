@@ -2,87 +2,12 @@
 # Author: Martin Debouté, Lucas Villenave
 
 
-class Edge:
-    """
-    Represents an edge of a graph.
-    """
+class Graph:
+    """Represents a graph with an adjacency matrix."""
 
-    def __init__(self, firstVertex, secondVertex, weight):
-        self.firstVertex = firstVertex
-        self.secondVertex = secondVertex
-        self.weight = weight
-
-    def __str__(self):
-        """
-        Returns a string representation of the edge.
-        """
-        return (
-            "Edge from "
-            + str(self.firstVertex)
-            + " to "
-            + str(self.secondVertex)
-            # + " with weight "
-            # + str(self.weight)
-            # all the weights are equal to 1
-        )
-
-    def __repr__(self):
-        """
-        Returns a string representation of the edge.
-        """
-        return (
-            "Edge from "
-            + str(self.firstVertex)
-            + " to "
-            + str(self.secondVertex)
-            # + " with weight "
-            # + str(self.weight)
-            # all the weights are equal to 1
-        )
-
-    def __eq__(self, other):
-        """
-        Returns True if the edges are equal.
-        """
-        return (
-            self.firstVertex == other.firstVertex
-            and self.secondVertex == other.secondVertex
-            and self.weight == other.weight
-        )
-
-    def __hash__(self):
-        """
-        Returns a hash representation of the edge.
-        """
-        return hash(self.firstVertex) ^ hash(self.secondVertex) ^ hash(self.weight)
-
-    def getFirstVertex(self):
-        """
-        Returns the first vertex of the edge.
-        """
-        return self.firstVertex
-
-    def getSecondVertex(self):
-        """
-        Returns the second vertex of the edge.
-        """
-        return self.secondVertex
-
-    def getWeight(self):
-        """
-        Returns the weight of the edge.
-        """
-        return self.weight
-
-
-class Graph(Edge):
-    """Represents a graph"""
-
-    def __init__(self, nb_vertices, nb_edges, dmin, dmax, edges, degrees):
-        self.nb_vertices = nb_vertices
-        self.nb_edges = nb_edges
-        self.dmin = dmin
-        self.dmax = dmax
+    def __init__(self, nbVertices, nbEdges, edges, degrees):
+        self.nbVertices = nbVertices
+        self.nbEdges = nbEdges
         self.edges = edges
         self.degrees = degrees
 
@@ -92,9 +17,9 @@ class Graph(Edge):
         """
         return (
             "Graph with "
-            + str(self.nb_vertices)
+            + str(self.nbVertices)
             + " vertices and "
-            + str(self.nb_edges)
+            + str(self.nbEdges)
             + " edges."
         )
 
@@ -104,9 +29,9 @@ class Graph(Edge):
         """
         return (
             "Graph with "
-            + str(self.nb_vertices)
+            + str(self.nbVertices)
             + " vertices and "
-            + str(self.nb_edges)
+            + str(self.nbEdges)
             + " edges."
         )
 
@@ -115,10 +40,8 @@ class Graph(Edge):
         Returns True if the graphs are equal.
         """
         return (
-            self.nb_vertices == other.nb_vertices
-            and self.nb_edges == other.nb_edges
-            and self.dmin == other.dmin
-            and self.dmax == other.dmax
+            self.nbVertices == other.nbVertices
+            and self.nbEdges == other.nbEdges
             and self.edges == other.edges
             and self.degrees == other.degrees
         )
@@ -127,11 +50,13 @@ class Graph(Edge):
         """
         Returns a hash representation of the graph.
         """
-        return (
-            hash(self.nb_vertices)
-            ^ hash(self.nb_edges)
-            ^ hash(self.dmin)
-            ^ hash(self.dmax)
+        return hash(
+            (
+                self.nbVertices,
+                self.nbEdges,
+                self.edges,
+                self.degrees,
+            )
         )
 
     def print(self, verbose=False):
@@ -140,64 +65,75 @@ class Graph(Edge):
         """
         print(
             "Graph with "
-            + str(self.nb_vertices)
+            + str(self.nbVertices)
             + " vertices and "
-            + str(self.nb_edges)
+            + str(self.nbEdges)
             + " edges."
         )
         if verbose:
             print("\n")
             print("Edges:")
-            for edge in self.edges:
-                print(edge)
+            # print the edges as an adjacency list (i.e src -> dest, weight)
+            for i in range(self.nbVertices):
+                for j in range(self.nbVertices):
+                    if self.edges[i][j] != 0:
+                        print(
+                            str(i + 1)  # i+1 because the vertices are indexed from 1
+                            + " -> "
+                            + str(j + 1)
+                            + " ("
+                            + str(
+                                self.edges[i][j]
+                            )  # j+1 because the vertices are indexed from 1
+                            + ")"
+                        )
             print("\n")
             print("Degrees:")
             for i in range(len(self.degrees)):
-                print(i + 1, ":", self.degrees[i])
-
-    def getEdge(self, firstVertex, secondVertex):
-        """
-        Returns the edge between firstVertex and secondVertex.
-        """
-        for edge in self.edges:
-            if (
-                edge.getFirstVertex() == firstVertex
-                and edge.getSecondVertex() == secondVertex
-            ) or (
-                edge.getFirstVertex() == secondVertex
-                and edge.getSecondVertex() == firstVertex
-            ):
-                return edge
+                print(
+                    i + 1, ":", self.degrees[i]
+                )  # i+1 because the vertices are indexed from 1
 
     def getNbEdges(self):
         """
         Returns the number of edges of the graph.
         """
-        return self.nb_edges
+        return self.nbEdges
 
     def getNbVertices(self):
         """
         Returns the number of vertices of the graph.
         """
-        return self.nb_vertices
-
-    def has_key(self, vertex):
-        """
-        Returns True if the graph has the vertex.
-        """
-        return vertex in self.degrees
+        return self.nbVertices
 
     def getNeighbors(self, vertex):
         """
-        Returns the neighbors of the vertex.
+        Returns the neighbors of the vertex if it's possible.
         """
         neighbors = []
-        for edge in self.edges:
-            if edge.getFirstVertex() == vertex:
-                neighbors.append(edge.getSecondVertex())
-            if edge.getSecondVertex() == vertex:
-                neighbors.append(edge.getFirstVertex())
+        for i in range(self.nbVertices):
+            if vertex <= self.nbVertices and vertex >= 0:
+                if self.edges[vertex][i] != 0:
+                    neighbors.append(i)
         return neighbors
+
+    def getEdges(self):
+        """
+        Returns the edges of the graph.
+        """
+        return self.edges
+
+    def getDegrees(self):
+        """
+        Returns the degrees of the graph.
+        """
+        return self.degrees
+
+    def getDegree(self, vertex):
+        """
+        Returns the degree of the vertex.
+        """
+        return self.degrees[vertex]
 
 
 class Solution(Graph):
@@ -236,19 +172,19 @@ class Solution(Graph):
         """
         return hash(self.graph) ^ hash(self.nbClasses) ^ hash(self.partition)
 
-    # this method returns the cost of the solution as the sum of the weiths of the inter-class edges
     def getCost(self):
         """
-        Returns the cost of the solution.
+        Returns the cost of the solution as the sum of the weiths of the inter-class edges
         """
         cost = 0
         for i in range(self.nbClasses):
-            for vertex in self.partition[i]:
-                for neighbor in self.graph.getNeighbors(vertex):
-                    if self.partition[i].count(neighbor) == 0:
-                        if self.graph.getEdge(vertex, neighbor) is not None:
-                            cost += self.graph.getEdge(vertex, neighbor).getWeight()
-        return cost // 2
+            for j in range(self.nbClasses):
+                if i != j:
+                    for vertex in self.partition[i]:
+                        for neighbor in self.graph.getNeighbors(vertex):
+                            if neighbor in self.partition[j]:
+                                cost += self.graph.getEdges()[vertex][neighbor]
+        return cost
 
     def getNbClasses(self):
         """
@@ -262,11 +198,11 @@ class Solution(Graph):
         """
         return self.partition
 
-    def getNbVerticesInClass(self, class_):
+    def getNbVerticesInClass(self, _class_):
         """
         Returns the number of vertices in the class.
         """
-        return len(self.partition[class_])
+        return len(self.partition[_class_])
 
     def getGraph(self):
         """
@@ -284,18 +220,18 @@ class Solution(Graph):
 
         # check the first condition
         count = 0
-        nb_vertices = self.graph.getNbVertices()
+        nbVertices = self.graph.getNbVertices()
         for i in range(self.nbClasses):
             count += len(self.partition[i])
-        if count == nb_vertices:
+        if count == nbVertices:
             feasible = True
         else:
             feasible = False
 
         # check the second condition
-        nb_vertices_per_class_approx = nb_vertices // self.nbClasses
+        nbVertices_per_class_approx = nbVertices // self.nbClasses
         for i in range(self.nbClasses):
-            if len(self.partition[i]) < nb_vertices_per_class_approx:
+            if len(self.partition[i]) < nbVertices_per_class_approx:
                 feasible = False
 
         return feasible

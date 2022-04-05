@@ -1,5 +1,5 @@
 from telnetlib import TM
-from Structures import *
+from structures import *
 import copy, random
 
 
