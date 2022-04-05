@@ -1,3 +1,6 @@
+from neighborhood import *
+
+
 def gradientDescent(sol, neighborhood):
     """
     Returns the best solution using the swap for the neighborhood.
@@ -11,6 +14,8 @@ def gradientDescent(sol, neighborhood):
         if s.getCost() < bestScore:
             bestSol = s
             bestScore = s.getCost()
+            # and we update the neighborhood of the new best solution
+            neighborhood = swap(bestSol)
     if bestScore != sol.getCost():
         return gradientDescent(bestSol, neighborhood)
     else:
