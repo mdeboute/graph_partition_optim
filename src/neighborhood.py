@@ -1,4 +1,3 @@
-from telnetlib import TM
 from structures import *
 import copy, random
 
@@ -11,7 +10,8 @@ Notion of neighborhoods:
     - You can do a circular permutation (Sweep)
 """
 
-def swapEvaluateur(solution,node1,node2):
+
+def swapEvaluateur(solution, node1, node2):
     graph = solution.getGraph()
     partition = solution.getPartition()
     nbClasses = solution.getNbClasses()
@@ -24,6 +24,8 @@ def swapEvaluateur(solution,node1,node2):
                         if graph.getEdge(node, node2) is not None:
                             cost += 1
     return cost
+    # what about node1 ??
+
 
 def swapEvaluator(solution, solutionCost, node1, node1Class, node2, node2Class):
     graph = solution.getGraph()
@@ -221,5 +223,6 @@ def bestPickNDropVoisinage(soluce, classToDrop):
 
 
 # TODO: test the pickNDrop method and create (fix) the nSwap method
-# that will return a random list of n neighbors
-# (useful for huge graphs)
+# that will return a random list of n neighbors (useful for huge graphs)
+# + refactor the code with the new methods structure,
+# btw i don't think that the new evaluators are needed anymore
