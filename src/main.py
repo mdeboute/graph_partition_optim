@@ -8,7 +8,7 @@ from neighborhood import *
 from metaheuristics import simulatedAnnealing
 
 t = time.time()
-graph = parse("./data/vingtCinqSommets.txt")
+graph = parse("./data/vingtSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -26,8 +26,9 @@ graph.print(verbose=False)
 
 # Test for the enumeration
 ##########################
-# print(basicEnum(graph, verbose=False, nb_classes=2))
+# print(basicEnum(graph, verbose=False, nbClasses=2))
 ##########################
+# 45 sec for the enumeration of the graph with 20 vertices and 2 classes
 
 
 # Test for the gradientDescent

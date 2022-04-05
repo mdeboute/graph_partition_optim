@@ -227,18 +227,13 @@ class Solution(Graph):
             feasible = True
         else:
             feasible = False
-            print(
-                "The number of vertices in each class is not equal to the number of vertices of the graph"
-            )
 
         # check the second condition
         nbVertices_per_class_approx = nbVertices // self.nbClasses
         for i in range(self.nbClasses):
             if len(self.partition[i]) < nbVertices_per_class_approx:
                 feasible = False
-                print(
-                    "The number of vertices in each class is not approximatively the same"
-                )
+
         return feasible
 
 
