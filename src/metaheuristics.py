@@ -1,4 +1,5 @@
 import math, random
+from neighborhood import swap
 
 
 def simulatedAnnealing(
@@ -22,5 +23,7 @@ def simulatedAnnealing(
         # we should normalize the delta because he have a huge impact on the metropolis criterion?
         if delta > 0 or random.uniform(0, 1) < math.exp(-delta / currTemperature):
             bestSol = s
+            bestScore = s.getCost()
+            # neighborhood = swap(s)
         currTemperature *= coolingRate
     return bestSol, bestScore

@@ -1,4 +1,5 @@
 import time
+from enumeration import basicEnum
 from gradient_descent import gradientDescent
 from utils import *
 from enum import *
@@ -7,14 +8,15 @@ from neighborhood import *
 from metaheuristics import simulatedAnnealing
 
 t = time.time()
-graph = parse("./data/vingtCinqSommets.txt")
+graph = parse("./data/quatreSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
-graph.print(verbose=True)
+graph.print(verbose=False)
+print(graph.edges)
 
-partition = makeKPartition(graph, nbClasses=2)
-solution = Solution(partition, graph, nbClasses=2)
-neighborhood = swap(solution)
+# partition = makeKPartition(graph, nbClasses=2)
+# solution = Solution(partition, graph, nbClasses=2)
+# neighborhood = swap(solution)
 
 # Test for the nSwap method
 ############################
@@ -22,12 +24,19 @@ neighborhood = swap(solution)
 # print(nSwap(solution, 2))
 ############################
 
+
+# Test for the enumeration
+##########################
+# print(basicEnum(graph, verbose=False, nb_classes=2))
+##########################
+
+
 # Test for the gradientDescent
 ##############################
-bestSol, bestCost = gradientDescent(solution, neighborhood)
-print(
-    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
-)
+# bestSol, bestCost = gradientDescent(solution, neighborhood)
+# print(
+#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+# )
 ##############################
 
 
