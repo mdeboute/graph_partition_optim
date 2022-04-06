@@ -1,4 +1,4 @@
-from struct import *
+from structures import *
 
 
 def parse(file_path):

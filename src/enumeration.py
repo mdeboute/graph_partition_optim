@@ -1,4 +1,4 @@
-from struct import *
+from structures import *
 import itertools
 import math
 
