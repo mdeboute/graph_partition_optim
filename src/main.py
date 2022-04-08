@@ -7,19 +7,19 @@ from random_partition import *
 from neighborhood import *
 from metaheuristics import simulatedAnnealing
 
-# nbClasses = 3
+k = 2
 
 t = time.time()
-graph = parse("./data/quatreSommets.txt")
+graph = parse("./data/trenteSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
-graph.print(verbose=True)
+graph.print(verbose=False)
 
-# partition = makeKPartition(graph, nbClasses)
-# solution = Solution(partition, graph, nbClasses)
+partition = makeKPartition(graph, nbClasses=k)
+solution = Solution(partition, graph, nbClasses=k)
 
-# neighborhood = swapNeighborhood(solution)
-# nodesNeighborhood = swapNodes(solution)
+neighborhood = swapNeighborhood(solution)
+nodesNeighborhood = swapNodes(solution)
 
 # Test for the nSwap method
 ############################
@@ -41,21 +41,23 @@ graph.print(verbose=True)
 # t = time.time()
 # bestSol, bestCost = gradientDescent(solution, neighborhood)
 # print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, in: ", time.time()-t, "s"
+#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
 # )
 #############################
 
 # Test for the partialGradientDescent
 #####################################
-# t = time.time()
-# bestSol, bestCost = partialGradientDescent(
-#     solution, solution.getCost(), nodesNeighborhood
-# )
-# print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, in: ",
-#     time.time() - t,
-#     "s",
-# )
+t = time.time()
+bestSol, bestCost = partialGradientDescent(
+    solution, solution.getCost(), nodesNeighborhood
+)
+print(
+    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+    time.time() - t,
+    "sec",
+)
 #####################################
 
 
@@ -69,7 +71,7 @@ graph.print(verbose=True)
 #     coolingRate=0.08,
 # )
 # print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
 # )
 #################################
 # 0.17 sec for 500 edges and 5 class is quite good I think?

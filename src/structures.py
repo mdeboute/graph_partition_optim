@@ -74,25 +74,20 @@ class Graph:
             print("\n")
             print("Edges:")
             # print the edges as an adjacency list (i.e src -> dest, weight)
+            # the matrix is symmetric so we only need to print the upper part
             for i in range(self.nbVertices):
-                for j in range(self.nbVertices):
+                for j in range(i + 1, self.nbVertices):
                     if self.edges[i][j] != 0:
                         print(
-                            str(i + 1)  # i+1 because the vertices are indexed from 1
-                            + " -> "
-                            + str(j + 1)
-                            + " ("
-                            + str(
-                                self.edges[i][j]
-                            )  # j+1 because the vertices are indexed from 1
-                            + ")"
-                        )
+                            i + 1, "->", j + 1, ":", self.edges[i][j]
+                        )  # i/j + 1 because the matrix is 0-indexed
             print("\n")
             print("Degrees:")
             for i in range(len(self.degrees)):
                 print(
                     i + 1, ":", self.degrees[i]
                 )  # i+1 because the vertices are indexed from 1
+        print("\n")
 
     def getNbEdges(self):
         """
