@@ -10,40 +10,28 @@ Notion of neighborhoods:
     - You can do a circular permutation (Sweep)
 """
 
+def swapEvaluator(solution, solutionCost, s):
+    node1 = s[0]
+    node1Class = s[1]
+    node2 = s[2]
+    node2Class = s[3]
 
-def swapEvaluateur(solution, node1, node2):
-    graph = solution.getGraph()
-    partition = solution.getPartition()
-    nbClasses = solution.getNbClasses()
-    cost = 0
-    for c in range(nbClasses):
-        for c2 in range(nbClasses):
-            if c < c2:
-                for node in partition[c]:
-                    for node2 in partition[c2]:
-                        if graph.getEdge(node, node2) is not None:
-                            cost += 1
-    return cost
-    # what about node1 ??
-
-
-def swapEvaluator(solution, solutionCost, node1, node1Class, node2, node2Class):
     graph = solution.getGraph()
     partition = solution.getPartition()
     cost = solutionCost
 
     for n in partition[node1Class]:
         if n != node1:
-            if graph.getEdge(node1, n) is not None:
+            if graph.getEdges()[node1][n] != 0 :
                 cost = cost + 1
-            if graph.getEdge(node2, n) is not None:
+            if graph.getEdges()[node2][n] != 0 :
                 cost = cost - 1
 
     for n in partition[node2Class]:
         if n != node2:
-            if graph.getEdge(node1, n) is not None:
+            if graph.getEdges()[node1][n] != 0 :
                 cost = cost - 1
-            if graph.getEdge(node2, n) is not None:
+            if graph.getEdges()[node2][n] != 0 :
                 cost = cost + 1
 
     return cost
@@ -71,7 +59,7 @@ def nSwap(solution, n):
 
         nvalue1 = tmp[c1][node1]
         nvalue2 = tmp[c2][node2]
-        print(" swap ", nvalue1, " and ", nvalue2, " from ", c1, " and ", c2)
+        
         tmp[c1].remove(nvalue1)
         tmp[c1].append(nvalue2)
 
@@ -96,7 +84,7 @@ def nSwap(solution, n):
     return partitions
 
 
-def swap(solution):
+def swapNeighborhood(solution):
     k = solution.getNbClasses()
     partitions = []
     partition = solution.getPartition()
@@ -116,6 +104,43 @@ def swap(solution):
 
                         partitions.append(Solution(tmp, solution.getGraph(), k))
     return partitions
+
+def swap (solution,s) :
+    node1 = s[0]
+    class1 = s[1]
+    node2 = s[2]
+    class2 = s[3]
+
+    partition = solution.getPartition()
+
+    partition[class1].remove(node1)
+    partition[class1].append(node2)
+
+    partition[class2].append(node1)
+    partition[class2].remove(node2)
+
+    solution = Solution(partition,solution.getGraph(),solution.getNbClasses())
+
+    return solution
+
+def swapNodes(solution):
+    # return tab of swaps with the format [node1,class1,node2,class2]
+    k = solution.getNbClasses()
+    swaps = []
+    partition = solution.getPartition()
+
+    for c1 in range(k):
+        for c2 in range(k):
+            if c1 < c2:
+                for node1 in partition[c1]:
+                    for node2 in partition[c2]:
+                        tmp = []
+                        tmp.append(node1)
+                        tmp.append(c1)
+                        tmp.append(node2)
+                        tmp.append(c2)
+                        swaps.append(tmp)
+    return swaps
 
 
 def pickNDropVoisinage(soluce, classToDrop):

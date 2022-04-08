@@ -19,6 +19,9 @@ def parse(file_path):
             edges[int(lines[i].split()[0]) - 1][int(lines[i].split()[1]) - 1] = int(
                 lines[i].split()[2]
             )
+            edges[int(lines[i].split()[1]) - 1][int(lines[i].split()[0]) - 1] = int(
+                lines[i].split()[2]
+            )
 
         degrees = []
         for i in range(6 + nbEdges, 6 + nbEdges + nbVertices):
