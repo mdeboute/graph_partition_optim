@@ -78,9 +78,9 @@ class Graph:
                 for j in range(self.nbVertices):
                     if self.edges[i][j] != 0:
                         print(
-                            str(i+1)  # i+1 because the vertices are indexed from 1
+                            str(i + 1)  # i+1 because the vertices are indexed from 1
                             + " -> "
-                            + str(j+1)
+                            + str(j + 1)
                             + " ("
                             + str(
                                 self.edges[i][j]
@@ -178,7 +178,7 @@ class Solution(Graph):
         """
         cost = 0
         for i in range(self.nbClasses):
-            for j in range(i+1,self.nbClasses):
+            for j in range(i + 1, self.nbClasses):
                 for vertex in self.partition[i]:
                     for neighbor in self.graph.getNeighbors(vertex):
                         if neighbor in self.partition[j]:

@@ -7,20 +7,19 @@ from random_partition import *
 from neighborhood import *
 from metaheuristics import simulatedAnnealing
 
-k = 3
+# nbClasses = 3
 
 t = time.time()
-
-graph = parse("./data/centSommets.txt")
-
+graph = parse("./data/quatreSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
-graph.print(verbose=False)
+graph.print(verbose=True)
 
-partition = makeKPartition(graph, k)
-solution = Solution(partition, graph, k)
-neighborhood = swapNeighborhood(solution)
-nodesNeighborhood = swapNodes(solution)
+# partition = makeKPartition(graph, nbClasses)
+# solution = Solution(partition, graph, nbClasses)
+
+# neighborhood = swapNeighborhood(solution)
+# nodesNeighborhood = swapNodes(solution)
 
 # Test for the nSwap method
 ############################
@@ -38,31 +37,26 @@ nodesNeighborhood = swapNodes(solution)
 
 # Test for the gradientDescent
 #############################
-
-print("init sol at cost of : ",solution.getCost())
-
-# classical gradientDescent
-#############################
-
+# print("Init sol at cost: ", solution.getCost())
 # t = time.time()
 # bestSol, bestCost = gradientDescent(solution, neighborhood)
-
 # print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, in : ", time.time()-t, "s"
+#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, in: ", time.time()-t, "s"
 # )
-
-# partial gradientDescent
 #############################
 
-t = time.time()
-bestSolP, bestCostP = partialGradientDescent(solution, solution.getCost(),nodesNeighborhood)
-
-print(
-    f"\nBest solution: {bestSolP}, with cost: {bestCostP}, feasible: {bestSolP.isFeasible()}, in : ", time.time()-t, "s"
-)
-
-#############################
-# 0.4 sec for 30 vertices and 2 classes
+# Test for the partialGradientDescent
+#####################################
+# t = time.time()
+# bestSol, bestCost = partialGradientDescent(
+#     solution, solution.getCost(), nodesNeighborhood
+# )
+# print(
+#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, in: ",
+#     time.time() - t,
+#     "s",
+# )
+#####################################
 
 
 # Test for the simulatedAnnealing

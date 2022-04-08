@@ -17,7 +17,6 @@ Notion of neighborhoods:
 # swapNodes(solution) return all the neighbor swaps of solution 'solution'
 
 
-
 def swapEvaluator(solution, solutionCost, s):
     node1 = s[0]
     node1Class = s[1]
@@ -30,16 +29,16 @@ def swapEvaluator(solution, solutionCost, s):
 
     for n in partition[node1Class]:
         if n != node1:
-            if graph.getEdges()[node1][n] != 0 :
+            if graph.getEdges()[node1][n] != 0:
                 cost = cost + 1
-            if graph.getEdges()[node2][n] != 0 :
+            if graph.getEdges()[node2][n] != 0:
                 cost = cost - 1
 
     for n in partition[node2Class]:
         if n != node2:
-            if graph.getEdges()[node1][n] != 0 :
+            if graph.getEdges()[node1][n] != 0:
                 cost = cost - 1
-            if graph.getEdges()[node2][n] != 0 :
+            if graph.getEdges()[node2][n] != 0:
                 cost = cost + 1
 
     return cost
@@ -67,7 +66,7 @@ def nSwap(solution, n):
 
         nvalue1 = tmp[c1][node1]
         nvalue2 = tmp[c2][node2]
-        
+
         tmp[c1].remove(nvalue1)
         tmp[c1].append(nvalue2)
 
@@ -113,7 +112,8 @@ def swapNeighborhood(solution):
                         partitions.append(Solution(tmp, solution.getGraph(), k))
     return partitions
 
-def swap (solution,s) :
+
+def swap(solution, s):
     node1 = s[0]
     class1 = s[1]
     node2 = s[2]
@@ -127,9 +127,10 @@ def swap (solution,s) :
     partition[class2].append(node1)
     partition[class2].remove(node2)
 
-    solution = Solution(partition,solution.getGraph(),solution.getNbClasses())
+    solution = Solution(partition, solution.getGraph(), solution.getNbClasses())
 
     return solution
+
 
 def swapNodes(solution):
     # return tab of swaps with the format [node1,class1,node2,class2]
