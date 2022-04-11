@@ -5,7 +5,7 @@ from utils import *
 from enum import *
 from random_partition import *
 from neighborhood import *
-from metaheuristics import simulatedAnnealing
+from metaheuristics import *
 
 k = 2
 
@@ -18,16 +18,17 @@ graph.print(verbose=False)
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
 
-# nNeighborhood = nSwap(solution, 5) # for metaheuristics/big instances
+nNeighborhood = nSwap(solution, 10)  # for metaheuristics/big instances
 nodesNeighborhood = swapNodes(solution)
 neighborhood = swapNeighborhood(solution)
 
 
-# Test for the nSwap method
-############################
+# Test for the swap's methods
+#############################
 # print(neighborhood)
 # print(nSwap(solution, 2))
-############################
+# print(nodesNeighborhood)
+#############################
 
 
 # Test for the enumeration
@@ -49,6 +50,7 @@ neighborhood = swapNeighborhood(solution)
 # )
 #############################
 
+
 # Test for the partialGradientDescent
 #####################################
 # t = time.time()
@@ -65,16 +67,16 @@ neighborhood = swapNeighborhood(solution)
 
 # Test for the simulatedAnnealing
 #################################
-# bestSol = simulatedAnnealing(
-#     solution,
-#     neighborhood=neighborhood,
-#     initialTemperature=30,
-#     finalTemperature=0.01,
-#     coolingRate=0.1,
-#     maxIterations=10,
-#     sizeNeighborhood=5,
-# )
-# print(
-#     f"Best solution: {bestSol}, with cost: {bestSol.getCost()}, feasible: {bestSol.isFeasible()}"
-# )
+bestSol, bestCost = simulatedAnnealing(
+    solution,
+    neighborhood=nNeighborhood,
+    initialTemperature=22,
+    finalTemperature=0.01,
+    coolingRate=0.095,
+    maxIterations=10,
+    sizeNeighborhood=10,
+)
+print(
+    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+)
 #################################
