@@ -10,7 +10,7 @@ from metaheuristics import simulatedAnnealing
 k = 2
 
 t = time.time()
-graph = parse("./data/trenteSommets.txt")
+graph = parse("./data/centSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -18,8 +18,10 @@ graph.print(verbose=False)
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
 
-neighborhood = swapNeighborhood(solution)
+# nNeighborhood = nSwap(solution, 5) # for metaheuristics/big instances
 nodesNeighborhood = swapNodes(solution)
+neighborhood = swapNeighborhood(solution)
+
 
 # Test for the nSwap method
 ############################
@@ -30,9 +32,9 @@ nodesNeighborhood = swapNodes(solution)
 
 # Test for the enumeration
 ##########################
-# print(basicEnum(graph, verbose=False, nbClasses=2))
+# print(basicEnum(graph, verbose=False, nbClasses=k))
 ##########################
-# 45 sec for the enumeration of the graph with 20 vertices and 2 classes
+# 27 sec for the enumeration of the graph with 20 vertices and 2 classes is quite good
 
 
 # Test for the gradientDescent
@@ -49,29 +51,30 @@ nodesNeighborhood = swapNodes(solution)
 
 # Test for the partialGradientDescent
 #####################################
-t = time.time()
-bestSol, bestCost = partialGradientDescent(
-    solution, solution.getCost(), nodesNeighborhood
-)
-print(
-    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
+# t = time.time()
+# bestSol, bestCost = partialGradientDescent(
+#     solution, solution.getCost(), nodesNeighborhood
+# )
+# print(
+#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
 #####################################
 
 
 # Test for the simulatedAnnealing
 #################################
-# bestSol, bestCost = simulatedAnnealing(
+# bestSol = simulatedAnnealing(
 #     solution,
-#     neighborhood,
-#     initialTemperature=80,
+#     neighborhood=neighborhood,
+#     initialTemperature=30,
 #     finalTemperature=0.01,
-#     coolingRate=0.08,
+#     coolingRate=0.1,
+#     maxIterations=10,
+#     sizeNeighborhood=5,
 # )
 # print(
-#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+#     f"Best solution: {bestSol}, with cost: {bestSol.getCost()}, feasible: {bestSol.isFeasible()}"
 # )
 #################################
-# 0.17 sec for 500 edges and 5 class is quite good I think?

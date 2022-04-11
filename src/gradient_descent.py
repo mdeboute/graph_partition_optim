@@ -10,7 +10,7 @@ def gradientDescent(sol, neighborhood):
     @return: the best solution for the graph associated to the solution
     """
     bestSol = sol
-    bestScore = sol.getCost()
+    bestScore = bestSol.getCost()
     for s in neighborhood:
         if s.getCost() < bestScore:
             bestSol = s

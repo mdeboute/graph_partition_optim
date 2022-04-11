@@ -110,6 +110,12 @@ class Graph:
             if vertex <= self.nbVertices and vertex >= 0:
                 if self.edges[vertex][i] != 0:
                     neighbors.append(i)
+        if len(neighbors) != self.degrees[vertex]:
+            raise Exception(
+                "The number of neighbors of the vertex "
+                + str(vertex)
+                + " is not equal to its degree."
+            )
         return neighbors
 
     def getEdges(self):
@@ -231,4 +237,4 @@ class Solution(Graph):
         return feasible
 
 
-# TODO: deepen the notion of approximately
+# TODO: deepen the notion of approximately?

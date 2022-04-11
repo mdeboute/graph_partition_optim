@@ -11,8 +11,8 @@ Notion of neighborhoods:
 """
 
 # swapEvaluator(solution, solutionCost, s) evaluate the new solution resulting of the swap 's' in solution 'solution'
-# swap(solution,s) return the solution resulting of the swap 's' on solution 'solution'
-# nSwap(solution,n) return 'n' random neighbor solutions of solution 'solution' (to upgrade)
+# swap(solution, s) return the solution resulting of the swap 's' on solution 'solution'
+# nSwap(solution, n) return 'n' random neighbor solutions of solution 'solution' (to upgrade)
 # swapNeighborhood(solution) return all the neighbor solutions of solution 'solution'
 # swapNodes(solution) return all the neighbor swaps of solution 'solution'
 
