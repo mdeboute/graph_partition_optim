@@ -256,7 +256,5 @@ def swapNodes(solution):
 # ???
 
 
-# TODO: test the pickNDrop method and create (fix) the nSwap method
-# that will return a random list of n neighbors (useful for huge graphs)
-# + refactor the code with the new methods structure,
-# btw i don't think that the new evaluators are needed anymore
+# TODO: test the pickNDrop method and upgrade the nSwap method
+# + refactor the swapEvaluator with the real weight of the graph, not +1

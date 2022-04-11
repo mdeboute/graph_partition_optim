@@ -58,3 +58,6 @@ def getInitialTemperature(solution, tau=0.8, k=100, neighborhoodSize=100):
         deltas.append(abs(s1Cost - s2Cost))
     meanDelta = mean(deltas)
     return -meanDelta / math.log(tau)
+
+
+# TODO: implement the tabuSearch

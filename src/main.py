@@ -80,3 +80,6 @@ print(
     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
 )
 #################################
+
+
+# TODO: create executables and shell scripts for the different tests and make the report
