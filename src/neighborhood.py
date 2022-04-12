@@ -43,9 +43,9 @@ def swapEvaluator(solution, solutionCost, s):
             w1 = graph.getEdges()[node1][n]
             w2 = graph.getEdges()[node2][n]
             if w1 != 0:
-                cost = cost + w1
+                cost = cost - w1
             if w2 != 0:
-                cost = cost - w2
+                cost = cost + w2
 
     return cost
 

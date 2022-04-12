@@ -10,7 +10,7 @@ from metaheuristics import *
 k = 2
 
 t = time.time()
-graph = parse("./data/dixSommets.txt")
+graph = parse("./data/centSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -71,7 +71,7 @@ nodesNeighborhood = swapNodes(solution)
 #########################
 # print("Init sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = tabou(solution, 7, graph.getNbVertices())
+# bestSol, bestCost = tabou(solution, 7, graph.getNbVertices() // 2)
 # print(
 #     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
