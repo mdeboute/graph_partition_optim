@@ -4,6 +4,11 @@ import math
 
 
 def basicEnum(graph, verbose=False, nbClasses=2):
+    """
+    Returns the best solution.
+    @param graph: the graph
+    @print: the best solution for the graph associated to the solution and the cost
+    """
     opt = math.inf
     bestSol = None
 

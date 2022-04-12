@@ -2,28 +2,14 @@ from neighborhood import *
 import copy
 
 
-def gradientDescent(sol, neighborhood):
+def gradientDescent(sol, solCost, neighborhood):
     """
     Returns the best solution using the swap for the neighborhood.
     @param sol: the solution
+    @param solCost: the cost of the solution
     @param neighborhood: the neighborhood of the solution
-    @return: the best solution for the graph associated to the solution
+    @return: the best solution for the graph associated to the solution and the cost
     """
-    bestSol = sol
-    bestScore = bestSol.getCost()
-    for s in neighborhood:
-        if s.getCost() < bestScore:
-            bestSol = s
-            bestScore = s.getCost()
-            # and we update the neighborhood of the new best solution
-            neighborhood = swapNeighborhood(bestSol)
-    if bestScore != sol.getCost():
-        return gradientDescent(bestSol, neighborhood)
-    else:
-        return bestSol, bestScore
-
-
-def partialGradientDescent(sol, solCost, neighborhood):
     bestSol = sol
     bestScore = solCost
     switch = 0
@@ -37,6 +23,6 @@ def partialGradientDescent(sol, solCost, neighborhood):
             switch = 42
     if switch != 0:
         neighborhood = swapNodes(bestSol)
-        return partialGradientDescent(bestSol, bestScore, neighborhood)
+        return gradientDescent(bestSol, bestScore, neighborhood)
     else:
         return bestSol, bestScore

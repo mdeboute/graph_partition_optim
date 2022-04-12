@@ -3,8 +3,8 @@ import random
 
 def makeKPartition(graph, nbClasses=2):
     """
-    create a partition of the vertices into k classes
-    the vertices are from 1 to N
+    Create a partition of the vertices into k classes,
+    the vertices are from 0 to N-1.
     @param graph: a graph
     @return: a k-partition of the vertices
     """

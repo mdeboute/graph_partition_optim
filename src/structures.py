@@ -1,5 +1,4 @@
 # This file consist of a set of classes that allows us to represents a non oriented weighted graph.
-# Author: Martin Debouté, Lucas Villenave
 
 
 class Graph:

@@ -17,8 +17,9 @@ graph.print(verbose=False)
 
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
+solutionCost = solution.getCost()
 
-nNeighborhood = nSwap(solution, 10)  # for metaheuristics/big instances
+# nNeighborhood = nSwap(solution, 10)  # for metaheuristics & big instances
 nodesNeighborhood = swapNodes(solution)
 neighborhood = swapNeighborhood(solution)
 
@@ -39,8 +40,8 @@ neighborhood = swapNeighborhood(solution)
 
 
 # Test for the gradientDescent
-#############################
-# print("Init sol at cost: ", solution.getCost())
+##############################
+# print("Init sol at cost: ", solutionCost)
 # t = time.time()
 # bestSol, bestCost = gradientDescent(solution, neighborhood)
 # print(
@@ -48,52 +49,37 @@ neighborhood = swapNeighborhood(solution)
 #     time.time() - t,
 #     "sec",
 # )
-#############################
-
-
-# Test for the partialGradientDescent
-#####################################
-t = time.time()
-bestSol, bestCost = partialGradientDescent(
-    solution, solution.getCost(), nodesNeighborhood
-)
-print(
-    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
-#####################################
+##############################
 
 
 # Test for the simulatedAnnealing
 #################################
-# print("Init sol at cost: ", solution.getCost())
-
+# print("Init sol at cost: ", solutionCost)
 # bestSol, bestCost = simulatedAnnealing(
 #     solution,
-#     neighborhood=nNeighborhood,
+#     neighborhood=neighborhood,
 #     initialTemperature=22,
 #     finalTemperature=0.01,
 #     coolingRate=0.095,
-#     maxIterations=10,
-#     sizeNeighborhood=10,
+#     maxIterations=100,
 # )
 # print(
 #     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
 # )
 #################################
 
-# Test for the tabou
-#####################################
-print("Init sol at cost: ", solution.getCost())
-t = time.time()
-bestSol, bestCost = tabou(solution,7,graph.nbVertices)
-print(
-    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
 
-#################################
+# Test for the tabuSearch
+#########################
+# print("Init sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = tabou(solution, 7, graph.nbVertices)
+# print(
+#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
+#########################
+
 
 # TODO: create executables and shell scripts for the different tests and make the report

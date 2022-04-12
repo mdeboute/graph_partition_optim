@@ -151,18 +151,19 @@ def swapNodes(solution):
                         swaps.append(tmp)
     return swaps
 
-def bestSwapNodesVoisinage(solution,solutionCost) :
+
+def bestSwapNodesVoisinage(solution, solutionCost):
     swaps = swapNodes(solution)
     bestScore = solutionCost
     bestSol = solution
-    
+
     for s in swaps:
         sCost = swapEvaluator(solution, solutionCost, s)
         if sCost < bestScore:
             tmp = copy.deepcopy(solution)
             bestSol = swap(tmp, s)
             bestScore = sCost
-    return bestSol,bestScore
+    return bestSol, bestScore
 
 
 # def pickNDropVoisinage(soluce, classToDrop):
@@ -266,8 +267,6 @@ def bestSwapNodesVoisinage(solution,solutionCost) :
 
 #                 partitions.append(tmp)
 #     return partitions
-# ???
 
 
-# TODO: test the pickNDrop method and upgrade the nSwap method
-# + refactor the swapEvaluator with the real weight of the graph, not +1
+# TODO: test the pickNDrop method
