@@ -18,6 +18,8 @@ Notion of neighborhoods:
 
 
 def swapEvaluator(solution, solutionCost, s):
+    solution.getGraph()
+    
     node1 = s[0]
     node1Class = s[1]
     node2 = s[2]
@@ -29,67 +31,63 @@ def swapEvaluator(solution, solutionCost, s):
 
     for n in partition[node1Class]:
         if n != node1:
-            if graph.getEdges()[node1][n] != 0:
-                cost = cost + 1
-            if graph.getEdges()[node2][n] != 0:
-                cost = cost - 1
+            w1 = graph.getEdges()[node1][n]
+            w2 = graph.getEdges()[node2][n]
+            if w1 != 0:
+                cost = cost + w1
+            if w2 != 0:
+                cost = cost - w2
 
     for n in partition[node2Class]:
         if n != node2:
+            w1 = graph.getEdges()[node1][n]
+            w2 = graph.getEdges()[node1][n]
             if graph.getEdges()[node1][n] != 0:
                 cost = cost - 1
-            if graph.getEdges()[node2][n] != 0:
+            if graph.getEdges()[node1][n] != 0:
                 cost = cost + 1
 
     return cost
 
-
-def nSwap(solution, n):
+def nSwap(solution,n) :
     k = solution.getNbClasses()
-    partitions = []
+    swaps = []
     partition = solution.getPartition()
+    solutions = []
     graph = solution.getGraph()
-
-    random.shuffle(partition)
-    for c in range(k):
-        random.shuffle(partition[c])
-    # partition fully shuffled at that point
-
-    switch = 0
-
-    c1 = 0
-    c2 = 1
-    node1 = 0
-    node2 = 0
-    while switch == 0 and len(partitions) < n:
+    nbNodes = graph.getNbVertices()
+    
+    while len(swaps) < n :
+        switch = 0
+        c1 = random.randint(0,k-1)
+        c2 = random.randint(0,k-1)
+        while (c2==c1) :
+            c2 = random.randint(0,k-1)
+        i = random.randint(0,len(partition[c1])-1)
+        j = random.randint(0,len(partition[c2])-1)
+        for s in swaps :
+            if (s[0] == i or s[0] == j) and (s[1] == i or s[1] == j) :
+                switch = 121
+        if (switch == 0) :
+            tmp = [i,c1,j,c2]
+            swaps.append(tmp)
+    
+    for s in swaps :
         tmp = copy.deepcopy(partition)
 
-        nvalue1 = tmp[c1][node1]
-        nvalue2 = tmp[c2][node2]
+        nvalue1 = tmp[s[1]][s[0]]
+        nvalue2 = tmp[s[3]][s[2]]
 
-        tmp[c1].remove(nvalue1)
-        tmp[c1].append(nvalue2)
+        tmp[s[1]].remove(nvalue1)
+        tmp[s[1]].append(nvalue2)
 
-        tmp[c2].remove(nvalue2)
-        tmp[c2].append(nvalue1)
-
-        partitions.append(Solution(tmp, graph, k))
-
-        node2 = node2 + 1
-        if node2 == len(partition[c2]):
-            node2 = 0
-            c2 = c2 + 1
-            if c2 == len(partition):
-                node1 = node1 + 1
-                if node1 == len(partition[c1]):
-                    node1 = 0
-                    c1 = c1 + 1
-                    if c1 == len(partition) - 1:
-                        switch = 1
-                c2 = c1 + 1
-
-    return partitions
-
+        tmp[s[3]].remove(nvalue2)
+        tmp[s[3]].append(nvalue1)
+        
+        tmpSol = Solution(tmp,graph,k)
+        
+        solutions.append(tmpSol)
+    return solutions
 
 def swapNeighborhood(solution):
     k = solution.getNbClasses()
@@ -216,57 +214,3 @@ def bestSwapNodesVoisinage(solution, solutionCost):
 #                             opt = ev
 #                             bestPartition = tmp
 #     return bestPartition
-
-
-# def bestPickNDropVoisinage(soluce, classToDrop):
-#     k = soluce.getNbClasses()
-#     try:
-#         if k < classToDrop:
-#             raise Exception("trying to drop from not existing class")
-#     except Exception as e:
-#         print(e)
-
-#     opt = -1
-#     bestPartition = []
-
-#     partition = soluce.getPartition()
-
-#     for node in partition[classToDrop]:
-#         for c in range(k):
-#             if c != classToDrop:
-#                 tmp = copy.deepcopy(partition)
-#                 tmp[c].append(node)
-#                 tmp[classToDrop].remove(node)
-
-#                 tmpSol = Solution(tmp, soluce.getGraph(), soluce.getNbClasses())
-#                 ev = tmpSol.getCost()
-#                 if ev < opt:
-#                     opt = ev
-#                     bestPartition = tmp
-#     return bestPartition
-
-
-# def pickNDrop(solution, classToDrop):
-#     k = solution.getNbClasses()
-#     try:
-#         if k < classToDrop:
-#             raise Exception("trying to drop from not existing class")
-#     except Exception as e:
-#         print(e)
-#     partitions = []
-#     partition = solution.getPartition()
-#     print("root :", partition)
-#     for node in partition[classToDrop]:
-#         for c in range(k):
-#             if c != classToDrop:
-#                 tmp = copy.deepcopy(partition)
-#                 tmp[c].append(node)
-#                 tmp[classToDrop].remove(node)
-
-#                 print(tmp)
-
-#                 partitions.append(tmp)
-#     return partitions
-
-
-# TODO: test the pickNDrop method
