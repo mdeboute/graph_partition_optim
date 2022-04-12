@@ -151,6 +151,19 @@ def swapNodes(solution):
                         swaps.append(tmp)
     return swaps
 
+def bestSwapNodesVoisinage(solution,solutionCost) :
+    swaps = swapNodes(solution)
+    bestScore = solutionCost
+    bestSol = solution
+    
+    for s in swaps:
+        sCost = swapEvaluator(solution, solutionCost, s)
+        if sCost < bestScore:
+            tmp = copy.deepcopy(solution)
+            bestSol = swap(tmp, s)
+            bestScore = sCost
+    return bestSol,bestScore
+
 
 # def pickNDropVoisinage(soluce, classToDrop):
 #     k = soluce.getNbClasses()
