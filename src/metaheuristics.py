@@ -66,7 +66,7 @@ def getInitialTemperature(solution, tau=0.8, k=100, neighborhoodSize=100):
 
 # tabou take a solution and return the best solution he could find browsing the neighborhood solutions recursively
 def tabou(solution, tabouSize, itermax):
-
+    
     if tabouSize <= 0:
         print("\n\n /!\ invalid tabou size /!\ \n\n")
 

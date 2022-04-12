@@ -10,7 +10,7 @@ from metaheuristics import *
 k = 2
 
 t = time.time()
-graph = parse("./data/centSommets.txt")
+graph = parse("./data/dixSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -24,7 +24,6 @@ solutionCost = solution.getCost()
 # nNeighborhood = nSwap(solution, 10)  # for metaheuristics & big instances
 nodesNeighborhood = swapNodes(solution)
 # neighborhood = swapNeighborhood(solution)
-
 
 # Test for the swap's methods
 #############################
