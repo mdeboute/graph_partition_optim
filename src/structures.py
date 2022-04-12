@@ -235,5 +235,16 @@ class Solution(Graph):
 
         return feasible
 
+    def print(self):
+        """
+        Prints the solution.
+        """
+        print(f"Partition with cost {self.getCost()}:")
+        for i in range(self.nbClasses):
+            # transform the partition by adding 1 to each vertex
+            # to have the correct index
+            self.partition[i] = [x + 1 for x in self.partition[i]]
+            print(i + 1, ":", self.partition[i])
+
 
 # TODO: deepen the notion of approximately?

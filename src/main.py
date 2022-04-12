@@ -19,9 +19,11 @@ partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
 solutionCost = solution.getCost()
 
+# solution.print()
+
 # nNeighborhood = nSwap(solution, 10)  # for metaheuristics & big instances
 nodesNeighborhood = swapNodes(solution)
-neighborhood = swapNeighborhood(solution)
+# neighborhood = swapNeighborhood(solution)
 
 
 # Test for the swap's methods
@@ -43,7 +45,7 @@ neighborhood = swapNeighborhood(solution)
 ##############################
 # print("Init sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = gradientDescent(solution, neighborhood)
+# bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
 # print(
 #     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
@@ -57,11 +59,8 @@ neighborhood = swapNeighborhood(solution)
 # print("Init sol at cost: ", solutionCost)
 # bestSol, bestCost = simulatedAnnealing(
 #     solution,
-#     neighborhood=neighborhood,
-#     initialTemperature=22,
-#     finalTemperature=0.01,
-#     coolingRate=0.095,
-#     maxIterations=100,
+#     neighborhood=nodesNeighborhood,
+#     maxIterations=10,
 # )
 # print(
 #     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
@@ -73,7 +72,7 @@ neighborhood = swapNeighborhood(solution)
 #########################
 # print("Init sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = tabou(solution, 7, graph.nbVertices)
+# bestSol, bestCost = tabou(solution, 7, graph.getNbVertices())
 # print(
 #     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,

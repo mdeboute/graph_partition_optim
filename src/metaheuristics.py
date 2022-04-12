@@ -6,22 +6,20 @@ from neighborhood import *
 def simulatedAnnealing(
     sol,
     neighborhood,
-    initialTemperature,
-    finalTemperature,
-    coolingRate,
     maxIterations,
-    sizeNeighborhood=None,
+    initialTemperature=22,
+    finalTemperature=0.01,
+    coolingRate=0.095,
 ):
     """
     Returns the best solution using the swap for the neighborhood.
     @param sol: the solution
     @param neighborhood: the neighborhood
+    @param maxIterations: the maximum number of iterations
     @param initialTemperature: the initial temperature
     @param finalTemperature: the final temperature
     @param coolingRate: the cooling rate
-    @param maxIterations: the maximum number of iterations
-    @param sizeNeighborhood: the size of the neighborhood
-    @return: the best solution for the graph associated to the initial solution
+    @return: the best solution for the graph associated to the initial solution and the cost
     """
     bestSol = sol
     bestCost = sol.getCost()
@@ -29,19 +27,20 @@ def simulatedAnnealing(
     i = 0
     nbhd = neighborhood
     while currTemperature > finalTemperature:
+        currSol = bestSol
+        currCost = bestCost
         while i < maxIterations:
             s = random.choice(nbhd)
-            sCost = s.getCost()
+            sCost = swapEvaluator(currSol, currCost, s)
             delta = sCost - bestCost
             # normalize the delta because he have a huge impact on the metropolis criterion
             # to avoid overflow
-            if delta < 0:
-                bestSol = s
+            if delta < 0 or random.uniform(0, 1) <= math.exp(-delta / currTemperature):
+                tmp = copy.deepcopy(currSol)
+                bestSol = swap(tmp, s)
                 bestCost = sCost
-            elif random.uniform(0, 1) <= math.exp(-delta / currTemperature):
-                bestSol = s
             i += 1
-        nbhd = swapNeighborhood(bestSol)
+        nbhd = swapNodes(bestSol)
         currTemperature *= coolingRate
         i = 0
     return bestSol, bestCost
