@@ -71,7 +71,7 @@ nodesNeighborhood = swapNodes(solution)
 #########################
 # print("Init sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = tabou(solution, 7, graph.getNbVertices() // 2)
+# bestSol, bestCost = tabuSearch(solution, 7, graph.getNbVertices() // 2)
 # print(
 #     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,

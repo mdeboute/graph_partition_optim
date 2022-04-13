@@ -60,15 +60,15 @@ def getInitialTemperature(solution, tau=0.8, k=100, neighborhoodSize=100):
 
 
 # arbitrary first choices :
-# liberation if f(move) < f'(move) (with f' the cost of the solution when he was placed in tabou)
+# liberation if f(move) < f'(move) (with f' the cost of the solution when he was placed in tabu)
 # it means you accept a move only if he is strictly better than he were the last time
 # this is definitively up to discution and will probably be changed
 
-# tabou take a solution and return the best solution he could find browsing the neighborhood solutions recursively
-def tabou(solution, tabouSize, itermax):
+# tabu take a solution and return the best solution he could find browsing the neighborhood solutions recursively
+def tabuSearch(solution, tabuSize, itermax):
 
-    if tabouSize <= 0:
-        print("\n\n /!\ invalid tabou size /!\ \n\n")
+    if tabuSize <= 0:
+        print("\n\n /!\ invalid tabu size /!\ \n\n")
 
     bestSol = solution
     bestScore = solution.getCost()
@@ -80,7 +80,7 @@ def tabou(solution, tabouSize, itermax):
     # we have optimals found that are put in bestSol and bestScore but we want to explore, sometimes we won't exit the program
     # at optimal found so we need some current solutions that are our iterations and best solutions for exit
 
-    tabou = [None] * tabouSize
+    tabu = [None] * tabuSize
 
     while actualIter < itermax:
         actualIter += 1
@@ -95,31 +95,31 @@ def tabou(solution, tabouSize, itermax):
 
         for s in neighborhood:
             sCost = swapEvaluator(currentSol, currentScore, s)
-            isInTabou = 0
-            for i in range(tabouSize):
-                if tabou[i] is not None:
-                    # print(s," and ",tabou[i])
-                    if (s[0] == tabou[i][0] or s[0] == tabou[i][1]) and (
-                        s[2] == tabou[i][0] or s[2] == tabou[i][1]
+            isIntabu = 0
+            for i in range(tabuSize):
+                if tabu[i] is not None:
+                    # print(s," and ",tabu[i])
+                    if (s[0] == tabu[i][0] or s[0] == tabu[i][1]) and (
+                        s[2] == tabu[i][0] or s[2] == tabu[i][1]
                     ):
-                        isInTabou = i
+                        isIntabu = i
 
-            if isInTabou == 0:
+            if isIntabu == 0:
                 if sCost < currentBestScore:
                     currentBestScore = sCost
                     currentBestSwap = s
             else:
-                if sCost < tabou[isInTabou][2]:
-                    tabou[isInTabou] = None
+                if sCost < tabu[isIntabu][2]:
+                    tabu[isIntabu] = None
                     if sCost < currentBestScore:
                         currentBestScore = sCost
                         currentBestSwap = s
         # this is the big part of the algo so if you don't understand something, ask
 
-        # we update tabou
-        for i in range(tabouSize - 1):
-            tabou[i] = tabou[i + 1]
-        tabou[tabouSize - 1] = [s[0], s[2], currentBestScore]
+        # we update tabu
+        for i in range(tabuSize - 1):
+            tabu[i] = tabu[i + 1]
+        tabu[tabuSize - 1] = [s[0], s[2], currentBestScore]
 
         # we iterate in the best solution found
         # print(currentSol," to swap ",s)
