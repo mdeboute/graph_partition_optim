@@ -4,25 +4,27 @@ from neighborhood import *
 
 
 def simulatedAnnealing(
-    sol,
+    solution,
     neighborhood,
     maxIterations,
+    neighborhoodSize,
     initialTemperature=22,
     finalTemperature=0.01,
     coolingRate=0.095,
 ):
     """
     Returns the best solution using the swap for the neighborhood.
-    @param sol: the solution
+    @param solution: the solution
     @param neighborhood: the neighborhood
-    @param maxIterations: the maximum number of iterations
+    @param maxIterations: the maximum number of iterations for the inner loop
+    @param neighborhoodSize: the size of the neighborhood
     @param initialTemperature: the initial temperature
     @param finalTemperature: the final temperature
     @param coolingRate: the cooling rate
     @return: the best solution for the graph associated to the initial solution and the cost
     """
-    bestSol = sol
-    bestCost = sol.getCost()
+    bestSol = solution
+    bestCost = solution.getCost()
     currTemperature = initialTemperature
     i = 0
     nbhd = neighborhood
@@ -40,7 +42,7 @@ def simulatedAnnealing(
                 bestSol = swap(tmp, s)
                 bestCost = sCost
             i += 1
-        nbhd = swapNodes(bestSol)
+        nbhd = nSwap(bestSol, neighborhoodSize)
         currTemperature *= coolingRate
         i = 0
     return bestSol, bestCost

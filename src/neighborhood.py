@@ -50,12 +50,10 @@ def swapEvaluator(solution, solutionCost, s):
     return cost
 
 
-def nSwap(solution, n):
+def nSwap(solution, n=20):
     k = solution.getNbClasses()
     swaps = []
     partition = solution.getPartition()
-    solutions = []
-    graph = solution.getGraph()
 
     while len(swaps) < n:
         switch = 0
@@ -69,25 +67,10 @@ def nSwap(solution, n):
             if (s[0] == i or s[0] == j) and (s[1] == i or s[1] == j):
                 switch = 121
         if switch == 0:
-            tmp = [i, c1, j, c2]
+            tmp = [partition[c1][i], c1, partition[c2][j], c2]
             swaps.append(tmp)
 
-    for s in swaps:
-        tmp = copy.deepcopy(partition)
-
-        nvalue1 = tmp[s[1]][s[0]]
-        nvalue2 = tmp[s[3]][s[2]]
-
-        tmp[s[1]].remove(nvalue1)
-        tmp[s[1]].append(nvalue2)
-
-        tmp[s[3]].remove(nvalue2)
-        tmp[s[3]].append(nvalue1)
-
-        tmpSol = Solution(tmp, graph, k)
-
-        solutions.append(tmpSol)
-    return solutions
+    return swaps
 
 
 def swapNeighborhood(solution):

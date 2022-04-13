@@ -18,17 +18,17 @@ graph.print(verbose=False)
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
 solutionCost = solution.getCost()
-
 # solution.print()
 
-# nNeighborhood = nSwap(solution, 10)  # for metaheuristics & big instances
-nodesNeighborhood = swapNodes(solution)
+nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
+# nodesNeighborhood = swapNodes(solution)
 # neighborhood = swapNeighborhood(solution)
+
 
 # Test for the swap's methods
 #############################
 # print(neighborhood)
-# print(nSwap(solution, 2))
+# print(nNeighborhood)
 # print(nodesNeighborhood)
 #############################
 
@@ -55,15 +55,16 @@ nodesNeighborhood = swapNodes(solution)
 
 # Test for the simulatedAnnealing
 #################################
-# print("Init sol at cost: ", solutionCost)
-# bestSol, bestCost = simulatedAnnealing(
-#     solution,
-#     neighborhood=nodesNeighborhood,
-#     maxIterations=10,
-# )
-# print(
-#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
-# )
+print("Init sol at cost: ", solutionCost)
+bestSol, bestCost = simulatedAnnealing(
+    solution,
+    neighborhood=nNeighborhood,
+    maxIterations=graph.getNbVertices(),
+    neighborhoodSize=100,
+)
+print(
+    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+)
 #################################
 
 
