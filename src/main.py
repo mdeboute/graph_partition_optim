@@ -9,7 +9,7 @@ from metaheuristics import *
 k = 2
 
 t = time.time()
-graph = parse("./data/dixMilleSommets.txt")
+graph = parse("./data/cinqCentSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -57,14 +57,14 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 
 # Test for the betterGradientDescent
 ##############################
-# print("\nInit sol at cost: ", solutionCost)
-# t = time.time()
-# bestSol, bestCost = betterGradientDescent(solution, solutionCost)
-# print(
-#     f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-#     time.time() - t,
-#     "sec",
-# )
+print("\nInit sol at cost: ", solutionCost)
+t = time.time()
+bestSol, bestCost = betterGradientDescent(solution, solutionCost, 1)
+print(
+    f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+    time.time() - t,
+    "sec",
+)
 # if (bestCost!=bestSol.getCost()) :
 #     print ("\n/!\ alerte rouge /!\ \n")
 ##############################
@@ -94,21 +94,9 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 #########################
 # print("Init sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = tabuSearch(solution, 7, graph.getNbVertices() // 2)
+# bestSol, bestCost = tabuSearch(solution, solutionCost, 7, graph.getNbVertices()*100000, 1, 900, 1)
 # print(
 #     f"Best Tabou solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-#     time.time() - t,
-#     "sec",
-# )
-########################
-
-# Test for the tabuSearchNSwap
-#########################
-# print("Init sol at cost: ", solutionCost)
-# t = time.time()
-# bestSol, bestCost = tabuSearch(solution, solutionCost, 7, graph.getNbVertices()*100000, 1, 1, 900)
-# print(
-#     f"Best Tabou nSwap solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
 #     "sec",
 # )
