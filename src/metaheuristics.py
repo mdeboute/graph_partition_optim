@@ -9,6 +9,7 @@ def simulatedAnnealing(
     solutionCost,
     neighborhood,
     maxIterations,
+    timeOut,
     nswap=False,
     neighborhoodSize=1000,
     initialTemperature=30,
@@ -21,6 +22,7 @@ def simulatedAnnealing(
     @param solutionCost: the cost of the solution
     @param neighborhood: the neighborhood
     @param maxIterations: the maximum number of iterations for the inner loop
+    @param timeOut: the time out
     @param nswap: if True, the neighborhood is created with nSwap, otherwise with swapNodes
     @param neighborhoodSize: the size of the neighborhood (if nswap is True)
     @param initialTemperature: the initial temperature
@@ -33,10 +35,14 @@ def simulatedAnnealing(
     currTemperature = initialTemperature
     i = 0
     nbhd = neighborhood
+    t = time.time() + timeOut
     while currTemperature > finalTemperature:
         currSol = bestSol
         currCost = bestCost
         while i < maxIterations and i < len(nbhd):
+            if time.time() > t:
+                print("Timeout reached!")
+                return bestSol, bestCost
             s = nbhd[i]
             sCost = swapEvaluator(currSol, currCost, s)
             delta = sCost - bestCost
@@ -104,13 +110,13 @@ def tabuSearch(
         print("TabuSize must be > 0!")
 
     bestSol = solution
-    bestScore = solutionCost
+    bestCost = solutionCost
     actualIter = 0
 
     currentSol = bestSol
-    currentScore = bestScore
+    currentScore = bestCost
     # why do we need currents you ask ? glad you did
-    # we have optimals found that are put in bestSol and bestScore but we want to explore, sometimes we won't exit the program
+    # we have optimals found that are put in bestSol and bestCost but we want to explore, sometimes we won't exit the program
     # at optimal found so we need some current solutions that are our iterations and best solutions for exit
 
     tabu = [None] * tabuSize
@@ -128,7 +134,7 @@ def tabuSearch(
             neighborhood = swapNodes(currentSol)
 
         currentBestSwap = []
-        currentBestScore = sys.maxsize
+        currentbestCost = sys.maxsize
         # surely we don't need a second set of current ! what are you doing step-lucas ? well glad you asked that too
         # in fact you may quite have not seen it in the GD but i did add a second set of solutions, "sol" was what currentSol is
         # and then i added a bestSol to keep in mind the best sol found so far, with keeping in memory sol (or currentSol)
@@ -147,28 +153,28 @@ def tabuSearch(
                         isIntabu = i
 
             if isIntabu == 0:
-                if sCost < currentBestScore:
-                    currentBestScore = sCost
+                if sCost < currentbestCost:
+                    currentbestCost = sCost
                     currentBestSwap = s
             else:
                 if (sCost < tabu[isIntabu][2]) and (isAspirating != False):
                     tabu[isIntabu] = None
-                    if sCost < currentBestScore:
-                        currentBestScore = sCost
+                    if sCost < currentbestCost:
+                        currentbestCost = sCost
                         currentBestSwap = s
         # this is the big part of the algo so if you don't understand something, ask
 
         # we update tabu
-        tabu = tabouUpdate(tabu, [s[0], s[2], currentBestScore])
+        tabu = tabouUpdate(tabu, [s[0], s[2], currentbestCost])
 
         # we iterate in the best solution found
         # print(currentSol," to swap ",s)
         tmp = copySolution(currentSol)
         currentSol = swap(tmp, currentBestSwap)
-        currentScore = currentBestScore
+        currentScore = currentbestCost
 
-        if currentScore < bestScore:
-            bestScore = currentScore
+        if currentScore < bestCost:
+            bestCost = currentScore
             bestSol = currentSol
 
-    return bestSol, bestScore
+    return bestSol, bestCost

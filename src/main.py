@@ -75,6 +75,7 @@ nodesNeighborhood = swapNodes(solution)
 #     solutionCost,
 #     neighborhood=nodesNeighborhood,
 #     maxIterations=graph.getNbVertices() * 10,
+#     timeOut=3,
 #     nswap=False,
 #     neighborhoodSize=None,
 #     initialTemperature=36,
@@ -89,19 +90,19 @@ nodesNeighborhood = swapNodes(solution)
 
 # Test for the tabuSearch
 ########################
-print("Init sol at cost: ", solutionCost)
-t = time.time()
-bestSol, bestCost = tabuSearch(
-    solution,
-    solutionCost,
-    iterMax=graph.getNbVertices() * 10,
-    timeOut=8,
-)
-print(
-    f"Best Tabou solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
+# print("Init sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = tabuSearch(
+#     solution,
+#     solutionCost,
+#     iterMax=graph.getNbVertices() * 10,
+#     timeOut=4,
+# )
+# print(
+#     f"Best Tabou solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
 ########################
 
 
