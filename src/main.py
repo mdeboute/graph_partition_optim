@@ -11,7 +11,7 @@ k = 2
 
 t = time.time()
 
-graph = parse("./data/cinqCentSommets.txt")
+graph = parse("./data/centSommets.txt")
 
 print(time.time() - t, "seconds of parsing")
 
@@ -23,8 +23,8 @@ solutionCost = solution.getCost()
 # solution.print()
 
 nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
-# nodesNeighborhood = swapNodes(solution)
-# neighborhood = swapNeighborhood(solution)
+nodesNeighborhood = swapNodes(solution)
+neighborhood = swapNeighborhood(solution)
 
 
 # preuve du cancer !
@@ -85,29 +85,36 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 
 # Test for the gradientDescent
 ##############################
-# print("Init sol at cost: ", solutionCost)
-# t = time.time()
-# bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
-# print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-#     time.time() - t,
-#     "sec",
-# )
+print("Init sol at cost: ", solutionCost)
+t = time.time()
+bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
+print(
+    f"\nBest Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+    time.time() - t,
+    "sec",
+)
+t = time.time()
+bestSol, bestCost = betterGradientDescent(solution, solutionCost, nodesNeighborhood)
+print(
+    f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+    time.time() - t,
+    "sec",
+)
 ##############################
 
 
 # Test for the simulatedAnnealing
 #################################
-print("Init sol at cost: ", solutionCost)
-bestSol, bestCost = simulatedAnnealing(
-    solution,
-    neighborhood=nNeighborhood,
-    maxIterations=graph.getNbVertices(),
-    neighborhoodSize=100,
-)
-print(
-    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
-)
+# print("Init sol at cost: ", solutionCost)
+# bestSol, bestCost = simulatedAnnealing(
+#     solution,
+#     neighborhood=nNeighborhood,
+#     maxIterations=graph.getNbVertices(),
+#     neighborhoodSize=100,
+# )
+# print(
+#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+# )
 #################################
 
 
@@ -121,7 +128,7 @@ print(
 #     time.time() - t,
 #     "sec",
 # )
-#########################
+########################
 
 
 # TODO: create executables and shell scripts for the different tests and make the report

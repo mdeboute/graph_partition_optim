@@ -1,6 +1,7 @@
 import math, random, sys
 from statistics import mean
 from neighborhood import *
+from utils import *
 
 
 def simulatedAnnealing(
@@ -38,7 +39,8 @@ def simulatedAnnealing(
             # normalize the delta because he have a huge impact on the metropolis criterion
             # to avoid overflow
             if delta < 0 or random.uniform(0, 1) <= math.exp(-delta / currTemperature):
-                tmp = copy.deepcopy(currSol)
+                # tmp = copy.deepcopy(currSol)
+                tmp = copySolution(currSol)
                 bestSol = swap(tmp, s)
                 bestCost = sCost
             i += 1
@@ -89,7 +91,7 @@ def tabuSearch(solution, tabuSize, itermax):
         neighborhood = swapNodes(currentSol)
         currentBestSwap = []
         currentBestScore = sys.maxsize
-        # surely we don't need a second set of current ! wtf are you doing lucas ? well glad you asked that too
+        # surely we don't need a second set of current ! what are you doing step-lucas ? well glad you asked that too
         # in fact you may quite have not seen it in the GD but i did add a second set of solutions, "sol" was what currentSol is
         # and then i added a bestSol to keep in mind the best sol found so far, with keeping in memory sol (or currentSol)
         # to compute the cost of other swaps.
@@ -125,7 +127,7 @@ def tabuSearch(solution, tabuSize, itermax):
 
         # we iterate in the best solution found
         # print(currentSol," to swap ",s)
-        tmp = copy.deepcopy(currentSol)
+        tmp = currentSol
         currentSol = swap(tmp, currentBestSwap)
         currentScore = currentBestScore
 
@@ -134,3 +136,62 @@ def tabuSearch(solution, tabuSize, itermax):
             bestSol = currentSol
 
     return bestSol, bestScore
+
+
+def getEdgeTabuSearch(solution, tabuSize, itermax):
+
+    if tabuSize <= 0:
+        print("\n\n /!\ invalid tabu size /!\ \n\n")
+
+    bestSol = solution
+    bestScore = solution.getCost()
+    actualIter = 0
+
+    currentSol = bestSol
+    currentScore = bestScore
+
+    tabu = [None] * tabuSize
+
+    while actualIter < itermax:
+        actualIter += 1
+        neighborhood = swapNodes(currentSol)
+        currentBestSwap = []
+        currentBestScore = sys.maxsize
+
+        for s in neighborhood:
+            tmp = copySolution(currentSol)
+            sCost = swap(tmp,s).getCost()
+            isIntabu = 0
+            for i in range(tabuSize):
+                if tabu[i] is not None:
+                    if (s[0] == tabu[i][0] or s[0] == tabu[i][1]) and (
+                        s[2] == tabu[i][0] or s[2] == tabu[i][1]
+                    ):
+                        isIntabu = i
+
+            if isIntabu == 0:
+                if sCost < currentBestScore:
+                    currentBestScore = sCost
+                    currentBestSwap = s
+            else:
+                if sCost < tabu[isIntabu][2]:
+                    tabu[isIntabu] = None
+                    if sCost < currentBestScore:
+                        currentBestScore = sCost
+                        currentBestSwap = s
+
+        for i in range(tabuSize - 1):
+            tabu[i] = tabu[i + 1]
+        tabu[tabuSize - 1] = [s[0], s[2], currentBestScore]
+        
+        tmp = currentSol
+        currentSol = swap(tmp, currentBestSwap)
+        currentScore = currentBestScore
+
+        if currentScore < bestScore:
+            bestScore = currentScore
+            bestSol = currentSol
+
+    return bestSol, bestScore
+
+# getEdge doesn't seems to be better here

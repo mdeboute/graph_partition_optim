@@ -37,3 +37,6 @@ def copyPartition(partition) :
             tmp.append(partition[i][j])
         copy.append(tmp)
     return copy
+
+def copySolution(solution) :
+    return Solution(copyPartition(solution.getPartition()),solution.getGraph(),solution.getNbClasses())

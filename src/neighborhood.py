@@ -1,5 +1,6 @@
 from structures import *
 import copy, random
+from utils import *
 
 
 """
@@ -83,7 +84,7 @@ def swapNeighborhood(solution):
             if c < c2:
                 for node in partition[c]:
                     for node2 in partition[c2]:
-                        tmp = copy.deepcopy(partition)
+                        tmp = copyPartition(partition)
 
                         tmp[c].remove(node)
                         tmp[c].append(node2)
@@ -142,7 +143,7 @@ def bestSwapNodesVoisinage(solution, solutionCost):
     for s in swaps:
         sCost = swapEvaluator(solution, solutionCost, s)
         if sCost < bestScore:
-            tmp = copy.deepcopy(solution)
+            tmp = copySolution(solution)
             bestSol = swap(tmp, s)
             bestScore = sCost
     return bestSol, bestScore
