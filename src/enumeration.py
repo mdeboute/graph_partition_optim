@@ -1,18 +1,23 @@
+import time
 from structures import *
-import itertools
-import math
+import itertools, math
 
 
-def basicEnum(graph, verbose=False, nbClasses=2):
+def basicEnum(graph, TimeOut, nbClasses=2, verbose=False):
     """
-    Returns the best solution.
+    A basic enumeration algorithm to find the better partition of the graph.
     @param graph: the graph
-    @print: the best solution for the graph associated to the solution and the cost
+    @param TimeOut: the time limit
+    @param nbClasses: the number of classes
+    @param verbose: if True, prints the best solution
+    @return: the best solution and its cost
     """
-    opt = math.inf
+    t = time.time() + TimeOut
+    bestCost = math.inf
     bestSol = None
 
-    vertices = range(1, graph.getNbVertices() + 1)
+    nbVertices = graph.getNbVertices()
+    vertices = range(1, nbVertices + 1)
 
     # we create the sets of possible classes for each vertex
     support = (range(nbClasses) for _ in vertices)
@@ -23,6 +28,9 @@ def basicEnum(graph, verbose=False, nbClasses=2):
     # for each answer of the iterator we create the partitions
     nbSol = 0  # nb of partitions found
     for rep in iter:
+        if time.time() > t:
+            print("Time out!")
+            break
         sol = [[] for _ in range(nbClasses)]
         nbSol += 1
 
@@ -34,18 +42,13 @@ def basicEnum(graph, verbose=False, nbClasses=2):
 
         if solution.isFeasible():
             ev = solution.getCost()
-            if ev < opt:
-                opt = ev
+            if ev < bestCost:
+                bestCost = ev
                 bestSol = solution
 
         if verbose:
             print("Sol = {0!r:23} numero = {1:02}".format(sol, nbSol))
 
-    # We check that we have had the right number of answers
-    _msg = "Found: {found:d} partitions. "
-    _msg += "Expected: {expected:d} > "
-    _msg += "diagnostic {status}"
-    d = {"found": nbSol, "expected": nbClasses ** graph.getNbVertices()}
-    d["status"] = d["found"] == d["expected"]
-    print(_msg.format(**d))
-    print(f"\nBest solution: {bestSol}, with cost: {opt}")
+    if nbSol != nbClasses ** nbVertices:
+        print("The number of solutions found is not correct!")
+    return bestSol, bestCost

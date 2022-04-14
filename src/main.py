@@ -9,7 +9,7 @@ from metaheuristics import *
 k = 2
 
 t = time.time()
-graph = parse("./data/dixMilleSommets.txt")
+graph = parse("./data/vingtSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -37,7 +37,7 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 
 # Test for the enumeration
 ##########################
-# print(basicEnum(graph, verbose=False, nbClasses=k))
+print(basicEnum(graph, 30, nbClasses=k, verbose=True))
 ##########################
 # 27 sec for the enumeration of the graph with 20 vertices and 2 classes is quite good
 
