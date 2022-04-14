@@ -6,12 +6,14 @@ from utils import *
 
 def simulatedAnnealing(
     solution,
+    solutionCost,
     neighborhood,
     maxIterations,
-    neighborhoodSize,
-    initialTemperature=22,
+    nswap=False,
+    neighborhoodSize=1000,
+    initialTemperature=30,
     finalTemperature=0.01,
-    coolingRate=0.095,
+    coolingRate=0.09,
 ):
     """
     Returns the best solution using the swap for the neighborhood.
@@ -25,39 +27,47 @@ def simulatedAnnealing(
     @return: the best solution for the graph associated to the initial solution and the cost
     """
     bestSol = solution
-    bestCost = solution.getCost()
+    bestCost = solutionCost
     currTemperature = initialTemperature
     i = 0
     nbhd = neighborhood
     while currTemperature > finalTemperature:
         currSol = bestSol
         currCost = bestCost
-        while i < maxIterations:
-            s = random.choice(nbhd)
+        while i < maxIterations and i < len(nbhd):
+            s = nbhd[i]
             sCost = swapEvaluator(currSol, currCost, s)
             delta = sCost - bestCost
             # normalize the delta because he have a huge impact on the metropolis criterion
             # to avoid overflow
             if delta < 0 or random.uniform(0, 1) <= math.exp(-delta / currTemperature):
-                # tmp = copy.deepcopy(currSol)
                 tmp = copySolution(currSol)
                 bestSol = swap(tmp, s)
                 bestCost = sCost
             i += 1
-        nbhd = nSwap(bestSol, neighborhoodSize)
+        if nswap == True:
+            nbhd = nSwap(bestSol, neighborhoodSize)
+        else:
+            nbhd = swapNodes(bestSol)
         currTemperature *= coolingRate
         i = 0
     return bestSol, bestCost
 
 
-def getInitialTemperature(solution, tau=0.8, k=100, neighborhoodSize=100):
+def getInitialTemperature(
+    solution,
+    solutionCost,
+    tau=0.8,
+    k=100,
+    neighborhoodSize=1000,
+):
     neighborhood = nSwap(solution, neighborhoodSize)
     deltas = list()
     for _ in range(k):
         s1 = random.choice(neighborhood)
         s2 = random.choice(neighborhood)
-        s1Cost = s1.getCost()
-        s2Cost = s2.getCost()
+        s1Cost = swapEvaluator(solution, solutionCost, s1)
+        s2Cost = swapEvaluator(solution, solutionCost, s2)
         deltas.append(abs(s1Cost - s2Cost))
     meanDelta = mean(deltas)
     return -meanDelta / math.log(tau)

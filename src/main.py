@@ -9,7 +9,7 @@ from metaheuristics import *
 k = 2
 
 t = time.time()
-graph = parse("./data/centSommets.txt")
+graph = parse("./data/dixMilleSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -17,53 +17,12 @@ graph.print(verbose=False)
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
 solutionCost = solution.getCost()
-solution.print()
+# solution.print()
 
-# nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
+nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 # nodesNeighborhood = swapNodes(solution)
 # neighborhood = swapNeighborhood(solution)
 
-
-# preuve du cancer !
-# p2 = partition
-# s2 = Solution(p2,graph,k)
-# print(partition)
-# swap(s2,[p2[0][0],0,p2[1][0],1])
-# print(partition)
-
-# solved cancer
-# p2 = []
-# for i in range(len(partition)) :
-#     tmp = []
-#     for j in range(len(partition[i])) :
-#         tmp.append(partition[i][j])
-#     p2.append(tmp)
-
-# print("partition : ", partition)
-# print("p2 : ",p2)
-# s2 = Solution(p2,graph,k)
-# swap(s2,[p2[0][0],0,p2[1][0],1])
-# print("new partition : ",partition)
-# print("new p2 : ",p2)
-
-# test solved cancer
-# p2 = copyPartition(partition)
-# s2 = Solution(p2,graph,k)
-# print(p2)
-# print("here : ",partition)
-# swap(s2,[p2[0][0],0,p2[1][0],1])
-# print("there : ",partition)
-# youhou copyPartition works !!!!
-
-# test perf deepcopy vs mycopy
-# t = time.time()
-# tmp = copy.deepcopy(partition)
-# dt = time.time()-t
-# t = time.time()
-# tmp = copyPartition(partition)
-# mt = (time.time()-t)
-# print(dt/mt," of factor gain")
-# factor 6 on 500nodes
 
 # Test for the nSwap method
 ############################
@@ -113,9 +72,14 @@ solution.print()
 # print("Init sol at cost: ", solutionCost)
 # bestSol, bestCost = simulatedAnnealing(
 #     solution,
+#     solutionCost,
 #     neighborhood=nNeighborhood,
 #     maxIterations=graph.getNbVertices(),
+#     nswap=True,
 #     neighborhoodSize=100,
+#     initialTemperature=230,
+#     finalTemperature=0.01,
+#     coolingRate=0.2,
 # )
 # print(
 #     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
