@@ -28,3 +28,12 @@ def parse(file_path):
             degrees.append(int(lines[i].split()[1]))
 
         return Graph(nbVertices, nbEdges, edges, degrees)
+
+def copyPartition(partition) :
+    copy = []
+    for i in range(len(partition)) :
+        tmp = []
+        for j in range(len(partition[i])) :
+            tmp.append(partition[i][j])
+        copy.append(tmp)
+    return copy

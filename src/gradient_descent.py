@@ -1,5 +1,6 @@
 from neighborhood import *
 import copy
+from utils import copyPartition
 
 def gradientDescent(sol, neighborhood):
     """
@@ -35,7 +36,8 @@ def partialGradientDescent(sol, solCost, neighborhood):
     for s in neighborhood:
         sCost = swapEvaluator(sol, solCost, s)
         if sCost < bestScore :
-            tmp = copy.deepcopy(sol)
+            # tmp = copy.deepcopy(sol)
+            tmp = Solution(copyPartition(sol.getPartition()),sol.getGraph(),sol.getNbClasses())
             bestSol = swap(tmp,s)
             bestScore = sCost
             switch = 42
