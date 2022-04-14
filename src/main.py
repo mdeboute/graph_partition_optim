@@ -85,7 +85,7 @@ neighborhood = swapNeighborhood(solution)
 
 # Test for the gradientDescent
 ##############################
-print("Init sol at cost: ", solutionCost)
+print("\nInit sol at cost: ", solutionCost)
 t = time.time()
 bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
 print(
@@ -93,6 +93,12 @@ print(
     time.time() - t,
     "sec",
 )
+# if (bestCost!=bestSol.getCost()) :
+#     print ("\n/!\ alerte rouge /!\ \n")
+
+# Test for the betterGradientDescent
+##############################
+print("\nInit sol at cost: ", solutionCost)
 t = time.time()
 bestSol, bestCost = betterGradientDescent(solution, solutionCost, nodesNeighborhood)
 print(
@@ -100,6 +106,8 @@ print(
     time.time() - t,
     "sec",
 )
+# if (bestCost!=bestSol.getCost()) :
+#     print ("\n/!\ alerte rouge /!\ \n")
 ##############################
 
 

@@ -40,7 +40,7 @@ def betterGradientDescent(sol, solCost, neighborhood):
         sCost = swapEvaluator(sol, solCost, s)
         if sCost < solCost :
             tmp = swap(sol,s)
-            return gradientDescent(tmp, sCost, swapNodes(tmp))
+            return betterGradientDescent(tmp, sCost, swapNodes(tmp))
     else:
         return sol, solCost
 # MOUAIFFF
