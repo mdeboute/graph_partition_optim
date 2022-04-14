@@ -19,7 +19,6 @@ Notion of neighborhoods:
 
 
 def swapEvaluator(solution, solutionCost, s):
-    solution.getGraph()
 
     node1 = s[0]
     node1Class = s[1]

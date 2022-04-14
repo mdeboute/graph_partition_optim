@@ -11,7 +11,7 @@ k = 2
 
 t = time.time()
 
-graph = parse("./data/centSommets.txt")
+graph = parse("./data/dixMilleSommets.txt")
 
 print(time.time() - t, "seconds of parsing")
 
@@ -19,12 +19,15 @@ graph.print(verbose=False)
 
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
+t = time.time()
 solutionCost = solution.getCost()
+print(time.time()-t,"sec of getCost()")
+
 # solution.print()
 
-nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
-nodesNeighborhood = swapNodes(solution)
-neighborhood = swapNeighborhood(solution)
+# nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
+# nodesNeighborhood = swapNodes(solution)
+# neighborhood = swapNeighborhood(solution)
 
 
 # preuve du cancer !
@@ -85,27 +88,27 @@ neighborhood = swapNeighborhood(solution)
 
 # Test for the gradientDescent
 ##############################
-print("\nInit sol at cost: ", solutionCost)
-t = time.time()
-bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
-print(
-    f"\nBest Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
+# print("\nInit sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = gradientDescent(solution, solutionCost)
+# print(
+#     f"\nBest Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
 # if (bestCost!=bestSol.getCost()) :
 #     print ("\n/!\ alerte rouge /!\ \n")
 
 # Test for the betterGradientDescent
 ##############################
-print("\nInit sol at cost: ", solutionCost)
-t = time.time()
-bestSol, bestCost = betterGradientDescent(solution, solutionCost, nodesNeighborhood)
-print(
-    f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
+# print("\nInit sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = betterGradientDescent(solution, solutionCost)
+# print(
+#     f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
 # if (bestCost!=bestSol.getCost()) :
 #     print ("\n/!\ alerte rouge /!\ \n")
 ##############################
@@ -132,10 +135,22 @@ print(
 # t = time.time()
 # bestSol, bestCost = tabuSearch(solution, 7, graph.getNbVertices() // 2)
 # print(
-#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     f"Best Tabou solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
 #     "sec",
 # )
+########################
+
+# Test for the tabuSearchNSwap
+#########################
+print("Init sol at cost: ", solutionCost)
+t = time.time()
+bestSol, bestCost = tabuSearch(solution, solutionCost, 7, graph.getNbVertices()*100000, 1, 1, 900)
+print(
+    f"Best Tabou nSwap solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+    time.time() - t,
+    "sec",
+)
 ########################
 
 
