@@ -1,58 +1,58 @@
 from neighborhood import *
-import copy
 from utils import *
 
-# look at the whole neighborhood 
-def gradientDescent(sol, solCost, nswaps=0):
+
+def gradientDescent(sol, solCost, nswap=False, neighborhoodSize=100):
     """
-    Returns the best solution using the swap for the neighborhood.
+    Returns the best solution from looking at the whole neighborhood.
     @param sol: the solution
     @param solCost: the cost of the solution
-    @param neighborhood: the neighborhood of the solution
-    @return: the best solution for the graph associated to the solution and the cost
+    @param nswap: if True, use the nSwap neighborhood
+    @param neighborhoodSize: the size of the neighborhood
+    @return: the best solution and its cost
     """
-    bestS = []
-    bestScore = solCost
+    bestSol = sol
+    bestCost = solCost
     switch = 0
 
-    if (nswaps==1):
-        neighborhood = nSwap(sol,100)
-    else :
+    if nswap == True:
+        neighborhood = nSwap(sol, neighborhoodSize)
+    else:
         neighborhood = swapNodes(sol)
 
     for s in neighborhood:
         sCost = swapEvaluator(sol, solCost, s)
-        if sCost < bestScore :
-            bestS = s
-            bestScore = sCost
+        if sCost < bestCost:
+            bestSol = s
+            bestCost = sCost
             switch = 42
     if switch != 0:
         tmp = copySolution(sol)
-        bestSol = swap(tmp,bestS)
-        
-        return gradientDescent(bestSol, bestScore)
+        bestSol = swap(tmp, bestSol)
+
+        return gradientDescent(bestSol, bestCost)
     else:
         return sol, solCost
 
 
-# take the 1st solution that better ou cost.
-def betterGradientDescent(sol, solCost, nswaps=0):
+def betterGradientDescent(sol, solCost, nswap=False, neighborhoodSize=100):
     """
-    Returns the best solution using the swap for the neighborhood.
+    Returns the best solution while looking at the first improving solution.
     @param sol: the solution
     @param solCost: the cost of the solution
-    @param neighborhood: the neighborhood of the solution
-    @return: the best solution for the graph associated to the solution and the cost
+    @param nswap: if True, use the nSwap neighborhood
+    @param neighborhoodSize: the size of the neighborhood
+    @return: the best solution and its cost
     """
-    if (nswaps==1):
-        neighborhood = nSwap(sol,100)
-    else :
+    if nswap == True:
+        neighborhood = nSwap(sol, neighborhoodSize)
+    else:
         neighborhood = swapNodes(sol)
 
     for s in neighborhood:
         sCost = swapEvaluator(sol, solCost, s)
-        if sCost < solCost :
-            tmp = swap(sol,s)
+        if sCost < solCost:
+            tmp = swap(sol, s)
             return betterGradientDescent(tmp, sCost)
     else:
         return sol, solCost

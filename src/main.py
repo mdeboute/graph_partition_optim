@@ -9,7 +9,7 @@ from metaheuristics import *
 k = 2
 
 t = time.time()
-graph = parse("./data/vingtSommets.txt")
+graph = parse("./data/centSommets.txt")
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -23,7 +23,7 @@ print(time.time() - t, "sec of getCost()")
 # solution.print()
 
 nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
-# nodesNeighborhood = swapNodes(solution)
+nodesNeighborhood = swapNodes(solution)
 # neighborhood = swapNeighborhood(solution)
 
 
@@ -37,7 +37,7 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 
 # Test for the enumeration
 ##########################
-print(basicEnum(graph, 30, nbClasses=k, verbose=True))
+# print(basicEnum(graph, 30, nbClasses=k, verbose=True))
 ##########################
 # 27 sec for the enumeration of the graph with 20 vertices and 2 classes is quite good
 
@@ -52,8 +52,7 @@ print(basicEnum(graph, 30, nbClasses=k, verbose=True))
 #     time.time() - t,
 #     "sec",
 # )
-# if (bestCost!=bestSol.getCost()) :
-#     print ("\n/!\ alerte rouge /!\ \n")
+##############################
 
 # Test for the betterGradientDescent
 ##############################
