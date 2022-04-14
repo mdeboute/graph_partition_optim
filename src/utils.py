@@ -1,4 +1,5 @@
 from structures import *
+import random
 
 
 def parse(file_path):
@@ -29,14 +30,45 @@ def parse(file_path):
 
         return Graph(nbVertices, nbEdges, edges, degrees)
 
-def copyPartition(partition) :
+
+def makeKPartition(graph, nbClasses=2):
+    """
+    Create a partition of the vertices into k classes,
+    the vertices are from 0 to N-1.
+    @param graph: a graph
+    @return: a k-partition of the vertices
+    """
+    nbVertices = graph.getNbVertices()
+    l = [_ for _ in range(nbVertices)]  # the list of vertices
+    partition = list()
+    counter = 0
+    for c in range(nbClasses):
+        partition.append([])
+        for i in range(int((nbVertices / nbClasses) - ((nbVertices / nbClasses) % 1))):
+            counter += 1
+            j = random.sample(l, 1)
+            partition[c].append(j[0])
+            l.remove(j[0])
+    for i in range(nbVertices - counter):
+        j = random.sample(l, 1)
+        partition[i].append(j[0])
+        l.remove(j[0])
+    return partition
+
+
+def copyPartition(partition):
     copy = []
-    for i in range(len(partition)) :
+    for i in range(len(partition)):
         tmp = []
-        for j in range(len(partition[i])) :
+        for j in range(len(partition[i])):
             tmp.append(partition[i][j])
         copy.append(tmp)
     return copy
 
-def copySolution(solution) :
-    return Solution(copyPartition(solution.getPartition()),solution.getGraph(),solution.getNbClasses())
+
+def copySolution(solution):
+    return Solution(
+        copyPartition(solution.getPartition()),
+        solution.getGraph(),
+        solution.getNbClasses(),
+    )

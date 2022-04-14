@@ -17,9 +17,9 @@ def gradientDescent(sol, solCost, neighborhood):
 
     for s in neighborhood:
         sCost = swapEvaluator(sol, solCost, s)
-        if sCost < bestScore :
+        if sCost < bestScore:
             tmp = copySolution(sol)
-            bestSol = swap(tmp,s)
+            bestSol = swap(tmp, s)
             bestScore = sCost
             switch = 42
     if switch != 0:
@@ -27,6 +27,7 @@ def gradientDescent(sol, solCost, neighborhood):
         return gradientDescent(bestSol, bestScore, neighborhood)
     else:
         return bestSol, bestScore
+
 
 def betterGradientDescent(sol, solCost, neighborhood):
     """
@@ -38,9 +39,11 @@ def betterGradientDescent(sol, solCost, neighborhood):
     """
     for s in neighborhood:
         sCost = swapEvaluator(sol, solCost, s)
-        if sCost < solCost :
-            tmp = swap(sol,s)
+        if sCost < solCost:
+            tmp = swap(sol, s)
             return betterGradientDescent(tmp, sCost, swapNodes(tmp))
     else:
         return sol, solCost
+
+
 # MOUAIFFF

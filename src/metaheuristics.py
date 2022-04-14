@@ -160,7 +160,7 @@ def getEdgeTabuSearch(solution, tabuSize, itermax):
 
         for s in neighborhood:
             tmp = copySolution(currentSol)
-            sCost = swap(tmp,s).getCost()
+            sCost = swap(tmp, s).getCost()
             isIntabu = 0
             for i in range(tabuSize):
                 if tabu[i] is not None:
@@ -183,7 +183,7 @@ def getEdgeTabuSearch(solution, tabuSize, itermax):
         for i in range(tabuSize - 1):
             tabu[i] = tabu[i + 1]
         tabu[tabuSize - 1] = [s[0], s[2], currentBestScore]
-        
+
         tmp = currentSol
         currentSol = swap(tmp, currentBestSwap)
         currentScore = currentBestScore
@@ -193,5 +193,6 @@ def getEdgeTabuSearch(solution, tabuSize, itermax):
             bestSol = currentSol
 
     return bestSol, bestScore
+
 
 # getEdge doesn't seems to be better here

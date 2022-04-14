@@ -3,16 +3,13 @@ from enumeration import basicEnum
 from gradient_descent import *
 from utils import *
 from enum import *
-from random_partition import *
 from neighborhood import *
 from metaheuristics import *
 
 k = 2
 
 t = time.time()
-
 graph = parse("./data/centSommets.txt")
-
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
@@ -20,11 +17,11 @@ graph.print(verbose=False)
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
 solutionCost = solution.getCost()
-# solution.print()
+solution.print()
 
-nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
-nodesNeighborhood = swapNodes(solution)
-neighborhood = swapNeighborhood(solution)
+# nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
+# nodesNeighborhood = swapNodes(solution)
+# neighborhood = swapNeighborhood(solution)
 
 
 # preuve du cancer !
@@ -49,7 +46,7 @@ neighborhood = swapNeighborhood(solution)
 # print("new partition : ",partition)
 # print("new p2 : ",p2)
 
-#test solved cancer
+# test solved cancer
 # p2 = copyPartition(partition)
 # s2 = Solution(p2,graph,k)
 # print(p2)
@@ -58,7 +55,7 @@ neighborhood = swapNeighborhood(solution)
 # print("there : ",partition)
 # youhou copyPartition works !!!!
 
-#test perf deepcopy vs mycopy
+# test perf deepcopy vs mycopy
 # t = time.time()
 # tmp = copy.deepcopy(partition)
 # dt = time.time()-t
@@ -85,27 +82,27 @@ neighborhood = swapNeighborhood(solution)
 
 # Test for the gradientDescent
 ##############################
-print("\nInit sol at cost: ", solutionCost)
-t = time.time()
-bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
-print(
-    f"\nBest Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
+# print("\nInit sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
+# print(
+#     f"\nBest Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
 # if (bestCost!=bestSol.getCost()) :
 #     print ("\n/!\ alerte rouge /!\ \n")
 
 # Test for the betterGradientDescent
 ##############################
-print("\nInit sol at cost: ", solutionCost)
-t = time.time()
-bestSol, bestCost = betterGradientDescent(solution, solutionCost, nodesNeighborhood)
-print(
-    f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
+# print("\nInit sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = betterGradientDescent(solution, solutionCost, nodesNeighborhood)
+# print(
+#     f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
 # if (bestCost!=bestSol.getCost()) :
 #     print ("\n/!\ alerte rouge /!\ \n")
 ##############################
