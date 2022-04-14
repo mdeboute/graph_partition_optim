@@ -10,13 +10,9 @@ from metaheuristics import *
 k = 2
 
 t = time.time()
-<<<<<<< HEAD
 
 graph = parse("./data/cinqCentSommets.txt")
 
-=======
-graph = parse("./data/centSommets.txt")
->>>>>>> a85cc07a6ee86680d182aca6e862d498f501d3ea
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
