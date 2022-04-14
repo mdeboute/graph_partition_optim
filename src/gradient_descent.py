@@ -2,8 +2,8 @@ from neighborhood import *
 import copy
 from utils import *
 
-
-def gradientDescent(sol, solCost):
+# look at the whole neighborhood 
+def gradientDescent(sol, solCost, nswaps=0):
     """
     Returns the best solution using the swap for the neighborhood.
     @param sol: the solution
@@ -15,7 +15,10 @@ def gradientDescent(sol, solCost):
     bestScore = solCost
     switch = 0
 
-    neighborhood = swapNodes(sol)
+    if (nswaps==1):
+        neighborhood = nSwap(sol,100)
+    else :
+        neighborhood = swapNodes(sol)
 
     for s in neighborhood:
         sCost = swapEvaluator(sol, solCost, s)
@@ -31,7 +34,9 @@ def gradientDescent(sol, solCost):
     else:
         return sol, solCost
 
-def betterGradientDescent(sol, solCost):
+
+# take the 1st solution that better ou cost.
+def betterGradientDescent(sol, solCost, nswaps=0):
     """
     Returns the best solution using the swap for the neighborhood.
     @param sol: the solution
@@ -39,7 +44,10 @@ def betterGradientDescent(sol, solCost):
     @param neighborhood: the neighborhood of the solution
     @return: the best solution for the graph associated to the solution and the cost
     """
-    neighborhood = swapNodes(sol)
+    if (nswaps==1):
+        neighborhood = nSwap(sol,100)
+    else :
+        neighborhood = swapNodes(sol)
 
     for s in neighborhood:
         sCost = swapEvaluator(sol, solCost, s)
@@ -48,6 +56,3 @@ def betterGradientDescent(sol, solCost):
             return betterGradientDescent(tmp, sCost)
     else:
         return sol, solCost
-
-
-# MOUAIFFF
