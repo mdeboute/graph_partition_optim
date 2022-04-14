@@ -1,4 +1,4 @@
-import math, random, sys
+import math, random, sys, time
 from statistics import mean
 from neighborhood import *
 from utils import *
@@ -73,19 +73,28 @@ def getInitialTemperature(
     return -meanDelta / math.log(tau)
 
 
+
+def tabouUpdate(tabu,x) :
+    tabuSize = len(tabu)
+    for i in range(tabuSize - 1):
+        tabu[i] = tabu[i + 1]
+    tabu[tabuSize - 1] = x
+    return tabu
+
+
 # arbitrary first choices :
 # liberation if f(move) < f'(move) (with f' the cost of the solution when he was placed in tabu)
 # it means you accept a move only if he is strictly better than he were the last time
 # this is definitively up to discution and will probably be changed
 
 # tabu take a solution and return the best solution he could find browsing the neighborhood solutions recursively
-def tabuSearch(solution, tabuSize, itermax):
+def tabuSearch(solution, solutionCost, tabuSize, itermax, nSwaps, timeout, isAspirating=0):
 
     if tabuSize <= 0:
         print("\n\n /!\ invalid tabu size /!\ \n\n")
 
     bestSol = solution
-    bestScore = solution.getCost()
+    bestScore = solutionCost
     actualIter = 0
 
     currentSol = bestSol
@@ -96,9 +105,15 @@ def tabuSearch(solution, tabuSize, itermax):
 
     tabu = [None] * tabuSize
 
-    while actualIter < itermax:
+    timeouts = time.time()+timeout
+
+    while (actualIter < itermax) and time.time()<timeouts :
         actualIter += 1
-        neighborhood = swapNodes(currentSol)
+        if (nSwaps==1) :
+            neighborhood = nSwap(currentSol,100)
+        else :
+            neighborhood = swapNodes(currentSol)
+        
         currentBestSwap = []
         currentBestScore = sys.maxsize
         # surely we don't need a second set of current ! what are you doing step-lucas ? well glad you asked that too
@@ -123,7 +138,7 @@ def tabuSearch(solution, tabuSize, itermax):
                     currentBestScore = sCost
                     currentBestSwap = s
             else:
-                if sCost < tabu[isIntabu][2]:
+                if (sCost < tabu[isIntabu][2]) and (isAspirating!=0) :
                     tabu[isIntabu] = None
                     if sCost < currentBestScore:
                         currentBestScore = sCost
@@ -131,13 +146,11 @@ def tabuSearch(solution, tabuSize, itermax):
         # this is the big part of the algo so if you don't understand something, ask
 
         # we update tabu
-        for i in range(tabuSize - 1):
-            tabu[i] = tabu[i + 1]
-        tabu[tabuSize - 1] = [s[0], s[2], currentBestScore]
+        tabu = tabouUpdate(tabu,[s[0], s[2], currentBestScore])
 
         # we iterate in the best solution found
         # print(currentSol," to swap ",s)
-        tmp = currentSol
+        tmp = copySolution(currentSol)
         currentSol = swap(tmp, currentBestSwap)
         currentScore = currentBestScore
 
@@ -146,63 +159,3 @@ def tabuSearch(solution, tabuSize, itermax):
             bestSol = currentSol
 
     return bestSol, bestScore
-
-
-def getEdgeTabuSearch(solution, tabuSize, itermax):
-
-    if tabuSize <= 0:
-        print("\n\n /!\ invalid tabu size /!\ \n\n")
-
-    bestSol = solution
-    bestScore = solution.getCost()
-    actualIter = 0
-
-    currentSol = bestSol
-    currentScore = bestScore
-
-    tabu = [None] * tabuSize
-
-    while actualIter < itermax:
-        actualIter += 1
-        neighborhood = swapNodes(currentSol)
-        currentBestSwap = []
-        currentBestScore = sys.maxsize
-
-        for s in neighborhood:
-            tmp = copySolution(currentSol)
-            sCost = swap(tmp, s).getCost()
-            isIntabu = 0
-            for i in range(tabuSize):
-                if tabu[i] is not None:
-                    if (s[0] == tabu[i][0] or s[0] == tabu[i][1]) and (
-                        s[2] == tabu[i][0] or s[2] == tabu[i][1]
-                    ):
-                        isIntabu = i
-
-            if isIntabu == 0:
-                if sCost < currentBestScore:
-                    currentBestScore = sCost
-                    currentBestSwap = s
-            else:
-                if sCost < tabu[isIntabu][2]:
-                    tabu[isIntabu] = None
-                    if sCost < currentBestScore:
-                        currentBestScore = sCost
-                        currentBestSwap = s
-
-        for i in range(tabuSize - 1):
-            tabu[i] = tabu[i + 1]
-        tabu[tabuSize - 1] = [s[0], s[2], currentBestScore]
-
-        tmp = currentSol
-        currentSol = swap(tmp, currentBestSwap)
-        currentScore = currentBestScore
-
-        if currentScore < bestScore:
-            bestScore = currentScore
-            bestSol = currentSol
-
-    return bestSol, bestScore
-
-
-# getEdge doesn't seems to be better here

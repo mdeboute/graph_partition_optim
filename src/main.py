@@ -16,7 +16,10 @@ graph.print(verbose=False)
 
 partition = makeKPartition(graph, nbClasses=k)
 solution = Solution(partition, graph, nbClasses=k)
+t = time.time()
 solutionCost = solution.getCost()
+print(time.time() - t, "sec of getCost()")
+
 # solution.print()
 
 nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
@@ -43,7 +46,7 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 ##############################
 # print("\nInit sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
+# bestSol, bestCost = gradientDescent(solution, solutionCost)
 # print(
 #     f"\nBest Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
@@ -56,7 +59,7 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 ##############################
 # print("\nInit sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = betterGradientDescent(solution, solutionCost, nodesNeighborhood)
+# bestSol, bestCost = betterGradientDescent(solution, solutionCost)
 # print(
 #     f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
@@ -93,7 +96,19 @@ nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 # t = time.time()
 # bestSol, bestCost = tabuSearch(solution, 7, graph.getNbVertices() // 2)
 # print(
-#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     f"Best Tabou solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
+########################
+
+# Test for the tabuSearchNSwap
+#########################
+# print("Init sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = tabuSearch(solution, solutionCost, 7, graph.getNbVertices()*100000, 1, 1, 900)
+# print(
+#     f"Best Tabou nSwap solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
 #     "sec",
 # )
