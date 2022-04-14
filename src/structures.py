@@ -86,7 +86,6 @@ class Graph:
                 print(
                     i + 1, ":", self.degrees[i]
                 )  # i+1 because the vertices are indexed from 1
-        print("\n")
 
     def getNbEdges(self):
         """
@@ -245,4 +244,3 @@ class Solution(Graph):
             # to have the correct index
             self.partition[i] = [x + 1 for x in self.partition[i]]
             print(i + 1, ":", self.partition[i])
-        print("\n")

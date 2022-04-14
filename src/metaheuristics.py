@@ -11,7 +11,7 @@ def simulatedAnnealing(
     maxIterations,
     timeOut,
     nswap=False,
-    neighborhoodSize=1000,
+    neighborhoodSize=None,
     initialTemperature=30,
     finalTemperature=0.01,
     coolingRate=0.09,
@@ -102,7 +102,7 @@ def tabuSearch(
     timeOut,
     tabuSize=7,
     nswap=True,
-    neighborhoodSize=100,
+    neighborhoodSize=1000,
     isAspirating=False,
 ):
 
@@ -125,7 +125,7 @@ def tabuSearch(
 
     while actualIter < iterMax:
         if time.time() > t:
-            print("Timeout reached!")
+            print("Time out reached!")
             break
         actualIter += 1
         if nswap == True:
