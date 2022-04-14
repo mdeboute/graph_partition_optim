@@ -48,4 +48,6 @@ def betterGradientDescent(sol, solCost):
             return betterGradientDescent(tmp, sCost)
     else:
         return sol, solCost
+
+
 # MOUAIFFF

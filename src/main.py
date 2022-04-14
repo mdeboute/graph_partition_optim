@@ -3,7 +3,6 @@ from enumeration import basicEnum
 from gradient_descent import *
 from utils import *
 from enum import *
-from random_partition import *
 from neighborhood import *
 from metaheuristics import *
 
@@ -52,7 +51,7 @@ print(time.time()-t,"sec of getCost()")
 # print("new partition : ",partition)
 # print("new p2 : ",p2)
 
-#test solved cancer
+# test solved cancer
 # p2 = copyPartition(partition)
 # s2 = Solution(p2,graph,k)
 # print(p2)
@@ -61,7 +60,7 @@ print(time.time()-t,"sec of getCost()")
 # print("there : ",partition)
 # youhou copyPartition works !!!!
 
-#test perf deepcopy vs mycopy
+# test perf deepcopy vs mycopy
 # t = time.time()
 # tmp = copy.deepcopy(partition)
 # dt = time.time()-t

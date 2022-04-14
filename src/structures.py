@@ -245,6 +245,4 @@ class Solution(Graph):
             # to have the correct index
             self.partition[i] = [x + 1 for x in self.partition[i]]
             print(i + 1, ":", self.partition[i])
-
-
-# TODO: deepen the notion of approximately?
+        print("\n")
