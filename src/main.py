@@ -5,22 +5,31 @@ from utils import *
 from enum import *
 from random_partition import *
 from neighborhood import *
-from metaheuristics import simulatedAnnealing
+from metaheuristics import *
 
-k = 3
+k = 2
 
 t = time.time()
+<<<<<<< HEAD
 
 graph = parse("./data/cinqCentSommets.txt")
 
+=======
+graph = parse("./data/centSommets.txt")
+>>>>>>> a85cc07a6ee86680d182aca6e862d498f501d3ea
 print(time.time() - t, "seconds of parsing")
 
 graph.print(verbose=False)
 
-partition = makeKPartition(graph, k)
-solution = Solution(partition, graph, k)
-neighborhood = swapNeighborhood(solution)
-nodesNeighborhood = swapNodes(solution)
+partition = makeKPartition(graph, nbClasses=k)
+solution = Solution(partition, graph, nbClasses=k)
+solutionCost = solution.getCost()
+# solution.print()
+
+nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
+# nodesNeighborhood = swapNodes(solution)
+# neighborhood = swapNeighborhood(solution)
+
 
 # preuve du cancer !
 # p2 = partition
@@ -66,71 +75,57 @@ nodesNeighborhood = swapNodes(solution)
 # Test for the nSwap method
 ############################
 # print(neighborhood)
-# print(nSwap(solution, 2))
-############################
+# print(nNeighborhood)
+# print(nodesNeighborhood)
+#############################
 
 
 # Test for the enumeration
 ##########################
-# print(basicEnum(graph, verbose=False, nbClasses=2))
+# print(basicEnum(graph, verbose=False, nbClasses=k))
 ##########################
-# 45 sec for the enumeration of the graph with 20 vertices and 2 classes
+# 27 sec for the enumeration of the graph with 20 vertices and 2 classes is quite good
 
 
 # Test for the gradientDescent
-#############################
-
-print("init sol at cost of : ",solution.getCost())
-
-# classical gradientDescent
-#############################
-
+##############################
+# print("Init sol at cost: ", solutionCost)
 # t = time.time()
-# bestSol, bestCost = gradientDescent(solution, neighborhood)
-
+# bestSol, bestCost = gradientDescent(solution, solutionCost, nodesNeighborhood)
 # print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, in : ", time.time()-t, "s"
+#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
 # )
-
-# partial gradientDescent
-#############################
-
-# t = time.time()
-# bestSolP, bestCostP = partialGradientDescent(solution, solution.getCost(),nodesNeighborhood)
-
-# print(
-#     f"\nBest solution: {bestSolP}, with cost: {bestCostP}, feasible: {bestSolP.isFeasible()}, in : ", time.time()-t, "s"
-# )
-
-#############################
-# 0.4 sec for 30 vertices and 2 classes
+##############################
 
 
 # Test for the simulatedAnnealing
 #################################
-# bestSol, bestCost = simulatedAnnealing(
-#     solution,
-#     neighborhood,
-#     initialTemperature=80,
-#     finalTemperature=0.01,
-#     coolingRate=0.08,
-# )
-# print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
-# )
+print("Init sol at cost: ", solutionCost)
+bestSol, bestCost = simulatedAnnealing(
+    solution,
+    neighborhood=nNeighborhood,
+    maxIterations=graph.getNbVertices(),
+    neighborhoodSize=100,
+)
+print(
+    f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+)
 #################################
-# 0.17 sec for 500 edges and 5 class is quite good I think?
 
-# Test for the Tabou
-#################################
-# bestSol, bestCost = Tabou(
-#     solution,
-#     neighborhood,
-#     initialTemperature=80,
-#     finalTemperature=0.01,
-#     coolingRate=0.08,
-# )
+
+# Test for the tabuSearch
+#########################
+# print("Init sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = tabuSearch(solution, 7, graph.getNbVertices() // 2)
 # print(
-#     f"\nBest solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
 # )
-#################################
+#########################
+
+
+# TODO: create executables and shell scripts for the different tests and make the report

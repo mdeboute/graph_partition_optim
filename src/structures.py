@@ -1,5 +1,4 @@
 # This file consist of a set of classes that allows us to represents a non oriented weighted graph.
-# Author: Martin Debouté, Lucas Villenave
 
 
 class Graph:
@@ -74,25 +73,20 @@ class Graph:
             print("\n")
             print("Edges:")
             # print the edges as an adjacency list (i.e src -> dest, weight)
+            # the matrix is symmetric so we only need to print the upper part
             for i in range(self.nbVertices):
-                for j in range(self.nbVertices):
+                for j in range(i + 1, self.nbVertices):
                     if self.edges[i][j] != 0:
                         print(
-                            str(i+1)  # i+1 because the vertices are indexed from 1
-                            + " -> "
-                            + str(j+1)
-                            + " ("
-                            + str(
-                                self.edges[i][j]
-                            )  # j+1 because the vertices are indexed from 1
-                            + ")"
-                        )
+                            i + 1, "->", j + 1, ":", self.edges[i][j]
+                        )  # i/j + 1 because the matrix is 0-indexed
             print("\n")
             print("Degrees:")
             for i in range(len(self.degrees)):
                 print(
                     i + 1, ":", self.degrees[i]
                 )  # i+1 because the vertices are indexed from 1
+        print("\n")
 
     def getNbEdges(self):
         """
@@ -115,6 +109,12 @@ class Graph:
             if vertex <= self.nbVertices and vertex >= 0:
                 if self.edges[vertex][i] != 0:
                     neighbors.append(i)
+        if len(neighbors) != self.degrees[vertex]:
+            raise Exception(
+                "The number of neighbors of the vertex "
+                + str(vertex)
+                + " is not equal to its degree."
+            )
         return neighbors
 
     def getEdges(self):
@@ -178,7 +178,7 @@ class Solution(Graph):
         """
         cost = 0
         for i in range(self.nbClasses):
-            for j in range(i+1,self.nbClasses):
+            for j in range(i + 1, self.nbClasses):
                 for vertex in self.partition[i]:
                     for neighbor in self.graph.getNeighbors(vertex):
                         if neighbor in self.partition[j]:
@@ -235,5 +235,16 @@ class Solution(Graph):
 
         return feasible
 
+    def print(self):
+        """
+        Prints the solution.
+        """
+        print(f"Partition with cost {self.getCost()}:")
+        for i in range(self.nbClasses):
+            # transform the partition by adding 1 to each vertex
+            # to have the correct index
+            self.partition[i] = [x + 1 for x in self.partition[i]]
+            print(i + 1, ":", self.partition[i])
 
-# TODO: deepen the notion of approximately
+
+# TODO: deepen the notion of approximately?
