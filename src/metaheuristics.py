@@ -18,13 +18,15 @@ def simulatedAnnealing(
     """
     Returns the best solution using the swap for the neighborhood.
     @param solution: the solution
+    @param solutionCost: the cost of the solution
     @param neighborhood: the neighborhood
     @param maxIterations: the maximum number of iterations for the inner loop
-    @param neighborhoodSize: the size of the neighborhood
+    @param nswap: if True, the neighborhood is created with nSwap, otherwise with swapNodes
+    @param neighborhoodSize: the size of the neighborhood (if nswap is True)
     @param initialTemperature: the initial temperature
     @param finalTemperature: the final temperature
     @param coolingRate: the cooling rate
-    @return: the best solution for the graph associated to the initial solution and the cost
+    @return: the best solution and its cost
     """
     bestSol = solution
     bestCost = solutionCost
@@ -73,8 +75,7 @@ def getInitialTemperature(
     return -meanDelta / math.log(tau)
 
 
-
-def tabouUpdate(tabu,x) :
+def tabouUpdate(tabu, x):
     tabuSize = len(tabu)
     for i in range(tabuSize - 1):
         tabu[i] = tabu[i + 1]
@@ -88,10 +89,19 @@ def tabouUpdate(tabu,x) :
 # this is definitively up to discution and will probably be changed
 
 # tabu take a solution and return the best solution he could find browsing the neighborhood solutions recursively
-def tabuSearch(solution, solutionCost, tabuSize, itermax, nSwaps, timeout, isAspirating=0):
+def tabuSearch(
+    solution,
+    solutionCost,
+    iterMax,
+    timeOut,
+    tabuSize=7,
+    nswap=True,
+    neighborhoodSize=100,
+    isAspirating=False,
+):
 
     if tabuSize <= 0:
-        print("\n\n /!\ invalid tabu size /!\ \n\n")
+        print("TabuSize must be > 0!")
 
     bestSol = solution
     bestScore = solutionCost
@@ -105,15 +115,18 @@ def tabuSearch(solution, solutionCost, tabuSize, itermax, nSwaps, timeout, isAsp
 
     tabu = [None] * tabuSize
 
-    timeouts = time.time()+timeout
+    t = time.time() + timeOut
 
-    while (actualIter < itermax) and time.time()<timeouts :
+    while actualIter < iterMax:
+        if time.time() > t:
+            print("Timeout reached!")
+            break
         actualIter += 1
-        if (nSwaps==1) :
-            neighborhood = nSwap(currentSol,100)
-        else :
+        if nswap == True:
+            neighborhood = nSwap(currentSol, neighborhoodSize)
+        else:
             neighborhood = swapNodes(currentSol)
-        
+
         currentBestSwap = []
         currentBestScore = sys.maxsize
         # surely we don't need a second set of current ! what are you doing step-lucas ? well glad you asked that too
@@ -138,7 +151,7 @@ def tabuSearch(solution, solutionCost, tabuSize, itermax, nSwaps, timeout, isAsp
                     currentBestScore = sCost
                     currentBestSwap = s
             else:
-                if (sCost < tabu[isIntabu][2]) and (isAspirating!=0) :
+                if (sCost < tabu[isIntabu][2]) and (isAspirating != False):
                     tabu[isIntabu] = None
                     if sCost < currentBestScore:
                         currentBestScore = sCost
@@ -146,7 +159,7 @@ def tabuSearch(solution, solutionCost, tabuSize, itermax, nSwaps, timeout, isAsp
         # this is the big part of the algo so if you don't understand something, ask
 
         # we update tabu
-        tabu = tabouUpdate(tabu,[s[0], s[2], currentBestScore])
+        tabu = tabouUpdate(tabu, [s[0], s[2], currentBestScore])
 
         # we iterate in the best solution found
         # print(currentSol," to swap ",s)

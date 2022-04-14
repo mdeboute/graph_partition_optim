@@ -24,7 +24,6 @@ print(time.time() - t, "sec of getCost()")
 
 nNeighborhood = nSwap(solution, n=100)  # for metaheuristics & big instances
 nodesNeighborhood = swapNodes(solution)
-# neighborhood = swapNeighborhood(solution)
 
 
 # Test for the nSwap method
@@ -44,11 +43,11 @@ nodesNeighborhood = swapNodes(solution)
 
 # Test for the gradientDescent
 ##############################
-# print("\nInit sol at cost: ", solutionCost)
+# print("Init sol at cost: ", solutionCost)
 # t = time.time()
 # bestSol, bestCost = gradientDescent(solution, solutionCost)
 # print(
-#     f"\nBest Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     f"Best Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
 #     time.time() - t,
 #     "sec",
 # )
@@ -56,49 +55,53 @@ nodesNeighborhood = swapNodes(solution)
 
 # Test for the betterGradientDescent
 ##############################
-print("\nInit sol at cost: ", solutionCost)
-t = time.time()
-bestSol, bestCost = betterGradientDescent(solution, solutionCost, 1)
-print(
-    f"\nBest betterGradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-    time.time() - t,
-    "sec",
-)
-# if (bestCost!=bestSol.getCost()) :
-#     print ("\n/!\ alerte rouge /!\ \n")
+# print("Init sol at cost: ", solutionCost)
+# t = time.time()
+# bestSol, bestCost = betterGradientDescent(solution, solutionCost)
+# print(
+#     f"Best Gradient solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+#     time.time() - t,
+#     "sec",
+# )
 ##############################
 
 
 # Test for the simulatedAnnealing
 #################################
 # print("Init sol at cost: ", solutionCost)
+# t = time.time()
 # bestSol, bestCost = simulatedAnnealing(
 #     solution,
 #     solutionCost,
-#     neighborhood=nNeighborhood,
-#     maxIterations=graph.getNbVertices(),
-#     nswap=True,
-#     neighborhoodSize=100,
-#     initialTemperature=230,
+#     neighborhood=nodesNeighborhood,
+#     maxIterations=graph.getNbVertices() * 10,
+#     nswap=False,
+#     neighborhoodSize=None,
+#     initialTemperature=36,
 #     finalTemperature=0.01,
-#     coolingRate=0.2,
+#     coolingRate=0.09,
 # )
 # print(
-#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}"
+#     f"Best solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, in time: {time.time() - t} sec",
 # )
 #################################
 
 
 # Test for the tabuSearch
-#########################
-# print("Init sol at cost: ", solutionCost)
-# t = time.time()
-# bestSol, bestCost = tabuSearch(solution, solutionCost, 7, graph.getNbVertices()*100000, 1, 900, 1)
-# print(
-#     f"Best Tabou solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
-#     time.time() - t,
-#     "sec",
-# )
+########################
+print("Init sol at cost: ", solutionCost)
+t = time.time()
+bestSol, bestCost = tabuSearch(
+    solution,
+    solutionCost,
+    iterMax=graph.getNbVertices() * 10,
+    timeOut=8,
+)
+print(
+    f"Best Tabou solution: {bestSol}, with cost: {bestCost}, feasible: {bestSol.isFeasible()}, time: ",
+    time.time() - t,
+    "sec",
+)
 ########################
 
 
