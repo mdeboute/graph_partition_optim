@@ -41,7 +41,7 @@ def gradientDescent(sol, solCost, timeout = 60, nswap=False, neighborhoodSize=10
         return sol, solCost
 
 
-def betterGradientDescent(sol, solCost, nswap=False, neighborhoodSize=100):
+def betterGradientDescent(sol, solCost, timeout, nswap=False, neighborhoodSize=100):
     """
     Returns the best solution while looking at the first improving solution.
     @param sol: the solution
