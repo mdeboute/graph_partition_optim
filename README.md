@@ -1,6 +1,8 @@
-# graph_partition_optim
+# Graph partition optimization
 
-Usage:
+From a non oriented graph, possibly weighted in R. The principal objective is to partition the graph into p classes, so that the sum of the weights between vertices not belonging to the same class is minimal. Moreover, it's necessary to ensure that the vertices of the graph are distributed in a (more or less) equitable way in the p classes. And finally establish what is the best method to solve this problem.
+
+## Python script
 
 ```text
 Usage: python3 src/main.py [filePath] [options]
@@ -23,3 +25,17 @@ python3 -m cProfile -s tottime src/main.py [filePath] [options]
 ```
 
 for perfomance.
+
+## Shell script for benchmarking (test all the instances)
+
+Before running the script make sure to do: `chmod u+x src/benchmark.sh`
+
+```text
+Usage: ./benchmark.sh [dataDir] [solDir] [algo] [timeLimit]
+where algo can be one of these:
+  --enum
+  --gradient
+  --meta1
+  --meta2
+and timeLimit is in seconds.
+```
