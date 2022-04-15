@@ -28,7 +28,8 @@ def main():
     #   -m2, --meta2: perform tabu search
     #   -t, --time: set the time limit for the algorithm in seconds (default: 600)
     #   -k, --class: set the number of classes to be considered (default: 2)
-    #   -s, --size: set the size of the neighborhood (default: 1000) only for gradient descent or metaheuristics
+    #   -s, --size: set the size of the neighborhood (default: all the neighborhood)
+    # only for gradient descent or metaheuristics
 
     args = sys.argv[1:]
 
@@ -55,7 +56,8 @@ def main():
         print("  -t, --time: set the time limit for the algorithm (default: 600)")
         print("  -k, --class: set the number of classes to be considered (default: 2)")
         print(
-            "  -s, --size: set a size for the neighborhood (default: 1000) only for gradient descent or metaheuristics"
+            "  -s, --size: set a size for the neighborhood (default: all the neighborhood)",
+            "only for gradient descent or metaheuristics",
         )
         return
 
@@ -168,8 +170,9 @@ def main():
                 isAspirating=False,
             )
 
+    print(f"Best solution: {bestSol}")
     print(
-        f"Best solution found: {bestSol}, with cost {bestCost}, computed in {time.time() - t:.2f} seconds."
+        f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
     )
 
 
