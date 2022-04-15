@@ -31,11 +31,13 @@ for perfomance.
 Before running the script make sure to do: `chmod u+x src/benchmark.sh`
 
 ```text
-Usage: ./benchmark.sh [dataDir] [solDir] [algo] [timeLimit]
+Usage: ./benchmark.sh [dataDir] [solDir] [algo] [timeLimit] [sizeNeighborhood]
 where algo can be one of these:
   --enum
   --gradient
   --meta1
   --meta2
-and timeLimit is in seconds.
+timeLimit is the time limit in seconds,
+and sizeNeighborhood is the size of the neighborhood
+only for the meta-heuristics (default: all the neighborhoods).
 ```
