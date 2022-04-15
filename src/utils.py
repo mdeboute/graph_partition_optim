@@ -15,14 +15,14 @@ def parse(file_path):
         # save the edges information as an adjacency matrix
         # where the value (i, j) is the weight of the edge (i, j)
         # or 0 if there is no edge
-        edges = [[0 for j in range(nbVertices)] for i in range(nbVertices)]
+        edges = [[0 for _ in range(nbVertices)] for _ in range(nbVertices)]
         for i in range(5, 5 + nbEdges):
-            edges[int(lines[i].split()[0]) - 1][int(lines[i].split()[1]) - 1] = int(
-                lines[i].split()[2]
-            )
-            edges[int(lines[i].split()[1]) - 1][int(lines[i].split()[0]) - 1] = int(
-                lines[i].split()[2]
-            )
+            # vertices are from 1 to nbVertices, so we need to substract 1
+            src = int(lines[i].split()[0]) - 1
+            dest = int(lines[i].split()[1]) - 1
+            weight = int(lines[i].split()[2])
+            edges[src][dest] = weight
+            edges[dest][src] = weight
 
         degrees = []
         for i in range(6 + nbEdges, 6 + nbEdges + nbVertices):

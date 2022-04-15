@@ -103,17 +103,22 @@ class Graph:
         """
         Returns the neighbors of the vertex if it's possible.
         """
+        if vertex < 0 or vertex >= self.nbVertices:
+            raise ValueError("Vertex is out of bounds!")
+
         neighbors = []
         for i in range(self.nbVertices):
-            if vertex <= self.nbVertices and vertex >= 0:
-                if self.edges[vertex][i] != 0:
-                    neighbors.append(i)
+            if self.edges[vertex][i] != 0:
+                neighbors.append(i)
+
         if len(neighbors) != self.degrees[vertex]:
             raise Exception(
                 "The number of neighbors of the vertex "
-                + str(vertex)
-                + " is not equal to its degree."
+                + str(vertex + 1)
+                + " is not equal to its degree!"
+                + " There are probably errors in the instance!"
             )
+
         return neighbors
 
     def getEdges(self):

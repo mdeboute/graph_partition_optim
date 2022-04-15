@@ -3,7 +3,7 @@ from neighborhood import *
 from utils import *
 
 
-def gradientDescent(sol, solCost, timeout = 60, nswap=False, neighborhoodSize=100):
+def gradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=100):
     """
     Returns the best solution from looking at the whole neighborhood.
     @param sol: the solution
@@ -23,15 +23,19 @@ def gradientDescent(sol, solCost, timeout = 60, nswap=False, neighborhoodSize=10
 
     i = 0
     nSize = len(neighborhood)
-    while (i<nSize and time.time()<timeout) :
+    while i < nSize and time.time() < timeOut:
         s = neighborhood[i]
         sCost = swapEvaluator(sol, solCost, s)
         if sCost < bestCost:
             bestSol = s
             bestCost = sCost
             switch = 42
-        i+=1
-        
+        i += 1
+
+    if time.time() > timeOut:
+        print("Timeout reached!")
+        switch = 0
+
     if switch != 0:
         tmp = copySolution(sol)
         bestSol = swap(tmp, bestSol)
@@ -41,7 +45,7 @@ def gradientDescent(sol, solCost, timeout = 60, nswap=False, neighborhoodSize=10
         return sol, solCost
 
 
-def betterGradientDescent(sol, solCost, timeout, nswap=False, neighborhoodSize=100):
+def betterGradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=100):
     """
     Returns the best solution while looking at the first improving solution.
     @param sol: the solution
@@ -57,12 +61,12 @@ def betterGradientDescent(sol, solCost, timeout, nswap=False, neighborhoodSize=1
 
     i = 0
     nSize = len(neighborhood)
-    while (i<nSize and time.time()<timeout) :
+    while i < nSize and time.time() < timeOut:
         s = neighborhood[i]
         sCost = swapEvaluator(sol, solCost, s)
         if sCost < solCost:
             tmp = swap(sol, s)
             return betterGradientDescent(tmp, sCost)
-        i +=1
-    
+        i += 1
+
     return sol, solCost

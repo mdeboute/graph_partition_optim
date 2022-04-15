@@ -1,4 +1,3 @@
-from ast import arg
 import time, sys
 from enumeration import basicEnum
 from gradient_descent import *
@@ -82,7 +81,7 @@ def main():
         if "-t" in args or "--time" in args:
             timeLimit = int(args[args.index("-t") + 1])
         else:
-            timeLimit = 6
+            timeLimit = 600
         if "-k" in args or "--k" in args:
             k = int(args[args.index("-k") + 1])
         else:
@@ -91,11 +90,19 @@ def main():
         if "-s" in args or "--size" in args:
             size = int(args[args.index("-s") + 1])
             bestSol, bestCost = gradientDescent(
-                solution, solutionCost, time.time()+timeLimit, nswap=True, neighborhoodSize=size
+                solution,
+                solutionCost,
+                timeOut=timeLimit,
+                nswap=True,
+                neighborhoodSize=size,
             )
         else:
             bestSol, bestCost = gradientDescent(
-                solution, solutionCost, time.time()+timeLimit, nswap=False, neighborhoodSize=None
+                solution,
+                solutionCost,
+                timeOut=timeLimit,
+                nswap=False,
+                neighborhoodSize=None,
             )
 
     if "-m1" in args or "--meta1" in args:

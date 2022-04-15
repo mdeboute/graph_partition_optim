@@ -56,14 +56,14 @@ def nSwap(solution, n=20):
     swaps = []
     partition = solution.getPartition()
 
-    while len(swaps) < n : #10 000 est suffisement grand je pense
+    while len(swaps) < n:  # 10 000 is sufficient
         c1 = random.randint(0, k - 1)
         c2 = random.randint(0, k - 1)
         while c2 == c1:
             c2 = random.randint(0, k - 1)
         i = random.randint(0, len(partition[c1]) - 1)
         j = random.randint(0, len(partition[c2]) - 1)
-        
+
         tmp = [partition[c1][i], c1, partition[c2][j], c2]
         swaps.append(tmp)
     return swaps
@@ -128,17 +128,3 @@ def swapNodes(solution):
                         tmp.append(c2)
                         swaps.append(tmp)
     return swaps
-
-
-def bestSwapNodesVoisinage(solution, solutionCost):
-    swaps = swapNodes(solution)
-    bestScore = solutionCost
-    bestSol = solution
-
-    for s in swaps:
-        sCost = swapEvaluator(solution, solutionCost, s)
-        if sCost < bestScore:
-            tmp = copySolution(solution)
-            bestSol = swap(tmp, s)
-            bestScore = sCost
-    return bestSol, bestScore

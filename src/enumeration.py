@@ -17,7 +17,7 @@ def basicEnum(graph, TimeOut, nbClasses=2, verbose=False):
     bestSol = None
 
     nbVertices = graph.getNbVertices()
-    vertices = range(1, nbVertices + 1)
+    vertices = range(nbVertices)
 
     # we create the sets of possible classes for each vertex
     support = (range(nbClasses) for _ in vertices)
@@ -29,7 +29,7 @@ def basicEnum(graph, TimeOut, nbClasses=2, verbose=False):
     nbSol = 0  # nb of partitions found
     for rep in iter:
         if time.time() > t:
-            print("Time out!")
+            print("Time out reached!")
             break
         sol = [[] for _ in range(nbClasses)]
         nbSol += 1

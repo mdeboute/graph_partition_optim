@@ -12,7 +12,7 @@ def simulatedAnnealing(
     timeOut,
     nswap=False,
     neighborhoodSize=None,
-    initialTemperature=30,
+    initialTemperature=36,
     finalTemperature=0.01,
     coolingRate=0.09,
 ):
@@ -102,7 +102,7 @@ def tabuSearch(
     timeOut,
     tabuSize=7,
     nswap=True,
-    neighborhoodSize=1000,
+    neighborhoodSize=100,
     isAspirating=False,
 ):
 
