@@ -1,4 +1,4 @@
-# Usage: ./benchmark.sh [dataDir] [solDir] algo timeLimit
+# Usage: ./benchmark.sh [dataDir] [solDir] [algo} [timeLimit]
 # where algo can be one of these:
 #   --enum
 #   --gradient
@@ -9,7 +9,7 @@
 
 #if size of argv less than 4 or more than 4, then print the help message and exit
 if [ $# -lt 4 ] || [ $# -gt 4 ]; then
-    echo "Usage: ./benchmark.sh [dataDir] [solDir] algo timeLimit"
+    echo "Usage: ./benchmark.sh [dataDir] [solDir] [algo] [timeLimit]"
     echo "where algo can be one of these:"
     echo "  --enum"
     echo "  --gradient"
