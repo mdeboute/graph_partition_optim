@@ -56,21 +56,16 @@ def nSwap(solution, n=20):
     swaps = []
     partition = solution.getPartition()
 
-    while len(swaps) < n:
-        switch = 0
+    while len(swaps) < n : #10 000 est suffisement grand je pense
         c1 = random.randint(0, k - 1)
         c2 = random.randint(0, k - 1)
         while c2 == c1:
             c2 = random.randint(0, k - 1)
         i = random.randint(0, len(partition[c1]) - 1)
         j = random.randint(0, len(partition[c2]) - 1)
-        for s in swaps:
-            if (s[0] == i or s[0] == j) and (s[1] == i or s[1] == j):
-                switch = 121
-        if switch == 0:
-            tmp = [partition[c1][i], c1, partition[c2][j], c2]
-            swaps.append(tmp)
-
+        
+        tmp = [partition[c1][i], c1, partition[c2][j], c2]
+        swaps.append(tmp)
     return swaps
 
 
