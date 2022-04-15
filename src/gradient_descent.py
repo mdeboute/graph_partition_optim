@@ -1,8 +1,9 @@
+import time
 from neighborhood import *
 from utils import *
 
 
-def gradientDescent(sol, solCost, nswap=False, neighborhoodSize=100):
+def gradientDescent(sol, solCost, timeout = 60, nswap=False, neighborhoodSize=100):
     """
     Returns the best solution from looking at the whole neighborhood.
     @param sol: the solution
@@ -20,12 +21,17 @@ def gradientDescent(sol, solCost, nswap=False, neighborhoodSize=100):
     else:
         neighborhood = swapNodes(sol)
 
-    for s in neighborhood:
+    i = 0
+    nSize = len(neighborhood)
+    while (i<nSize and time.time()<timeout) :
+        s = neighborhood[i]
         sCost = swapEvaluator(sol, solCost, s)
         if sCost < bestCost:
             bestSol = s
             bestCost = sCost
             switch = 42
+        i+=1
+        
     if switch != 0:
         tmp = copySolution(sol)
         bestSol = swap(tmp, bestSol)
@@ -49,10 +55,14 @@ def betterGradientDescent(sol, solCost, nswap=False, neighborhoodSize=100):
     else:
         neighborhood = swapNodes(sol)
 
-    for s in neighborhood:
+    i = 0
+    nSize = len(neighborhood)
+    while (i<nSize and time.time()<timeout) :
+        s = neighborhood[i]
         sCost = swapEvaluator(sol, solCost, s)
         if sCost < solCost:
             tmp = swap(sol, s)
             return betterGradientDescent(tmp, sCost)
-    else:
-        return sol, solCost
+        i +=1
+    
+    return sol, solCost
