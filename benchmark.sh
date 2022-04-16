@@ -35,7 +35,8 @@ fi
 
 algoDir = ${3#*--}
 mkdir -p $2  # create the output directory if it does not already exist
-cd $2 && mkdir -p $algoDir
+cd $2
+mkdir -p $algoDir
 echo `date` > $algoDir/date.txt
 cd ../../
 
