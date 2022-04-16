@@ -43,7 +43,7 @@ def main():
         print("No arguments provided. Please use -h for help.")
         return
 
-    if len(args) < 1:
+    if len(args) < 2:
         print("Please provide at least two arguments. Please use -h for help.")
         return
 
