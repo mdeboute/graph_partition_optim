@@ -3,7 +3,7 @@ from utils import *
 import time
 
 
-def gradientDescent(sol, solCost, timeout=60, nswap=False, neighborhoodSize=100):
+def gradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=None):
     """
     Returns the best solution from looking at the whole neighborhood.
     @param sol: the solution
@@ -12,6 +12,7 @@ def gradientDescent(sol, solCost, timeout=60, nswap=False, neighborhoodSize=100)
     @param neighborhoodSize: the size of the neighborhood
     @return: the best solution and its cost
     """
+
     bestSol = sol
     bestCost = solCost
     switch = 0
@@ -22,8 +23,8 @@ def gradientDescent(sol, solCost, timeout=60, nswap=False, neighborhoodSize=100)
         neighborhood = swapNodes(sol)
 
     for s in neighborhood:
-        if (time.time() > timeout) :
-            print("timeout reached!")
+        if time.time() > timeOut:
+            print("Time out reached!")
             switch = 0
             break
         sCost = swapEvaluator(sol, solCost, s)
@@ -31,18 +32,17 @@ def gradientDescent(sol, solCost, timeout=60, nswap=False, neighborhoodSize=100)
             bestSol = s
             bestCost = sCost
             switch = 42
-            
-    
+
     if switch != 0:
         tmp = copySolution(sol)
         bestSol = swap(tmp, bestSol)
 
-        return gradientDescent(bestSol, bestCost, timeout, nswap, neighborhoodSize)
+        return gradientDescent(bestSol, bestCost, timeOut, nswap, neighborhoodSize)
     else:
         return sol, solCost
 
 
-def betterGradientDescent(sol, solCost, timeout=60, nswap=False, neighborhoodSize=100):
+def betterGradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=None):
     """
     Returns the best solution while looking at the first improving solution.
     @param sol: the solution
@@ -51,19 +51,20 @@ def betterGradientDescent(sol, solCost, timeout=60, nswap=False, neighborhoodSiz
     @param neighborhoodSize: the size of the neighborhood
     @return: the best solution and its cost
     """
+
     if nswap == True:
         neighborhood = nSwap(sol, neighborhoodSize)
     else:
         neighborhood = swapNodes(sol)
 
     for s in neighborhood:
-        if (time.time() > timeout) :
-            print("timeout reached!")
+        if time.time() > timeOut:
+            print("Time out reached!")
             switch = 0
             break
         sCost = swapEvaluator(sol, solCost, s)
         if sCost < solCost:
             tmp = swap(sol, s)
-            return betterGradientDescent(tmp, sCost, timeout, nswap, neighborhoodSize)
+            return betterGradientDescent(tmp, sCost, timeOut, nswap, neighborhoodSize)
     else:
         return sol, solCost
