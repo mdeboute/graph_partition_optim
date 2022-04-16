@@ -42,12 +42,12 @@ cd ..
 if [ $# -eq 5 ]; then # if the size of the neighborhood is specified
     for instance in `ls $1` ; do  # for each instance in directory $1
         echo Resolution of $instance
-        python3 src/main.py $1/$instance $3 -t $4 -s $5 >> $2/$algoDir/log_${instance}.txt  # writing console output to a log file
+        python3 src/main.py $1/$instance $3 -t $4 -s $5 >> $2/$algoDir/log_${instance} # writing console output to a log file
     done
 else
     for instance in `ls $1` ; do
         echo Resolution of $instance
-        python3 src/main.py $1/$instance $3 -t $4 >> $2/$algoDir/log_${instance}.txt
+        python3 src/main.py $1/$instance $3 -t $4 >> $2/$algoDir/log_${instance}
     done
 fi
 
