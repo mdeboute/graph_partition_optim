@@ -44,9 +44,7 @@ if [ $# -eq 5 ]; then # if the size of the neighborhood is specified
         echo Resolution of $instance
         python3 src/main.py $1/$instance $3 -t $4 -s $5 >> $2/$algoDir/log_${instance}.txt  # writing console output to a log file
     done
-fi
-
-else # if $# == 4
+else
     for instance in `ls $1` ; do
         echo Resolution of $instance
         python3 src/main.py $1/$instance $3 -t $4 >> $2/$algoDir/log_${instance}.txt
