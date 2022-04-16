@@ -33,7 +33,7 @@ if [ $# -eq 5 ]; then
     echo Size of neighborhood: $5
 fi
 
-algoDir = ${3#*--}
+algoDir = "${3#*--}"
 mkdir -p $2  # create the output directory if it does not already exist
 cd $2
 mkdir -p $algoDir
