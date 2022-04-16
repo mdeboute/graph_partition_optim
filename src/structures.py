@@ -5,6 +5,9 @@ class Graph:
     """Represents a graph with an adjacency matrix."""
 
     def __init__(self, nbVertices, nbEdges, edges, degrees):
+        """
+        Initializes the graph.
+        """
         self.nbVertices = nbVertices
         self.nbEdges = nbEdges
         self.edges = edges
@@ -60,7 +63,7 @@ class Graph:
 
     def print(self, verbose=False):
         """
-        Prints the graph.
+        Prints the graph with a verbose option.
         """
         print(
             "Graph with "
@@ -141,9 +144,12 @@ class Graph:
 
 
 class Solution(Graph):
-    """Represents a solution"""
+    """Represents a solution with a partition."""
 
     def __init__(self, partition, graph, nbClasses=2):
+        """
+        Initializes the solution.
+        """
         self.partition = partition
         self.graph = graph
         self.nbClasses = nbClasses
@@ -178,7 +184,7 @@ class Solution(Graph):
 
     def getCost(self):
         """
-        Returns the cost of the solution as the sum of the weiths of the inter-class edges
+        Returns the cost of the solution as the sum of the weiths of the inter-class edges.
         """
         cost = 0
         for i in range(self.nbClasses):
@@ -214,10 +220,12 @@ class Solution(Graph):
         return self.graph
 
     def isFeasible(self):
-        # Check if the solution is feasible
-        # The partition is correct if the sum of the number of vertices
-        # in each class is equal to the number of vertices of the graph associated to the solution
-        # And if the number of vertices in each class is approximatively the same
+        """
+        Check if the solution is feasible.
+        The partition is correct if the sum of the number of vertices
+        in each class is equal to the number of vertices of the graph associated to the solution.
+        And if the number of vertices in each class is approximatively the same.
+        """
 
         feasible = None
 

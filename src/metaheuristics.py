@@ -30,6 +30,7 @@ def simulatedAnnealing(
     @param coolingRate: the cooling rate
     @return: the best solution and its cost
     """
+
     bestSol = solution
     bestCost = solutionCost
     currTemperature = initialTemperature
@@ -39,11 +40,11 @@ def simulatedAnnealing(
     while currTemperature > finalTemperature:
         currSol = bestSol
         currCost = bestCost
-        while i < maxIterations and i < len(nbhd):
+        while i < maxIterations:
             if time.time() > t:
                 print("Timeout reached!")
                 return bestSol, bestCost
-            s = nbhd[i]
+            s = random.choice(nbhd)
             sCost = swapEvaluator(currSol, currCost, s)
             delta = sCost - bestCost
             # normalize the delta because he have a huge impact on the metropolis criterion
@@ -69,6 +70,16 @@ def getInitialTemperature(
     k=100,
     neighborhoodSize=1000,
 ):
+    """
+    Returns the initial temperature for the simulated annealing.
+    @param solution: the solution
+    @param solutionCost: the cost of the solution
+    @param tau: the acceptance rate
+    @param k: the number of iterations
+    @param neighborhoodSize: the size of the neighborhood
+    @return: the initial temperature
+    """
+
     neighborhood = nSwap(solution, neighborhoodSize)
     deltas = list()
     for _ in range(k):
@@ -82,6 +93,13 @@ def getInitialTemperature(
 
 
 def tabouUpdate(tabu, x):
+    """
+    Updates the tabu list.
+    @param tabu: the tabu list
+    @param x: the solution
+    @return: the updated tabu list
+    """
+
     tabuSize = len(tabu)
     for i in range(tabuSize - 1):
         tabu[i] = tabu[i + 1]
@@ -105,6 +123,18 @@ def tabuSearch(
     neighborhoodSize=100,
     isAspirating=False,
 ):
+    """
+    Returns the best solution using the tabu search.
+    @param solution: the solution
+    @param solutionCost: the cost of the solution
+    @param iterMax: the maximum number of iterations
+    @param timeOut: the time out
+    @param tabuSize: the size of the tabu list (default: 7)
+    @param nswap: if True, the neighborhood is created with nSwap, otherwise with swapNodes (default: True)
+    @param neighborhoodSize: the size of the neighborhood (if nswap is True, default: 100)
+    @param isAspirating: if True, the tabu search is aspirating or not (default: False)
+    @return: the best solution and its cost
+    """
 
     if tabuSize <= 0:
         print("TabuSize must be > 0!")

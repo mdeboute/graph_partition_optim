@@ -205,3 +205,6 @@ def do(path, k, neighborhoodSize, iterMax, timeOut, tabuSize):
 
 if __name__ == "__main__":
     resultAutomatism()
+
+# wtf bro? why did you do that? i've made a fucking CLI and a shell script to do the same thing before u??
+# i thought that file was created to be used for the search of the best parameters of the tabu algorithm

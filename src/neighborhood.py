@@ -12,14 +12,15 @@ Notion of neighborhoods:
 For this project we will use the Swap neighborhood.
 """
 
-# swapEvaluator(solution, solutionCost, s) evaluate the new solution resulting of the swap 's' in solution 'solution'
-# swap(solution, s) return the solution resulting of the swap 's' on solution 'solution'
-# nSwap(solution, n) return 'n' random neighbor solutions of solution 'solution' (to upgrade)
-# swapNeighborhood(solution) return all the neighbor solutions of solution 'solution'
-# swapNodes(solution) return all the neighbor swaps of solution 'solution'
-
 
 def swapEvaluator(solution, solutionCost, s):
+    """
+    Evaluate the new solution resulting of the swap 's' in solution 'solution'.
+    @param solution: the solution
+    @param solutionCost: the cost of the solution
+    @param s: the swap
+    @return: the cost of the new solution
+    """
 
     node1 = s[0]
     node1Class = s[1]
@@ -51,7 +52,13 @@ def swapEvaluator(solution, solutionCost, s):
     return cost
 
 
-def nSwap(solution, n=20):
+def nSwap(solution, n=100):
+    """
+    Return 'n' random neighbor of solution 'solution'.
+    @param solution: the solution
+    @param n: the number of neighbor we want
+    @return: the list of neighbor
+    """
     k = solution.getNbClasses()
     swaps = []
     partition = solution.getPartition()
@@ -70,6 +77,12 @@ def nSwap(solution, n=20):
 
 
 def swapNeighborhood(solution):
+    """
+    Return all the neighbor of solution 'solution'.
+    @param solution: the solution
+    @return: the list of neighbor
+    """
+
     k = solution.getNbClasses()
     partitions = []
     partition = solution.getPartition()
@@ -92,6 +105,13 @@ def swapNeighborhood(solution):
 
 
 def swap(solution, s):
+    """
+    Return the solution resulting of the swap 's' on solution 'solution'.
+    @param solution: the solution
+    @param s: the swap
+    @return: the new solution
+    """
+
     node1 = s[0]
     class1 = s[1]
     node2 = s[2]
@@ -111,7 +131,12 @@ def swap(solution, s):
 
 
 def swapNodes(solution):
-    # return tab of swaps with the format [node1,class1,node2,class2]
+    """
+    Return all the neighbor swaps of solution 'solution'.
+    @param solution: the solution
+    @return: the list of neighbor (Solution objects)
+    """
+
     k = solution.getNbClasses()
     swaps = []
     partition = solution.getPartition()

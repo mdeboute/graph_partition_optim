@@ -28,9 +28,6 @@ def basicEnum(graph, TimeOut, nbClasses=2, verbose=False):
     # for each answer of the iterator we create the partitions
     nbSol = 0  # nb of partitions found
     for rep in iter:
-        if time.time() > t:
-            print("Time out reached!")
-            break
         sol = [[] for _ in range(nbClasses)]
         nbSol += 1
 
@@ -48,6 +45,10 @@ def basicEnum(graph, TimeOut, nbClasses=2, verbose=False):
 
         if verbose:
             print("Sol = {0!r:23} numero = {1:02}".format(sol, nbSol))
+
+        if time.time() > t:
+            print("Time out reached!")
+            break
 
     if nbSol != nbClasses ** nbVertices:
         print("The number of solutions found is not correct!")

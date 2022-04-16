@@ -5,7 +5,10 @@ import random
 def parse(file_path):
     """
     Parses the file and returns a Graph.
+    @param file_path: the path to the file
+    @return: a graph
     """
+
     with open(file_path, "r") as f:
         lines = f.readlines()
 
@@ -38,6 +41,7 @@ def makeKPartition(graph, nbClasses=2):
     @param graph: a graph
     @return: a k-partition of the vertices
     """
+
     nbVertices = graph.getNbVertices()
     l = [_ for _ in range(nbVertices)]  # the list of vertices
     partition = list()
@@ -57,6 +61,12 @@ def makeKPartition(graph, nbClasses=2):
 
 
 def copyPartition(partition):
+    """
+    Copy a partition.
+    @param partition: a partition
+    @return: a copy of the partition
+    """
+
     copy = []
     for i in range(len(partition)):
         tmp = []
@@ -67,6 +77,12 @@ def copyPartition(partition):
 
 
 def copySolution(solution):
+    """
+    Copy a solution.
+    @param solution: a solution
+    @return: a copy of the solution
+    """
+
     return Solution(
         copyPartition(solution.getPartition()),
         solution.getGraph(),

@@ -3,7 +3,7 @@ from neighborhood import *
 from utils import *
 
 
-def gradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=100):
+def gradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=None):
     """
     Returns the best solution from looking at the whole neighborhood.
     @param sol: the solution
@@ -45,7 +45,7 @@ def gradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=100):
         return sol, solCost
 
 
-def betterGradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=100):
+def betterGradientDescent(sol, solCost, timeOut, nswap=False, neighborhoodSize=None):
     """
     Returns the best solution while looking at the first improving solution.
     @param sol: the solution

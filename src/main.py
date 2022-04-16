@@ -7,7 +7,14 @@ from neighborhood import *
 from metaheuristics import *
 
 
-def initSol(graph, k):
+def initSol(graph, k=2):
+    """
+    Returns an initial solution.
+    @param graph: the graph
+    @param k: the number of classes
+    @return: the initial solution and its cost
+    """
+
     partition = makeKPartition(graph, nbClasses=k)
     solution = Solution(partition, graph, nbClasses=k)
     t = time.time()
@@ -26,7 +33,7 @@ def main():
     #   -m1, --meta1: perform simulated annealing
     #   -m2, --meta2: perform tabu search
     #   -t, --time: set the time limit for the algorithm in seconds (default: 600)
-    #   -k, --class: set the number of classes to be considered (default: 2)
+    #   -c, --class: set the number of classes to be considered (default: 2)
     #   -s, --size: set the size of the neighborhood (default: all the neighborhood)
     # only for gradient descent or metaheuristics
 
@@ -53,7 +60,7 @@ def main():
         print("  -m1, --meta1: perform simulated annealing")
         print("  -m2, --meta2: perform tabu search")
         print("  -t, --time: set the time limit for the algorithm (default: 600)")
-        print("  -k, --class: set the number of classes to be considered (default: 2)")
+        print("  -c, --class: set the number of classes to be considered (default: 2)")
         print(
             "  -s, --size: set a size for the neighborhood (default: all the neighborhood)",
             "only for gradient descent or metaheuristics",
@@ -71,8 +78,8 @@ def main():
             timeLimit = int(args[args.index("-t") + 1])
         else:
             timeLimit = 600
-        if "-k" in args or "--k" in args:
-            k = int(args[args.index("-k") + 1])
+        if "-c" in args or "--c" in args:
+            k = int(args[args.index("-c") + 1])
         else:
             k = 2
         bestSol, bestCost = basicEnum(graph, timeLimit, k)
@@ -86,8 +93,8 @@ def main():
             timeLimit = int(args[args.index("-t") + 1])
         else:
             timeLimit = 600
-        if "-k" in args or "--k" in args:
-            k = int(args[args.index("-k") + 1])
+        if "-c" in args or "--c" in args:
+            k = int(args[args.index("-c") + 1])
         else:
             k = 2
         solution, solutionCost = initSol(graph, k)
@@ -122,8 +129,8 @@ def main():
             timeLimit = int(args[args.index("-t") + 1])
         else:
             timeLimit = 600
-        if "-k" in args or "--k" in args:
-            k = int(args[args.index("-k") + 1])
+        if "-c" in args or "--c" in args:
+            k = int(args[args.index("-c") + 1])
         else:
             k = 2
         solution, solutionCost = initSol(graph, k)
@@ -168,8 +175,8 @@ def main():
             timeLimit = int(args[args.index("-t") + 1])
         else:
             timeLimit = 600
-        if "-k" in args or "--k" in args:
-            k = int(args[args.index("-k") + 1])
+        if "-c" in args or "--c" in args:
+            k = int(args[args.index("-c") + 1])
         else:
             k = 2
         solution, solutionCost = initSol(graph, k)
