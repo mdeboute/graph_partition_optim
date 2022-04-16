@@ -10,7 +10,7 @@ numpy = "^1.22.3"
 pandas = "^1.4.2"
 matplotlib = "^3.5.1"
 ipykernel = "^6.13.0"
-word2number = "^1.1"
+text2num = "^2.4.0"
 
 [tool.poetry.dev-dependencies]
 
