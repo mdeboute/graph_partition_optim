@@ -103,7 +103,7 @@ def main():
             bestSol, bestCost = gradientDescent(
                 solution,
                 solutionCost,
-                timeOut=timeLimit,
+                timeOut=timeLimit + time.time(),  # because it's a recursive function
                 nswap=True,
                 neighborhoodSize=size,
             )
@@ -115,7 +115,7 @@ def main():
             bestSol, bestCost = gradientDescent(
                 solution,
                 solutionCost,
-                timeOut=timeLimit,
+                timeOut=timeLimit + time.time(),  # because it's a recursive function
                 nswap=False,
                 neighborhoodSize=None,
             )
