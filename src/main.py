@@ -76,6 +76,10 @@ def main():
         else:
             k = 2
         bestSol, bestCost = basicEnum(graph, timeLimit, k)
+        print(f"Best solution: {bestSol}")
+        print(
+            f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
+        )
 
     if "-g" in args or "--gradient" in args:
         if "-t" in args or "--time" in args:
@@ -96,6 +100,10 @@ def main():
                 nswap=True,
                 neighborhoodSize=size,
             )
+            print(f"Best solution: {bestSol}")
+            print(
+                f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
+            )
         else:
             bestSol, bestCost = gradientDescent(
                 solution,
@@ -103,6 +111,10 @@ def main():
                 timeOut=timeLimit,
                 nswap=False,
                 neighborhoodSize=None,
+            )
+            print(f"Best solution: {bestSol}")
+            print(
+                f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
             )
 
     if "-m1" in args or "--meta1" in args:
@@ -129,6 +141,10 @@ def main():
                 finalTemperature=0.01,
                 coolingRate=0.09,
             )
+            print(f"Best solution: {bestSol}")
+            print(
+                f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
+            )
         else:
             bestSol, bestCost = simulatedAnnealing(
                 solution,
@@ -141,6 +157,10 @@ def main():
                 initialTemperature=36,
                 finalTemperature=0.01,
                 coolingRate=0.09,
+            )
+            print(f"Best solution: {bestSol}")
+            print(
+                f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
             )
 
     if "-m2" in args or "--meta2" in args:
@@ -165,6 +185,10 @@ def main():
                 neighborhoodSize=size,
                 isAspirating=False,
             )
+            print(f"Best solution: {bestSol}")
+            print(
+                f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
+            )
         else:
             bestSol, bestCost = tabuSearch(
                 solution,
@@ -176,11 +200,10 @@ def main():
                 neighborhoodSize=None,
                 isAspirating=False,
             )
-
-    print(f"Best solution: {bestSol}")
-    print(
-        f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
-    )
+            print(f"Best solution: {bestSol}")
+            print(
+                f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
+            )
 
 
 if __name__ == "__main__":
