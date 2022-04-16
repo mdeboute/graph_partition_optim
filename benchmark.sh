@@ -33,12 +33,11 @@ if [ $# -eq 5 ]; then
     echo Size of neighborhood: $5
 fi
 
-algoDir = "${3#*--}"
+algoDir="${3#*--}"
 mkdir -p $2  # create the output directory if it does not already exist
-cd $2
-mkdir -p $algoDir
+cd $2 && mkdir -p $algoDir
 echo `date` > $algoDir/date.txt
-cd ../../
+cd ..
 
 if [ $# -eq 5 ]; then # if the size of the neighborhood is specified
     for instance in `ls $1` ; do  # for each instance in directory $1
