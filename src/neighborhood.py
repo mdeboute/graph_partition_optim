@@ -61,9 +61,9 @@ def nSwap(solution, n=20):
         c2 = random.randint(0, k - 1)
         while c2 == c1:
             c2 = random.randint(0, k - 1)
-        i = random.randint(0, len(partition[c1]) - 1)
-        j = random.randint(0, len(partition[c2]) - 1)
-
+        i = random.randint(0, len(partition[c1]) - 2)
+        j = random.randint(i, len(partition[c2]) - 1)
+        
         tmp = [partition[c1][i], c1, partition[c2][j], c2]
         swaps.append(tmp)
     return swaps
