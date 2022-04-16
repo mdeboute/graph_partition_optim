@@ -185,7 +185,7 @@ def main():
             bestSol, bestCost = tabuSearch(
                 solution,
                 solutionCost,
-                iterMax=graph.getNbVertices() * 10,
+                iterMax=graph.getNbVertices(),
                 timeOut=timeLimit,
                 tabuSize=7,
                 nswap=True,
@@ -200,7 +200,7 @@ def main():
             bestSol, bestCost = tabuSearch(
                 solution,
                 solutionCost,
-                iterMax=graph.getNbVertices() * 10,
+                iterMax=graph.getNbVertices(),
                 timeOut=timeLimit,
                 tabuSize=7,
                 nswap=False,
