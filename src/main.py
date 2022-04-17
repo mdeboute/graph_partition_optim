@@ -35,7 +35,7 @@ def main():
     #   -t, --time: set the time limit for the algorithm in seconds (default: 600)
     #   -c, --class: set the number of classes to be considered (default: 2)
     #   -s, --size: set the size of the neighborhood (default: all the neighborhood)
-    # only for gradient descent or metaheuristics
+    # only for gradient descent or metaheuristics.
 
     args = sys.argv[1:]
 
@@ -63,7 +63,7 @@ def main():
         print("  -c, --class: set the number of classes to be considered (default: 2)")
         print(
             "  -s, --size: set a size for the neighborhood (default: all the neighborhood)",
-            "only for gradient descent or metaheuristics",
+            "only for gradient descent or metaheuristics.",
         )
         return
 
@@ -212,6 +212,8 @@ def main():
                 f"Result: best solution found in {time.time() - t:.2f} seconds with cost: {bestCost}."
             )
 
+
+# you should set isAspirating to True if you want to use the aspiration criterion for the tabu search (better results)
 
 if __name__ == "__main__":
     main()

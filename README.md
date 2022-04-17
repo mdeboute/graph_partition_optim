@@ -5,17 +5,16 @@ From a non oriented graph, possibly weighted in R. The principal objective is to
 ## Python script
 
 ```text
-Usage: python3 src/main.py [filePath] [options]
-Options:
+CLI arguments will be used to set the parameters of the algorithm as follows:
   -h, --help: print this help message
   -e, --enum: perform basic enumeration
   -g, --gradient: perform gradient descent
   -m1, --meta1: perform simulated annealing
   -m2, --meta2: perform tabu search
-  -t, --time: set the time limit for the algorithm (default: 600)
-  -k, --class: set the number of classes to be considered (default: 2)
-  -s, --size: set a size for the neighborhood (default: all the neighborhood)
-  only for gradient descent or metaheuristics
+  -t, --time: set the time limit for the algorithm in seconds (default: 600)
+  -c, --class: set the number of classes to be considered (default: 2)
+  -s, --size: set the size of the neighborhood (default: all the neighborhood)
+  only for gradient descent or metaheuristics.
 ```
 
 Use:
@@ -31,13 +30,16 @@ for perfomance.
 Before running the script make sure to do: `chmod u+x src/benchmark.sh`
 
 ```text
-Usage: ./benchmark.sh [dataDir] [solDir] [algo] [timeLimit] [sizeNeighborhood]
+Usage: ./benchmark.sh [dataDir] [solDir] [algo] [timeLimit] [k] [sizeNeighborhood]
 where algo can be one of these:
   --enum
   --gradient
   --meta1
   --meta2
 timeLimit is the time limit in seconds,
-and sizeNeighborhood is the size of the neighborhood
+k is the number of partitions (default: 2),
+and sizeNeighborhood is the size of the neighborhood,
 only for the meta-heuristics (default: all the neighborhoods).
 ```
+
+PS: you can find the dependencies for the `result.ipynb` notebook in the `pyproject.toml` file.

@@ -1,5 +1,5 @@
 from structures import *
-import copy, random
+import random
 from utils import *
 
 

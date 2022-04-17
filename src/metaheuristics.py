@@ -165,7 +165,8 @@ def tabuSearch(
 
         currentBestSwap = []
         currentbestCost = sys.maxsize
-        # surely we don't need a second set of current ! what are you doing step-lucas ? well glad you asked that too
+
+        # surely we don't need a second set of current ! what are you doing step ? well glad you asked that too
         # in fact you may quite have not seen it in the GD but i did add a second set of solutions, "sol" was what currentSol is
         # and then i added a bestSol to keep in mind the best sol found so far, with keeping in memory sol (or currentSol)
         # to compute the cost of other swaps.
@@ -179,7 +180,6 @@ def tabuSearch(
             isIntabu = 0
             for i in range(tabuSize):
                 if tabu[i] is not None:
-                    # print(s," and ",tabu[i])
                     if (s[0] == tabu[i][0] or s[0] == tabu[i][1]) and (
                         s[2] == tabu[i][0] or s[2] == tabu[i][1]
                     ):
@@ -195,13 +195,11 @@ def tabuSearch(
                     if sCost < currentbestCost:
                         currentbestCost = sCost
                         currentBestSwap = s
-        # this is the big part of the algo so if you don't understand something, ask
 
         # we update tabu
         tabu = tabouUpdate(tabu, [s[0], s[2], currentbestCost])
 
         # we iterate in the best solution found
-        # print(currentSol," to swap ",s)
         tmp = copySolution(currentSol)
         currentSol = swap(tmp, currentBestSwap)
         currentScore = currentbestCost
