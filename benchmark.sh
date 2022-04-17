@@ -7,7 +7,7 @@
 # timeLimit is the time limit in seconds,
 # k is the number of partitions (default: 2),
 # and sizeNeighborhood is the size of the neighborhood,
-# only for the meta-heuristics (default: all the neighborhoods).
+# only for the gradient or the meta-heuristics (default: all the neighborhoods).
 
 
 #if size of argv less than 4 or more than 5, then print the help message and exit
@@ -21,7 +21,7 @@ if [ $# -lt 4 ] || [ $# -gt 6 ]; then
     echo "timeLimit is the time limit in seconds,"
     echo "k is the number of partitions (default: 2),"
     echo "and sizeNeighborhood is the size of the neighborhood,"
-    echo "only for the meta-heuristics (default: all the neighborhoods)."
+    echo "only for the gradient or the meta-heuristics (default: all the neighborhoods)."
     exit 1
 fi
 
