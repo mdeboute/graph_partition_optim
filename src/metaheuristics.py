@@ -174,7 +174,7 @@ def tabuSearch(
         for s in neighborhood:
             if time.time() > t:
                 print("Time out reached!")
-                break
+                return bestSol, bestCost
             sCost = swapEvaluator(currentSol, currentScore, s)
             isIntabu = 0
             for i in range(tabuSize):
