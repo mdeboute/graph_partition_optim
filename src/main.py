@@ -140,7 +140,7 @@ def main():
                 solution,
                 solutionCost,
                 neighborhood=nSwap(solution, n=size),
-                maxIterations=graph.getNbVertices() * 10,
+                maxIterations=graph.getNbVertices() ** 2,
                 timeOut=timeLimit,
                 nswap=True,
                 neighborhoodSize=size,
