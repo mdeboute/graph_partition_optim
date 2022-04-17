@@ -172,6 +172,9 @@ def tabuSearch(
         # so that is why, surely, I need a 3rd set of solution/cost
 
         for s in neighborhood:
+            if time.time() > t:
+                print("Time out reached!")
+                break
             sCost = swapEvaluator(currentSol, currentScore, s)
             isIntabu = 0
             for i in range(tabuSize):
