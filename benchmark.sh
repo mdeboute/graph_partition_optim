@@ -36,6 +36,7 @@ if [ $# -eq 5 ]; then
 fi
 
 if [ $# -eq 6 ]; then
+    echo Number of partitions: $5
     echo Neighborhood size: $6
 fi
 
