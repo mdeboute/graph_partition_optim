@@ -9,29 +9,34 @@ def parse(file_path):
     @return: a graph
     """
 
-    with open(file_path, "r") as f:
-        lines = f.readlines()
+    # surround the file with try/except
+    try:
+        with open(file_path, "r") as f:
+            lines = f.readlines()
 
-        nbVertices = int(lines[1].split()[0])
-        nbEdges = int(lines[1].split()[1])
+            nbVertices = int(lines[1].split()[0])
+            nbEdges = int(lines[1].split()[1])
 
-        # save the edges information as an adjacency matrix
-        # where the value (i, j) is the weight of the edge (i, j)
-        # or 0 if there is no edge
-        edges = [[0 for _ in range(nbVertices)] for _ in range(nbVertices)]
-        for i in range(5, 5 + nbEdges):
-            # vertices are from 1 to nbVertices, so we need to substract 1
-            src = int(lines[i].split()[0]) - 1
-            dest = int(lines[i].split()[1]) - 1
-            weight = int(lines[i].split()[2])
-            edges[src][dest] = weight
-            edges[dest][src] = weight
+            # save the edges information as an adjacency matrix
+            # where the value (i, j) is the weight of the edge (i, j)
+            # or 0 if there is no edge
+            edges = [[0 for _ in range(nbVertices)] for _ in range(nbVertices)]
+            for i in range(5, 5 + nbEdges):
+                # vertices are from 1 to nbVertices, so we need to substract 1
+                src = int(lines[i].split()[0]) - 1
+                dest = int(lines[i].split()[1]) - 1
+                weight = int(lines[i].split()[2])
+                edges[src][dest] = weight
+                edges[dest][src] = weight
 
-        degrees = []
-        for i in range(6 + nbEdges, 6 + nbEdges + nbVertices):
-            degrees.append(int(lines[i].split()[1]))
+            degrees = []
+            for i in range(6 + nbEdges, 6 + nbEdges + nbVertices):
+                degrees.append(int(lines[i].split()[1]))
 
-        return Graph(nbVertices, nbEdges, edges, degrees)
+            return Graph(nbVertices, nbEdges, edges, degrees)
+    except FileNotFoundError:
+        print("File not found!")
+        exit(1)
 
 
 def makeKPartition(graph, nbClasses=2):
