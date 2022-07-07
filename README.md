@@ -4,6 +4,10 @@ From a non oriented graph, possibly weighted in R. The principal objective is to
 
 ## Python script
 
+```shell
+python3 src/main.py [filePath] [options]
+```
+
 ```text
 CLI arguments will be used to set the parameters of the algorithm as follows:
   -h, --help: print this help message
