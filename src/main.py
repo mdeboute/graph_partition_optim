@@ -7,7 +7,7 @@ from neighborhood import *
 from metaheuristics import *
 
 
-def initSol(graph, k=2):
+def initSol(graph, k=2, verbose=False):
     """
     Returns an initial solution.
     @param graph: the graph
@@ -19,9 +19,10 @@ def initSol(graph, k=2):
     solution = Solution(partition, graph, nbClasses=k)
     t = time.time()
     solutionCost = solution.getCost()
-    print(
-        f"Initial solution cost: {solutionCost}, computed in: {time.time() - t:.2f} seconds."
-    )
+    if verbose:
+        print(
+            f"Initial solution cost: {solutionCost}, computed in: {time.time() - t:.2f} seconds."
+        )
     return solution, solutionCost
 
 

@@ -1,5 +1,6 @@
 from structures import *
 import random
+from collections import Counter
 
 
 def parse(file_path):
@@ -93,3 +94,41 @@ def copySolution(solution):
         solution.getGraph(),
         solution.getNbClasses(),
     )
+
+
+def matrixToList(matrix: list[list], nbVertices: int) -> list:
+    l = [0 for _ in range(nbVertices)]
+    k = 0
+    for array in matrix:
+        for element in array:
+            l[element] = k
+        k += 1
+    return l
+
+
+def transformSolution(solution: list) -> dict:
+    counts = Counter(solution)
+    sol = dict()
+    for i, n in enumerate(solution):
+        if counts[n] >= 1:
+            sol.setdefault(n, []).append(i)
+    return sol
+
+
+def getCost(solution: list, graph: Graph) -> int:
+    """
+    Get the cost of a solution.
+    @param solution: a solution (a list of size n where n is the number of vertices,
+    each element of the list corresponds to the class of the vertex)
+    @return: the cost of the solution
+    """
+
+    dictSol = transformSolution(solution)
+    cost = 0
+    for i in range(len(dictSol)):
+        for j in range(i + 1, len(dictSol)):
+            for vertex in dictSol.get(i):
+                for neighbor in graph.getNeighbors(vertex):
+                    if neighbor in dictSol.get(j):
+                        cost += graph.getEdges()[vertex][neighbor]
+    return cost
